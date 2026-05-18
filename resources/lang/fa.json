@@ -1,0 +1,20 @@
+{
+    "Welcome!": "خوش آمدید!",
+    "Please enter your details to sign in.": "لطفاً جهت ورود به سیستم، اطلاعات خود را وارد کنید.",
+    "Email Address": "پست الکترونیک",
+    "Password": "کلمه عبور",
+    "Sign In": "ورود به سیستم",
+    "Remember Me": "مرا به خاطر بسپار",
+    "Don't have an account?": "هنوز ثبت نام نکرده‌اید؟",
+    "Create an Account": "ایجاد حساب کاربری",
+    "Full Name": "نام و نام خانوادگی",
+    "Confirm Password": "تکرار کلمه عبور",
+    "Sign Up": "ثبت نام",
+    "Already have an account?": "در حال حاضر یک حساب کاربری دارید؟",
+    "Login": "ورود",
+    "It is free to register and only takes a minute.": "ایجاد حساب کاربری رایگان است و فقط یک دقیقه زمان می‌برد.",
+    "Enter your full name": "نام و نام خانوادگی خود را وارد کنید",
+    "Enter your email": "ایمیل خود را وارد کنید",
+    "Enter your password": "رمز عبور خود را وارد کنید",
+    "Repeat your password": "رمز عبور را دوباره وارد کنید"
+}
