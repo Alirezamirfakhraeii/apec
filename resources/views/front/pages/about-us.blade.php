@@ -1,0 +1,597 @@
+<!--begin header -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <span class="header-border-top p-1" style="color: #5e5e5e">
+
+                 1403 / 04/18
+                <span class="mx-2 ">
+                    18 : 48
+                </span>
+
+            </span>
+            <span>
+                <a href="#" class="header-btn-border">
+                    انگلیس
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
+<!--end header -->
+
+
+
+
+<!--begin menu -->
+<div class="container">
+
+    <div class="row ">
+
+        <div class="col-lg-2 col-md-4 col-12 mt-sm-2 order-md-1 order-lg-1">
+            <div class="text-center">
+                <a href="index.html">
+                    <img src="img/1111.png" class="img-fluid "  >
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-7 col-md-12 col-12 order-md-3 order-lg-2">
+            <div class="  ">
+                <img src="img/orginal_1657783529.jpg" class="img-fluid mb-3">
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-8 col-12 order-md-2 order-lg-3">
+            <div class="top-search margin-search mt-md-5 mt-lg-4">
+                <form method="get" action="search">
+                    <input name="serch" type="text" class="form-control" placeholder="جستو جو در همه اخبار">
+                    <button type="button" name="button" class="bg-search">
+                        <i class="fa fa-search icon-header-color "></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<nav class="navbar navbar-expand-lg bg-nav-color sticky-top header  mt-2 ">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+                <i class="fa fa-bars"></i>
+            </span>
+        </button>
+        <div class="collapse navbar-collapse" id="main_nav">
+            <ul class="navbar-nav pr-lg-0">
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="#" >صفحات
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="index.html"> صفحه اصلی</a></li>
+                        <li><a class="dropdown-item" href="category.html">دسته بندی ها </a></li>
+                        <li><a class="dropdown-item" href="show-news.html"> نمایش خبر  </a></li>
+                        <li><a class="dropdown-item" href="contact.html"> ارتباط با ما  </a></li>
+                        <li><a class="dropdown-item" href="about-us.html"> درباره ی ما  </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link  nav-text-color pb-3" href="category.html" >بین الملل
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#">ایران</a></li>
+                        <li><a class="dropdown-item" href="#"> کافه بین الملل </a></li>
+                        <li><a class="dropdown-item" href="#"> عناوین کل اخبار بین الملل </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link  nav-text-color pb-3" href="category.html" >ورزشی
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#">توپ و تور</a></li>
+                        <li><a class="dropdown-item" href="#">پایه آبی </a></li>
+                        <li><a class="dropdown-item" href="#">فوتبال و فوتسال</a></li>
+                        <li><a class="dropdown-item" href="#">کشتی و رزمی </a></li>
+                        <li><a class="dropdown-item" href="#">عناوین کل اخبار ورزشی </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link  nav-text-color pb-3" href="category.html"> اجتماعی
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#">محیط زیست</a></li>
+                        <li><a class="dropdown-item" href="#">رفاه و تعاون</a></li>
+                        <li><a class="dropdown-item" href="#">عناوین کل اخبار اجتماعی</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html"> اقتصادی
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#">بانک و بیمه</a></li>
+                        <li><a class="dropdown-item" href="#">بورس</a></li>
+                        <li><a class="dropdown-item" href="#">راه و شهرسازی</a></li>
+                        <li><a class="dropdown-item" href="#">عناوین کل اخبار اقتصادی</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html">فرهنگی هنری
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#"> رادیو و تلویزیون</a></li>
+                        <li><a class="dropdown-item" href="#">سینما و تئاتر  </a></li>
+                        <li><a class="dropdown-item" href="#">عناوین کل اخبار فرهنگی و هنری </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html"> علمی و پزشکی
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#">دانلود نرم افزار</a></li>
+                        <li><a class="dropdown-item" href="#"> کلینیک </a></li>
+                        <li><a class="dropdown-item" href="#">عناوین کل اخبار علمی و پزشکی </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html"> فیلم و صوت
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#"> آموزشی </a></li>
+                        <li><a class="dropdown-item" href="#">گزارش استان ها </a></li>
+                        <li><a class="dropdown-item" href="#"> عناوین کل اخبار فیلم و صوت </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html"> عکس
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#">خبری</a></li>
+                        <li><a class="dropdown-item" href="#">مستند</a></li>
+                        <li><a class="dropdown-item" href="#"> عناوین کل اخبار عکس  </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html"> استان ها
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#">گلستان</a></li>
+                        <li><a class="dropdown-item" href="#"> تهران </a></li>
+                        <li><a class="dropdown-item" href="#">عناوین کل اخبار استان ها</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html">شهروند خبر نگار
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#"> شهروند خبرنگار</a></li>
+                        <li><a class="dropdown-item" href="#"> عناوین کل اخبار شهروند خبر نگار</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link nav-text-color pb-3" href="category.html">وب گردی
+                        <i class="fa fa-chevron-down font_11 menu_arrow"></i>
+                    </a>
+                    <ul class="dropdown-menu fade-up">
+                        <li><a class="dropdown-item" href="#"> خواندنی ها</a></li>
+                        <li><a class="dropdown-item" href="#"> مجله سرگرمی </a></li>
+                        <li><a class="dropdown-item" href="#">اخبار داغ</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div> <!-- navbar-collapse.// -->
+    </div> <!-- container-fluid.// -->
+</nav>
+
+<!--end menu-->
+
+
+
+<!--begin content-->
+
+<section>
+    <div class="bg-content-show-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-8">
+                    <div class="mt-3">
+                        <div class="border-bottom ">
+                            <div class="p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div style="text-align: right">
+                                            <span class="font_15 bg-resane">درباره ما</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section>
+                        <div class="mt-2">
+
+                            <section>
+                                <div class="mt-5">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="text-center">
+                                                <span class="date_en2" style="font-weight: bold">
+                                                    وب سایت خبری اردیبهشت  در یک نگاه
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="style-about-us">
+                                                <span class="date_en2" style="text-align:justify;line-height:33px;">
+
+                                                    وب سایت خبری اردیبهشت  مرکزی ملی است که به منظور آموزش مهارتهای حرفه ای خبرنگاری و رشد و شکوفایی استعدادهای بالقوه جوانان علاقمند به این حرفه و پوشش جامع خبری (ملی و فرا ملی) توسط معاونت سیاسی سازمان صدا و سیمای جمهوری اسلامی ایران در سال 1378 تاسیس گردید.
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="mt-5">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="text-center">
+                                                <span class="date_en2" style="font-weight: bold">
+                                                   نحوه همکاری با وب سایت خبری اردیبهشت
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="style-about-us" >
+                                                <span class="date_en2" style="text-align:justify;line-height:33px;">
+
+                                                    در راستای اهداف وب سایت خبری اردیبهشت  طبق برنامه ریزی به عمل آمده از سوی واحد آموزش دوره های آموزشی خبر در سطوح مختلف آموزشی (مقدماتی و تکمیلی) برگزار می گردد که داوطلبین می بایست فرم عضویت را تکميل همراه با مدارک لازم جهت ثبت نام به باشگاه تحويل دهند.
+
+پس از بررسی های لازم،طبق ضوابط باشگاه از داوطلبان برای شرکت در دوره های آموزشی دعوت به عمل می آید.
+
+کسانی که آموزشهای سطوح چند گانه باشگاه را با موفقیت به پایان برسانند به دریافت کارت خبرنگاری نائل خواهند شد.خبرنگاران پس از ادای سوگند و انتخاب سرویس خبری که بر اساس علاقه مندی شان صورت می گیرد می توانند به عنوان خبرنگار آزاد با باشگاه همکاری نمايند.
+
+بدیهی است این امر به معنی تعهد استخدامی باشگاه نسبت به اعضاء نیست،ضمن اینکه حقوق مادی و معنوی اعضاء برای اخبار ارسالی محفوظ خواهد بود
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </section>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="text-center">
+                                        <img src="img/3-1.jpg" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-4">
+                    <div class="sticky-top contact-sticky">
+                        <div class="bg-content-whit border mt-3">
+                            <ul class="nav nav-tabs aaa">
+                                <li class="nav-item">
+                                    <a class="nav-link active color-btn font_13" data-toggle="tab" href="#home1" style="text-align: center">پربیننده ترین ها</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link color-btn font_13" data-toggle="tab" href="#menu11" style="text-align: center">پر بحث ترین ها </a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane  active " id="home1">
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                    بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                    یارانه نقدی آبان یک روز زودتر واریز شد
+                                                </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        اکتشافات مهم تاریخی که جهان را در حیرت فرو برد + تصاویر
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        شوخی کی روش با وزیر ورزش
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        پاسخ امیرعبداللهیان به اظهارات مداخله جویانه وزیر خارجه آلمان
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        آیا شما دنبال راضی نگه داشتن دیگران هستید؟
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        علت فوت نسرین قادری مسمومیت ناشی از مصرف متانول است
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        شوخی کی روش با وزیر ورزش
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        پاسخ امیرعبداللهیان به اظهارات مداخله جویانه وزیر خارجه آلمان
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_13 color-text">
+                                        آیا شما دنبال راضی نگه داشتن دیگران هستید؟
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane fade" id="menu11">
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        اکتشافات مهم تاریخی که جهان را در حیرت فرو برد + تصاویر
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        شوخی کی روش با وزیر ورزش
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        پاسخ امیرعبداللهیان به اظهارات مداخله جویانه وزیر خارجه آلمان
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        آیا شما دنبال راضی نگه داشتن دیگران هستید؟
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        علت فوت نسرین قادری مسمومیت ناشی از مصرف متانول است
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        آیا شما دنبال راضی نگه داشتن دیگران هستید؟
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        علت فوت نسرین قادری مسمومیت ناشی از مصرف متانول است
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        شوخی کی روش با وزیر ورزش
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        پاسخ امیرعبداللهیان به اظهارات مداخله جویانه وزیر خارجه آلمان
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-1">
+                                        <a href="show-news.html">
+                                            <div class="circle-titr"></div>
+                                            <span class="font_16 color-text">
+                                        آیا شما دنبال راضی نگه داشتن دیگران هستید؟
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="bg-white">
+                                <div class="px-3">
+                                    <a href="#">
+                                        <div class="row">
+                                            <div class="col-12 mt-3 ">
+                                                <div class="bg-style-soozhe ">
+                                                    <div class="circle-end-news"></div>
+
+                                                    <span class="end-news">آخرین اخبار</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                            <span class="font_13 color-text">
+                بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                        </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="py-2">
+                                                <a href="show-news.html">
+                                                    <span class="font_13 color-text">
+                        بازداشت یکی از عوامل اصلی شبکه تروریستی سعودی اینترنشنال در ایران
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--end content-->
+
+

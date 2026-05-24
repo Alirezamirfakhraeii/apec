@@ -62,12 +62,11 @@
 <!-- Page -->
 <div class="page">
 
-    {{-- @include('back.layouts.sidebar') --}}
-
+     @include('back.admin.layouts.partials.sidebar')
     <!-- main-content -->
     <div class="main-content app-content">
 
-        {{-- @include('back.layouts.header') --}}
+         @include('back.admin.layouts.partials.navbar')
 
         <!-- container -->
         <div class="container-fluid">
