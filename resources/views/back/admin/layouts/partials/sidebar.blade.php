@@ -1,3 +1,25 @@
+<style>
+    .app-sidebar .side-menu__item {
+        display: flex;
+        align-items: center;
+    }
+
+    .app-sidebar .side-menu__icon {
+        margin-left: 10px;
+        margin-right: 0;
+        min-width: 24px;
+    }
+
+    .app-sidebar .side-menu__label {
+        line-height: 1.6;
+    }
+
+    .app-sidebar .angle {
+        margin-right: auto;
+        margin-left: 0;
+    }
+</style>
+
 <aside class="app-sidebar sidebar-scroll">
     <div class="main-sidebar-header active">
         <a class="desktop-logo logo-light active" href="{{ route('admin.dashboard') }}">
@@ -47,8 +69,7 @@
             @role('admin')
             <li class="side-item side-item-category">مدیریت دسترسی‌ها</li>
 
-            <!-- مدیریت کاربران -->
-            <li class="slide">
+            <li class="slide {{ request()->routeIs('admin.users.*', 'admin.roles.*') ? 'is-expanded' : '' }}">
                 <a class="side-menu__item" data-bs-toggle="slide" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -57,34 +78,106 @@
                     <span class="side-menu__label">مدیریت کاربران</span>
                     <i class="angle fe fe-chevron-down"></i>
                 </a>
-                <ul class="slide-menu">
-                    <li><a class="slide-item" href="#">لیست کاربران</a></li>
-                    <li><a class="slide-item" href="#">نقش‌ها و دسترسی‌ها</a></li>
+
+                <ul class="slide-menu {{ request()->routeIs('admin.users.*', 'admin.roles.*') ? 'open' : '' }}">
+                    <li>
+                        <a class="slide-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
+                            لیست کاربران
+                        </a>
+                    </li>
+                    <li>
+                        <a class="slide-item {{ request()->routeIs('admin.roles.*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
+                            نقش‌ها و دسترسی‌ها
+                        </a>
+                    </li>
                 </ul>
             </li>
             @endrole
 
-            <!-- منوی جدید: مدیریت محتوا (دسته بندی و بلاگ) -->
             <li class="side-item side-item-category">بخش محتوا</li>
-            <li class="slide {{ request()->routeIs('admin.categories.*') ? 'is-expanded' : '' }}">
+
+            <li class="slide">
+                <a class="side-menu__item {{ request()->routeIs('admin.menu-items.*') ? 'active' : '' }}" href="{{ route('admin.menu-items.index') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                        <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
+                    </svg>
+                    <span class="side-menu__label">مدیریت فهرست‌ها (منو)</span>
+                </a>
+            </li>
+
+            <li class="slide {{ request()->routeIs('admin.blog-categories.*', 'admin.posts.*') ? 'is-expanded' : '' }}">
                 <a class="side-menu__item" data-bs-toggle="slide" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
                         <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/>
                     </svg>
-                    <span class="side-menu__label">مدیریت محتوا</span>
+                    <span class="side-menu__label">مدیریت اتاق خبر</span>
                     <i class="angle fe fe-chevron-down"></i>
                 </a>
-                <ul class="slide-menu {{ request()->routeIs('admin.categories.*') ? 'open' : '' }}">
+
+                <ul class="slide-menu {{ request()->routeIs('admin.blog-categories.*', 'admin.posts.*') ? 'open' : '' }}">
                     <li>
-                        <a class="slide-item {{ request()->routeIs('admin.categories.index') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">دسته‌بندی‌ها</a>                    </li>
+                        <a class="slide-item {{ request()->routeIs('admin.blog-categories.index') ? 'active' : '' }}" href="{{ route('admin.blog-categories.index') }}">
+                            دسته‌بندی موضوعی
+                        </a>
+                    </li>
                     <li>
-                        <a class="slide-item" href="#">مدیریت اخبار و بلاگ</a>
+                        <a class="slide-item {{ request()->routeIs('admin.posts.index', 'admin.posts.create') ? 'active' : '' }}" href="{{ route('admin.posts.index') }}">
+                            لیست و ثبت اخبار
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="slide {{ request()->routeIs('admin.podcasts.*', 'admin.categories.index') ? 'is-expanded' : '' }}">
+                <a class="side-menu__item" data-bs-toggle="slide" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                        <path d="M19 10v1a7 7 0 0 1-14 0v-1"></path>
+                        <line x1="12" x2="12" y1="19" y2="22"></line>
+                    </svg>
+                    <span class="side-menu__label">مدیریت پادکست‌ها</span>
+                    <i class="angle fe fe-chevron-down"></i>
+                </a>
+
+                <ul class="slide-menu {{ request()->routeIs('admin.podcasts.*', 'admin.categories.index') ? 'open' : '' }}">
+                    <li>
+                        <a class="slide-item {{ request()->routeIs('admin.categories.index') ? 'active' : '' }}"
+                           href="{{ route('admin.categories.index', ['type' => 'podcast']) }}">
+                            دسته‌بندی پادکست‌ها
+                        </a>
+                    </li>
+                    <li>
+                        <a class="slide-item {{ request()->routeIs('admin.podcasts.index', 'admin.podcasts.create') ? 'active' : '' }}" href="{{ route('admin.podcasts.index') }}">
+                            لیست و ثبت پادکست
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="slide {{ request()->routeIs('admin.contacts.*') ? 'is-expanded' : '' }}">
+                <a class="side-menu__item" data-bs-toggle="slide" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <span class="side-menu__label">پیام‌های ارتباط با ما</span>
+                    <i class="angle fe fe-chevron-down"></i>
+                </a>
+
+                <ul class="slide-menu {{ request()->routeIs('admin.contacts.*') ? 'open' : '' }}">
+                    <li>
+                        <a class="slide-item {{ request()->routeIs('admin.contacts.index', 'admin.contacts.show') ? 'active' : '' }}"
+                           href="{{ route('admin.contacts.index') }}">
+                            لیست پیام‌های دریافتی
+                        </a>
                     </li>
                 </ul>
             </li>
 
             <li class="side-item side-item-category">عملیات</li>
+
             <li class="slide">
                 <a class="side-menu__item" href="#" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">

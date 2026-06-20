@@ -168,7 +168,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // فعال‌سازی قابلیت جابجایی مجزا برای تمام سطح‌ها (Nested Sortable)
             function initSortable(el) {
                 Sortable.create(el, {
                     group: 'nested-category-group',
@@ -214,17 +213,14 @@
                 });
             }
 
-// فعال‌سازی روی تمام لیست‌ها
             document.querySelectorAll('.sortable-list').forEach(function (listEl) {
                 initSortable(listEl);
             });
 
-            // اعمال تابع روی تمام لیست‌های درختی موجود در صفحه
             document.querySelectorAll('.sortable-list').forEach(function (listEl) {
                 initSortable(listEl);
             });
 
-            // باز شدن مدال ویرایش و پر شدن دیتا
             document.querySelectorAll('.edit-cat-btn').forEach(button => {
                 button.addEventListener('click', function () {
                     const id = this.getAttribute('data-id');

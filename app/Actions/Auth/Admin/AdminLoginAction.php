@@ -10,14 +10,13 @@ class AdminLoginAction
 {
     public function execute(AdminLoginDTO $dto): bool
     {
-        // ۱. تلاش برای احراز هویت اولیه با سشن‌های پیش‌فرض لاراول
-        if (!Auth::attempt(['email' => $dto->email, 'password' => $dto->password], $dto->remember)) {
+
+        if (!Auth::attempt(['email' => $dto->email, 'password' => $dto->password])) {
             throw ValidationException::withMessages([
                 'email' => [__('auth.failed')],
             ]);
         }
 
-        // ۲. گارد امنیتی: اگر کاربر لاگین شد ولی رول ادمین نداشت، بلافاصله سشن را بسوزان!
         $user = Auth::user();
         if (!$user->hasRole('admin')) {
             Auth::logout();
@@ -29,7 +28,6 @@ class AdminLoginAction
             ]);
         }
 
-        // ۳. تجدید توکن سشن برای جلوگیری از حملات Session Fixation
         request()->session()->regenerate();
 
         return true;

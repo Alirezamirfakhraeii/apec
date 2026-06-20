@@ -1,17 +1,25 @@
 <?php
 
+use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
-require __DIR__.'/user.php';
+//require __DIR__.'/user.php';
 
 
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/test', [HomeController::class, 'test'])->name('test');
+Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
+
+Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('front.posts.show');
+
+Route::get('/contact-us', [ContactController::class, 'index'])->name('front.contact.index');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('front.contact.store');
 
 
 Route::get('lang/{locale}', function ($locale) {

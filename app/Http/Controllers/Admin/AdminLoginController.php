@@ -23,6 +23,7 @@ class AdminLoginController extends Controller
         ]);
 
         $dto = AdminLoginDTO::fromRequest($request);
+
         $action->execute($dto);
 
         return redirect()->route('admin.dashboard');
