@@ -51,6 +51,8 @@
     <link href="{{ asset('back/switcher/css/switcher-rtl.css') }}" rel="stylesheet">
     <link href="{{ asset('back/switcher/demo.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/css/persian-datepicker.min.css">
+
     <!-- محل قرارگیری استایل‌های اختصاصی صفحات فرعی -->
     @stack('styles')
 </head>
@@ -62,12 +64,11 @@
 <!-- Page -->
 <div class="page">
 
-    {{-- @include('back.layouts.sidebar') --}}
-
+     @include('back.admin.layouts.partials.sidebar')
     <!-- main-content -->
     <div class="main-content app-content">
 
-        {{-- @include('back.layouts.header') --}}
+         @include('back.admin.layouts.partials.navbar')
 
         <!-- container -->
         <div class="container-fluid">
@@ -141,6 +142,22 @@
 <!-- Switcher js -->
 <script src="{{ asset('back/switcher/js/switcher-rtl.js') }}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/persian-date/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/js/persian-datepicker.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#published_at').persianDatepicker({
+            format: 'YYYY/MM/DD HH:mm',
+            timePicker: {
+                enabled: true
+            }
+        });
+    });
+</script>
+
+
+@yield('scripts')
 <!-- محل قرارگیری اسکریپت‌های اختصاصی صفحات فرعی -->
 @stack('scripts')
 </body>

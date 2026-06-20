@@ -10,11 +10,10 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::create([
-            'name' => 'مدیر سیستم',
-            'email' => 'admin@test.com',
-            'password' => Hash::make('password'), // حتما بعدا عوضش کن!
-            'is_active' => true,
+        $admin = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('12345678'),
         ]);
 
         // اختصاص نقش ادمین که در سیدر قبلی ساختیم

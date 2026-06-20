@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'اردیبهشت - ورژن 1.1')</title>
+    <title>@yield('title', 'سایت اپک')</title>
 
     <!-- استایل‌های اختصاصی قالب اردیبهشت -->
     <link href="{{ asset('front/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
