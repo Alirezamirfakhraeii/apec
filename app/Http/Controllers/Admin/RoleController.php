@@ -55,7 +55,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        if ($role->name === 'Super Admin') {
+        if ($role->name === 'Super Auth') {
             return redirect()->back()->with('error', 'نقش مدیر اصلی سیستم قابل حذف نیست.');
         }
 

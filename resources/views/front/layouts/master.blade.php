@@ -12,6 +12,7 @@
     <link href="{{ asset('front/css/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{ asset('front/css/style001.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('front/css/hircana.css') }}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('front/css/header-menu.css') }}">
 
     <!-- محل قرارگیری استایل‌های احتمالی صفحات خاص -->
     @stack('styles')
@@ -37,6 +38,7 @@
 <script src="{{ asset('front/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('front/js/owl.carousel.js') }}"></script>
 <script src="{{ asset('front/js/js.js') }}" type="text/javascript"></script>
+<script src="{{ asset('front/js/header-menu.js') }}"></script>
 
 <!-- محل قرارگیری اسکریپت‌های احتمالی صفحات خاص -->
 @stack('scripts')

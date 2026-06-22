@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\Auth\Admin\Posts\CreatePostAction;
-use App\Actions\Auth\Admin\Posts\UpdatePostAction;
-use App\DTOs\Auth\Admin\Posts\PostDTO;
+use App\Features\Admin\Posts\Actions\CreatePostAction;
+use App\Features\Admin\Posts\Actions\UpdatePostAction;
+use App\Features\Admin\Posts\DTOs\PostDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Blog\StorePostRequest;
 use App\Models\BlogCategory;
@@ -30,7 +30,6 @@ class PostController extends Controller
     {
         $dto = PostDTO::fromRequest($request);
         $action->execute($dto, auth()->id() ?? 1);
-
         return redirect()->route('admin.posts.index')->with('success', 'مطلب با موفقیت ثبت شد.');
     }
 

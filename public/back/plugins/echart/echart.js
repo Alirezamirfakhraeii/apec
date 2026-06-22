@@ -20176,7 +20176,7 @@ var SeriesModel = ComponentModel.extend({
     defaultOption: null,
 
     /**
-     * Data provided for legend
+     * DTOs provided for legend
      * @type {Function}
      */
     // PENDING
@@ -22422,7 +22422,7 @@ var actions = {};
 var eventActionMap = {};
 
 /**
- * Data processor functions of each stage
+ * DTOs processor functions of each stage
  * @type {Array.<Object.<string, Function>>}
  * @inner
  */
@@ -23188,7 +23188,7 @@ var List = function (dimensions, hostModel) {
     this.indices = [];
 
     /**
-     * Data storage
+     * DTOs storage
      * @type {Object.<key, TypedArray|Array>}
      * @private
      */
@@ -23723,7 +23723,7 @@ function normalizeDimensions(dimensions) {
 }
 
 /**
- * Data iteration
+ * DTOs iteration
  * @param {string|Array.<string>}
  * @param {Function} cb
  * @param {boolean} [stack=false]
@@ -23774,7 +23774,7 @@ listProto.each = function (dims, cb, stack, context) {
 };
 
 /**
- * Data filter
+ * DTOs filter
  * @param {string|Array.<string>}
  * @param {Function} cb
  * @param {boolean} [stack=false]
@@ -23831,7 +23831,7 @@ listProto.filterSelf = function (dimensions, cb, stack, context) {
 };
 
 /**
- * Data mapping to a plain array
+ * DTOs mapping to a plain array
  * @param {string|Array.<string>} [dimensions]
  * @param {Function} cb
  * @param {boolean} [stack=false]
@@ -23882,7 +23882,7 @@ function cloneListForMapAndSample(original, excludeDimensions) {
 }
 
 /**
- * Data mapping to a new List with given dimensions
+ * DTOs mapping to a new List with given dimensions
  * @param {string|Array.<string>} dimensions
  * @param {Function} cb
  * @param {boolean} [stack=false]
@@ -24260,7 +24260,7 @@ var OTHER_DIMS = {tooltip: 1, label: 1, itemName: 1};
  *      provides not only dim template, but also default order.
  *      `name` of each item provides default coord name.
  *      [{dimsDef: []}, ...] can be specified to give names.
- * @param {Array} data Data list. [[1, 2, 3], [2, 3, 4]].
+ * @param {Array} data DTOs list. [[1, 2, 3], [2, 3, 4]].
  * @param {Object} [opt]
  * @param {Array.<Object|string>} [opt.dimsDef] option.series.dimensions User defined dimensions
  *      For example: ['asdf', {name, type}, ...].
@@ -26570,7 +26570,7 @@ Axis.prototype = {
     },
 
     /**
-     * Convert data to coord. Data is the rank if it has a ordinal scale
+     * Convert data to coord. DTOs is the rank if it has a ordinal scale
      * @param {number} data
      * @param  {boolean} clamp
      * @return {number}
@@ -26589,7 +26589,7 @@ Axis.prototype = {
     },
 
     /**
-     * Convert coord to data. Data is the rank if it has a ordinal scale
+     * Convert coord to data. DTOs is the rank if it has a ordinal scale
      * @param {number} coord
      * @param  {boolean} clamp
      * @return {number}
@@ -27756,7 +27756,7 @@ var lineAnimationDiff = function (
             case '-':
                 var idx = diffItem.idx;
                 var rawIndex = oldData.getRawIndex(idx);
-                // Data is replaced. In the case of dynamic data queue
+                // DTOs is replaced. In the case of dynamic data queue
                 // FIXME FIXME FIXME
                 if (rawIndex !== idx) {
                     currPoints.push(oldData.getItemLayout(idx));
@@ -28462,7 +28462,7 @@ Chart.extend({
             });
 
             // In the case data zoom triggerred refreshing frequently
-            // Data may not change if line has a category axis. So it should animate nothing
+            // DTOs may not change if line has a category axis. So it should animate nothing
             if (!isPointsSame(this._stackedOnPoints, stackedOnPoints)
                 || !isPointsSame(this._points, points)
             ) {
@@ -32393,7 +32393,7 @@ registerVisual(function (ecModel) {
 });
 
 /**
- * Data selectable mixin for chart series.
+ * DTOs selectable mixin for chart series.
  * To eanble data select, option of series must have `selectedMode`.
  * And each data item will use `selected` to toggle itself selected status
  */
@@ -33081,7 +33081,7 @@ var dataColor = function (seriesType, ecModel) {
                     // Legend may use the visual info in data before processed
                     dataAll.setItemVisual(rawIdx, 'color', color);
 
-                    // Data is not filtered
+                    // DTOs is not filtered
                     if (filteredIdx != null) {
                         data.setItemVisual(filteredIdx, 'color', color);
                     }
@@ -42020,7 +42020,7 @@ var GraphSeries = extendSeriesModel({
 
     _updateCategoriesData: function () {
         var categories = map(this.option.categories || [], function (category) {
-            // Data must has value
+            // DTOs must has value
             return category.value != null ? category : extend({
                 value: 0
             }, category);
@@ -50920,7 +50920,7 @@ extendChartView({
         var inRangeVisuals = visualMapModel.targetVisuals.inRange;
         var outOfRangeVisuals = visualMapModel.targetVisuals.outOfRange;
         // if (!visualMapping) {
-        //     throw new Error('Data range must have color visuals');
+        //     throw new Error('DTOs range must have color visuals');
         // }
 
         var data = seriesModel.getData();
@@ -56449,7 +56449,7 @@ var LegendView = extendComponentView({
                 legendDrawnMap.set(name, true);
             }
             else {
-                // Data legend of pie, funnel
+                // DTOs legend of pie, funnel
                 ecModel.eachRawSeries(function (seriesModel) {
                     // In case multiple series has same data name
                     if (legendDrawnMap.get(name)) {
@@ -71246,7 +71246,7 @@ DataView.prototype.onclick = function (ecModel, api) {
         }
         catch (e) {
             close();
-            throw new Error('Data view format error ' + e);
+            throw new Error('DTOs view format error ' + e);
         }
         if (newOption) {
             api.dispatchAction({

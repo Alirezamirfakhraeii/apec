@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\Podcasts\StorePodcastAction;
-use App\Actions\Podcasts\UpdatePodcastAction;
+use App\Features\Admin\Podcasts\Actions\StorePodcastAction;
+use App\Features\Admin\Podcasts\Actions\UpdatePodcastAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Podcasts\StorePodcastRequest;
 use App\Http\Requests\Admin\Podcasts\UpdatePodcastRequest;

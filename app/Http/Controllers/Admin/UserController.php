@@ -81,7 +81,7 @@ class UserController extends Controller
         $user->update($data);
 
         // امنیت نقش خود ادمین اصلی
-        if ($user->id === auth()->id() && $user->hasRole('Super Admin') && $request->role !== 'Super Admin') {
+        if ($user->id === auth()->id() && $user->hasRole('Super Auth') && $request->role !== 'Super Auth') {
             return redirect()->back()->with('error', 'شما نمی‌توانید نقش خودتان را تغییر دهید!');
         }
 
@@ -116,8 +116,8 @@ class UserController extends Controller
             'role' => 'required|exists:roles,name',
         ]);
 
-        if ($user->id === auth()->id() && $user->hasRole('Super Admin') && $request->role !== 'Super Admin') {
-            return redirect()->back()->with('error', 'شما نمی‌توانید نقش Super Admin خود را تغییر دهید!');
+        if ($user->id === auth()->id() && $user->hasRole('Super Auth') && $request->role !== 'Super Auth') {
+            return redirect()->back()->with('error', 'شما نمی‌توانید نقش Super Auth خود را تغییر دهید!');
         }
         $user->syncRoles([$request->role]);
         return redirect()->back()->with('success', "نقش کاربر «{$user->name}» با موفقیت به «{$request->role}» تغییر یافت.");

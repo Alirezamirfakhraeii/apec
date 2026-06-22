@@ -13,8 +13,6 @@ require __DIR__.'/admin.php';
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/test', [HomeController::class, 'test'])->name('test');
-Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
 
 Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('front.posts.show');
 
@@ -28,6 +26,8 @@ Route::get('lang/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('lang.switch');
+
+
 
 
 

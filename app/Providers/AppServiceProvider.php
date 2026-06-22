@@ -28,7 +28,10 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $frontMenuItems = Cache::remember('global_front_menu_items', now()->addDays(7), function () {
-                return MenuItem::with('children')
+                return MenuItem::with([
+                    'target',
+                    'activeChildren',
+                ])
                     ->whereNull('parent_id')
                     ->where('status', 1)
                     ->orderBy('position', 'asc')

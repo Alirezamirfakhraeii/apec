@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\RegisterUserAction;
-use App\DTOs\Auth\RegisterData;
+use App\Features\Auth\Actions\RegisterUserAction;
+use App\Features\Auth\DTOs\RegisterData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 

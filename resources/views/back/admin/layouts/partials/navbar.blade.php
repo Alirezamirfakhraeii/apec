@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="ms-3 my-auto">
                                     <h6>{{ auth()->user()->name ?? 'مدیر سیستم' }}</h6>
-                                    <span>{{ auth()->user()->getRoleNames()->first() ?? 'Admin' }}</span>
+                                    <span>{{ auth()->user()->getRoleNames()->first() ?? 'Auth' }}</span>
                                 </div>
                             </div>
                         </div>

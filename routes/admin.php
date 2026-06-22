@@ -35,17 +35,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('podcasts', PodcastController::class);
 
     Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
-    // مشاهده جزئیات یک پیام
+
     Route::get('contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
 
-    // در روت‌های ادمین
     Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
 
     Route::post('menu-items/update-order', [MenuItemController::class, 'update_order'])->name('menu-items.update-order');
-
-    // روت‌های اصلی مدیریت فهرست (CRUD)
     Route::resource('menu-items', MenuItemController::class)->except(['create', 'show', 'edit']);
 
 });

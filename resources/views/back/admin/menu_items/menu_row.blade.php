@@ -7,10 +7,22 @@
         </div>
 
         <div style="width: 30%; font-family: monospace; text-align: left;" dir="ltr">
-            @if($item->type == 'category' || $item->type == 'menu')
-                <span class="badge bg-primary bg-opacity-10 font_10 py-0.5 px-2">{{ $item->category->title ?? 'نامشخص' }}</span>
+            @if(in_array($item->type, ['category', 'page', 'post']))
+                <span class="badge bg-primary bg-opacity-10 font_10 py-0.5 px-2">
+            {{ $item->target->title ?? 'مقصد نامشخص' }}
+        </span>
+            @elseif($item->type == 'route')
+                <small class="text-info font_11">
+                    route: {{ $item->route_name ?? 'نامشخص' }}
+                </small>
+            @elseif($item->type == 'heading')
+                <small class="text-muted font_11">
+                    بدون لینک
+                </small>
             @else
-                <small class="text-secondary font_11">irapec.com/{{ ltrim($item->url, '/') }}</small>
+                <small class="text-secondary font_11">
+                    {{ $item->url ? 'irapec.com/' . ltrim($item->url, '/') : 'لینک نامشخص' }}
+                </small>
             @endif
         </div>
 
@@ -23,16 +35,21 @@
         </div>
 
         <div style="width: 20%; text-align: center;" class="d-flex align-items-center justify-content-center" style="gap: 2px;">
-            <button class="btn btn-sm btn-link text-primary edit-menu-btn py-0 px-2 shadow-none"
+            <button type="button"
+                    class="btn btn-sm btn-info edit-menu-btn"
                     data-id="{{ $item->id }}"
-                    data-title="{{ $item->title }}"
+                    data-title="{{ e($item->title) }}"
                     data-type="{{ $item->type }}"
-                    data-url="{{ $item->url }}"
-                    data-category="{{ $item->category_id }}"
+                    data-url="{{ e($item->url) }}"
+                    data-target-type="{{ e($item->target_type) }}"
+                    data-target-id="{{ $item->target_id }}"
+                    data-route-name="{{ e($item->route_name) }}"
+                    data-route-params="{{ e(is_array($item->route_params) ? json_encode($item->route_params, JSON_UNESCAPED_UNICODE) : $item->route_params) }}"
+                    data-icon="{{ e($item->icon) }}"
+                    data-open-in-new-tab="{{ $item->open_in_new_tab ? 1 : 0 }}"
                     data-parent="{{ $item->parent_id }}"
-                    data-status="{{ $item->status }}"
-                    title="ویرایش">
-                <i class="fa fa-edit font_11"></i>
+                    data-status="{{ $item->status ? 1 : 0 }}">
+                ویرایش
             </button>
 
             <form action="{{ route('admin.menu-items.destroy', $item->id) }}" method="POST" onsubmit="return confirm('آیا از حذف این منو مطمئن هستید؟ زیرمنوها به ریشه منتقل می‌شوند.');" class="m-0">

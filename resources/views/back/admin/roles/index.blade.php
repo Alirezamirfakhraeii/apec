@@ -72,7 +72,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td class="fw-bold text-dark">{{ $role->name }}</td>
                                     <td class="text-right">
-                                        @if($role->name === 'Super Admin')
+                                        @if($role->name === 'Super Auth')
                                             <span class="badge badge-danger">دسترسی کامل به تمام سیستم</span>
                                         @elseif($role->permissions->isEmpty())
                                             <span class="badge badge-light text-muted">بدون مجوز</span>
@@ -83,7 +83,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($role->name !== 'Super Admin')
+                                        @if($role->name !== 'Super Auth')
                                             <button class="btn btn-sm btn-info-light edit-role-btn"
                                                     data-id="{{ $role->id }}"
                                                     data-name="{{ $role->name }}"
