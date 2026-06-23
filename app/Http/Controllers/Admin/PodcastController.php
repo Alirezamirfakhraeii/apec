@@ -21,14 +21,17 @@ class PodcastController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::query()
+            ->with('children')
+            ->orderBy('title')
+            ->get();
         return view('back.admin.podcasts.create', compact('categories'));
     }
 
     public function store(StorePodcastRequest $request, StorePodcastAction $action)
     {
-        $action->execute($request->validated());
 
+        $action->execute($request->validated());
         return redirect()->route('admin.podcasts.index')->with('success', 'پادکست با موفقیت ذخیره شد.');
     }
 

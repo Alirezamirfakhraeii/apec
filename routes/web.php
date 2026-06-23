@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\PageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -15,9 +16,11 @@ require __DIR__.'/admin.php';
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('front.posts.show');
+Route::get('/page/{slug}', [PageController::class, 'show'])->name('front.pages.show');
 
 Route::get('/contact-us', [ContactController::class, 'index'])->name('front.contact.index');
 Route::post('/contact-us', [ContactController::class, 'store'])->name('front.contact.store');
+
 
 
 Route::get('lang/{locale}', function ($locale) {

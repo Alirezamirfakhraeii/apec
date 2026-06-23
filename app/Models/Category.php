@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-
     use HasFactory;
-
     protected $fillable = [
         'title',
         'slug',
@@ -23,7 +21,6 @@ class Category extends Model
 
     public function children()
     {
-        // 🌟 حتماً باید orderBy('position', 'asc') در انتهای رابطه اضافه شده باشه
         return $this->hasMany(Category::class, 'parent_id')
             ->with('children')
             ->orderBy('position', 'asc');

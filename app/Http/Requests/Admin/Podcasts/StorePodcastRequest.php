@@ -14,16 +14,18 @@ class StorePodcastRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id'  => 'nullable|exists:categories,id',
-            'title'        => 'required|string|max:255',
-            'summary'      => 'nullable|string',
-            'image'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'audio_url'    => 'nullable|mimes:mp3,wav,ogg|max:50000',
-            'duration'     => 'nullable|string',
-            'embed_code'   => 'nullable|string',
-            'castbox_url'  => 'nullable|url',
-            'spotify_url'  => 'nullable|url',
-            'status'       => 'required|in:draft,published',
+            'title'       => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'host_name'   => 'nullable|string|max:255',
+            'summary'     => 'nullable|string',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'audio_file'  => 'nullable|file|mimes:mp3,wav,ogg,mpeg|max:50000',
+            'audio_url'   => 'nullable|url',
+            'duration'    => 'nullable|string|max:50',
+            'embed_code'  => 'nullable|string',
+            'castbox_url' => 'nullable|url',
+            'spotify_url' => 'nullable|url',
+            'status'      => 'required|in:draft,published',
         ];
     }
 }

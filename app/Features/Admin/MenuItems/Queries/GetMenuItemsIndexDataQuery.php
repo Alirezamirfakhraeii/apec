@@ -3,6 +3,7 @@
 namespace App\Features\Admin\MenuItems\Queries;
 use App\Models\Category;
 use App\Models\MenuItem;
+use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Support\Collection;
 
@@ -37,7 +38,10 @@ class GetMenuItemsIndexDataQuery
 
     private function getPages(): Collection
     {
-        return collect();
+        return Page::query()
+            ->latest()
+            ->take(200)
+            ->get();
     }
 
     private function getPosts(): Collection

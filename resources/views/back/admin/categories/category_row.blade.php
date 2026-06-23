@@ -31,7 +31,10 @@
 
         <!-- عملیات -->
         <div style="width: 20%;" class="text-center">
-            <button class="btn btn-sm btn-info-light edit-cat-btn"
+            <button type="button"
+                    class="btn btn-sm btn-info-light edit-cat-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editCategoryModal"
                     data-id="{{ $category->id }}"
                     data-title="{{ $category->title }}"
                     data-parent="{{ $category->parent_id }}"

@@ -106,6 +106,16 @@
                 </a>
             </li>
 
+            <li class="slide">
+                <a class="side-menu__item {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}" href="{{ route('admin.pages.index') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                        <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM13 9V3.5L18.5 9H13z"/>
+                    </svg>
+                    <span class="side-menu__label">مدیریت صفحات</span>
+                </a>
+            </li>
+
             <li class="slide {{ request()->routeIs('admin.blog-categories.*', 'admin.posts.*') ? 'is-expanded' : '' }}">
                 <a class="side-menu__item" data-bs-toggle="slide" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\MenuItems;
 
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
@@ -56,7 +57,11 @@ class StoreMenuItemRequest extends FormRequest
             }
 
             if ($type === 'page') {
-                $validator->errors()->add('type', 'نوع صفحه فعلاً در سیستم فعال نیست.');
+                if (! $this->filled('target_id')) {
+                    $validator->errors()->add('target_id', 'انتخاب صفحه الزامی است.');
+                } elseif (! Page::whereKey($this->input('target_id'))->exists()) {
+                    $validator->errors()->add('target_id', 'صفحه انتخاب‌شده معتبر نیست.');
+                }
             }
 
             if ($type === 'route' && ! $this->filled('route_name')) {

@@ -52,7 +52,8 @@
                         <div class="alert alert-success mt-2" role="alert">{{ session('success') }}</div>
                     @endif
 
-                    <form action="{{ route('admin.categories.store') }}" method="POST">
+                        <form action="{{ route('admin.categories.store', ['type' => request('type')]) }}" method="POST">
+
                         @csrf
                         <div class="form-group">
                             <label for="title" class="font_13 fw-bold">نام دسته‌بندی :</label>
@@ -117,135 +118,177 @@
     </div>
 
     <!-- پاپ‌آ‌پ (Modal) ویرایش دسته‌بندی -->
-    <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">ویرایش دسته‌بندی</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <form id="editCategoryForm" method="POST">
-                    @csrf
-                    @method('PUT')
+    <div class="modal fade" id="editCategoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <form id="editCategoryForm" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">ویرایش دسته‌بندی</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label class="fw-bold">نام دسته‌بندی :</label>
-                            <input type="text" name="title" id="edit_title" class="form-control" required>
+                        <div class="mb-3">
+                            <label>عنوان</label>
+                            <input type="text" name="title" id="edit_title" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label class="fw-bold">دسته والد :</label>
+
+                        <div class="mb-3">
+                            <label>دسته والد</label>
                             <select name="parent_id" id="edit_parent_id" class="form-control">
-                                <option value="">-- بدون والد (دسته اصلی) --</option>
+                                <option value="">بدون والد</option>
+
                                 @foreach($allCategories as $cat)
-                                    @php
-                                        $dash = ''; $parent = $cat->parent;
-                                        while($parent) { $dash .= '— '; $parent = $parent->parent; }
-                                    @endphp
-                                    <option value="{{ $cat->id }}">{{ $dash . $cat->title }}</option>
+                                    <option value="{{ $cat->id }}">{{ $cat->title }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="fw-bold">وضعیت نمایش :</label>
+
+                        <div class="mb-3">
+                            <label>وضعیت</label>
                             <select name="status" id="edit_status" class="form-control">
                                 <option value="1">فعال</option>
                                 <option value="0">غیرفعال</option>
                             </select>
                         </div>
                     </div>
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                        <button type="submit" class="btn btn-primary">اعمال تغییرات</button>
+                        <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            function initSortable(el) {
-                Sortable.create(el, {
-                    group: 'nested-category-group',
-                    handle: '.handle',
-                    animation: 180,
-                    fallbackOnBody: true,
-                    swapThreshold: 0.65,
-                    onEnd: function (evt) {
-                        const targetList = evt.to;
-                        const parentId = targetList.getAttribute('data-parent-id');
+            const updateOrderUrl = @json(route('admin.categories.update_order'));
+            const updateCategoryUrlTemplate = @json(route('admin.categories.update', ':id'));
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-                        // 🌟 فیلتر دقیق: فقط المنت‌های لایه اول همین لیست که ویژگی data-id دارند
-                        let order = [];
-                        Array.from(targetList.children).forEach(li => {
-                            if (li.matches && li.matches('[data-id]')) {
-                                order.push(li.getAttribute('data-id'));
+            initCategorySortable();
+            initEditCategoryModal();
+
+            function initCategorySortable() {
+                document.querySelectorAll('.sortable-list').forEach(function (listEl) {
+                    Sortable.create(listEl, {
+                        group: 'nested-category-group',
+                        handle: '.handle',
+                        animation: 180,
+                        fallbackOnBody: true,
+                        swapThreshold: 0.65,
+
+                        onEnd: function (evt) {
+                            const targetList = evt.to;
+                            const parentId = normalizeParentId(targetList.dataset.parentId);
+                            const order = getListOrder(targetList);
+
+                            if (!order.length) {
+                                return;
                             }
-                        });
 
-                        console.log("آی‌دی‌های ارسالی به سرور برای والد (" + parentId + "):", order);
-
-                        if (order.length > 0) {
-                            fetch("{{ route('admin.categories.update_order') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                                },
-                                body: JSON.stringify({
-                                    order: order,
-                                    parent_id: parentId
-                                })
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log('پاسخ سرور:', data.message);
-                                })
-                                .catch(error => {
-                                    console.error('خطا در ارسال:', error);
-                                });
+                            updateCategoryOrder(order, parentId);
                         }
-                    }
+                    });
                 });
             }
 
-            document.querySelectorAll('.sortable-list').forEach(function (listEl) {
-                initSortable(listEl);
-            });
+            function getListOrder(listEl) {
+                return Array.from(listEl.children)
+                    .filter(item => item.matches('[data-id]'))
+                    .map(item => item.dataset.id);
+            }
 
-            document.querySelectorAll('.sortable-list').forEach(function (listEl) {
-                initSortable(listEl);
-            });
+            function normalizeParentId(parentId) {
+                if (
+                    parentId === undefined ||
+                    parentId === null ||
+                    parentId === '' ||
+                    parentId === 'null' ||
+                    parentId === 'undefined'
+                ) {
+                    return null;
+                }
 
-            document.querySelectorAll('.edit-cat-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const id = this.getAttribute('data-id');
-                    const title = this.getAttribute('data-title');
-                    const parentId = this.getAttribute('data-parent');
-                    const status = this.getAttribute('data-status');
+                return parentId;
+            }
 
-                    let updateUrl = "{{ route('admin.categories.update', ':id') }}".replace(':id', id);
-                    document.getElementById('editCategoryForm').setAttribute('action', updateUrl);
+            function updateCategoryOrder(order, parentId) {
+                fetch(updateOrderUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({
+                        order: order,
+                        parent_id: parentId
+                    })
+                })
+                    .then(async response => {
+                        const data = await response.json();
 
-                    document.getElementById('edit_title').value = title;
-                    document.getElementById('edit_status').value = status;
+                        if (!response.ok) {
+                            throw data;
+                        }
 
-                    const selectParent = document.getElementById('edit_parent_id');
-                    selectParent.value = parentId ? parentId : "";
-
-                    Array.from(selectParent.options).forEach(option => {
-                        option.style.display = (option.value == id) ? 'none' : 'block';
+                        console.log('پاسخ سرور:', data.message);
+                    })
+                    .catch(error => {
+                        console.error('خطا در بروزرسانی ترتیب:', error);
                     });
+            }
 
-                    const modalEl = document.getElementById('editCategoryModal');
-                    const modal = new bootstrap.Modal(modalEl);
-                    modal.show();
+            function initEditCategoryModal() {
+                document.querySelectorAll('.edit-cat-btn').forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        const category = {
+                            id: this.dataset.id,
+                            title: this.dataset.title,
+                            parentId: this.dataset.parent || '',
+                            status: this.dataset.status
+                        };
+
+                        fillEditCategoryForm(category);
+                        openEditCategoryModal();
+                    });
                 });
-            });
+            }
+
+            function fillEditCategoryForm(category) {
+                const form = document.getElementById('editCategoryForm');
+                const titleInput = document.getElementById('edit_title');
+                const statusSelect = document.getElementById('edit_status');
+                const parentSelect = document.getElementById('edit_parent_id');
+
+                const updateUrl = updateCategoryUrlTemplate.replace(':id', category.id);
+
+                form.setAttribute('action', updateUrl);
+
+                titleInput.value = category.title;
+                statusSelect.value = category.status;
+                parentSelect.value = category.parentId;
+
+                Array.from(parentSelect.options).forEach(function (option) {
+                    option.disabled = option.value === category.id;
+                });
+            }
+
+            function openEditCategoryModal() {
+                const modalEl = document.getElementById('editCategoryModal');
+
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
         });
     </script>
 @endpush

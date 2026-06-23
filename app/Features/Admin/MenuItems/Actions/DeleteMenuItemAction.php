@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Features\Admin\MenuItems\Actions;
+
 use App\Models\MenuItem;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +22,8 @@ class DeleteMenuItemAction
             $lastPosition = MenuItem::query()
                 ->when(
                     $parentId === null,
-                    fn ($query) => $query->whereNull('parent_id'),
-                    fn ($query) => $query->where('parent_id', $parentId)
+                    fn($query) => $query->whereNull('parent_id'),
+                    fn($query) => $query->where('parent_id', $parentId)
                 )
                 ->where('id', '!=', $menuItem->id)
                 ->lockForUpdate()
@@ -30,7 +32,7 @@ class DeleteMenuItemAction
             foreach ($children as $index => $child) {
                 $child->update([
                     'parent_id' => $parentId,
-                    'position'  => $lastPosition + $index + 1,
+                    'position' => $lastPosition + $index + 1,
                 ]);
             }
 
@@ -47,8 +49,8 @@ class DeleteMenuItemAction
         MenuItem::query()
             ->when(
                 $parentId === null,
-                fn ($query) => $query->whereNull('parent_id'),
-                fn ($query) => $query->where('parent_id', $parentId)
+                fn($query) => $query->whereNull('parent_id'),
+                fn($query) => $query->where('parent_id', $parentId)
             )
             ->orderBy('position')
             ->orderBy('id')

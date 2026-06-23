@@ -5,19 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Features\Admin\Posts\Actions\CreatePostAction;
 use App\Features\Admin\Posts\Actions\UpdatePostAction;
 use App\Features\Admin\Posts\DTOs\PostDTO;
+use App\Features\Admin\Posts\Queries\GetPostsItemsDataQuery;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Blog\StorePostRequest;
 use App\Models\BlogCategory;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
 
-    public function index()
+    public function index(Request $request, GetPostsItemsDataQuery $query)
     {
-        $posts = Post::with('mainImage', 'author')->latest()->paginate(15);
-        return view('back.admin.posts.index', compact('posts'));
+        return view('back.admin.posts.index', $query->handle($request));
     }
 
     public function create()

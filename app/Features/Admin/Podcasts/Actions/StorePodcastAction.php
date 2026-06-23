@@ -5,6 +5,7 @@ namespace App\Features\Admin\Podcasts\Actions;
 use App\Models\Category;
 use App\Models\Podcast;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -15,6 +16,8 @@ class StorePodcastAction
      */
     public function execute(array $data): Podcast
     {
+
+
         if (! empty($data['category_id'])) {
             $categoryExists = Category::where('id', $data['category_id'])
                 ->where('type', 'podcast')
@@ -33,15 +36,15 @@ class StorePodcastAction
             ? now()
             : null;
 
-        if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
+        if (! empty($data['image']) && $data['image'] instanceof UploadedFile) {
             $data['image'] = $data['image']->store('podcasts/images', 'public');
         }
 
-        if (isset($data['audio_file']) && $data['audio_file'] instanceof UploadedFile) {
+        if (! empty($data['audio_file']) && $data['audio_file'] instanceof UploadedFile) {
             $data['audio_url'] = $data['audio_file']->store('podcasts/audio', 'public');
-
-            unset($data['audio_file']);
         }
+
+        unset($data['audio_file']);
 
         return Podcast::create($data);
     }

@@ -69,11 +69,17 @@
                             <label for="menu_type_select" class="font_12 fw-bold">نوع پیوند :</label>
                             <select name="type" id="menu_type_select" class="form-control" required>
                                 <option value="custom" {{ $oldType == 'custom' ? 'selected' : '' }}>لینک سفارشی</option>
-                                <option value="category" {{ $oldType == 'category' ? 'selected' : '' }}>اتصال به دسته‌بندی</option>
-                                <option value="page" {{ $oldType == 'page' ? 'selected' : '' }}>اتصال به صفحه ثابت</option>
-                                <option value="post" {{ $oldType == 'post' ? 'selected' : '' }}>اتصال به خبر / مقاله</option>
+                                <option value="category" {{ $oldType == 'category' ? 'selected' : '' }}>اتصال به
+                                    دسته‌بندی
+                                </option>
+                                <option value="page" {{ $oldType == 'page' ? 'selected' : '' }}>اتصال به صفحه ثابت
+                                </option>
+                                <option value="post" {{ $oldType == 'post' ? 'selected' : '' }}>اتصال به خبر / مقاله
+                                </option>
                                 <option value="route" {{ $oldType == 'route' ? 'selected' : '' }}>مسیر سیستمی</option>
-                                <option value="heading" {{ $oldType == 'heading' ? 'selected' : '' }}>فقط عنوان بدون لینک</option>
+                                <option value="heading" {{ $oldType == 'heading' ? 'selected' : '' }}>فقط عنوان بدون
+                                    لینک
+                                </option>
                             </select>
                         </div>
 
@@ -82,7 +88,8 @@
                         <div class="form-group mb-3 menu-field" id="url_input_wrapper">
                             <label for="url" class="font_12 fw-bold">لینک سفارشی :</label>
                             <div class="input-group" dir="ltr">
-                                <span class="input-group-text bg-light border-light-subtle font_11 px-2">irapec.com/</span>
+                                <span
+                                    class="input-group-text bg-light border-light-subtle font_11 px-2">irapec.com/</span>
                                 <input type="text"
                                        name="url"
                                        id="url"
@@ -98,7 +105,8 @@
                             <select name="target_id" id="target_category_id" class="form-control target-select">
                                 <option value="">-- یک دسته‌بندی انتخاب کنید --</option>
                                 @foreach($categories as $cat)
-                                    <option value="{{ $cat->id }}" {{ old('type') == 'category' && old('target_id') == $cat->id ? 'selected' : '' }}>
+                                    <option
+                                        value="{{ $cat->id }}" {{ old('type') == 'category' && old('target_id') == $cat->id ? 'selected' : '' }}>
                                         {{ $cat->title }}
                                     </option>
                                 @endforeach
@@ -110,7 +118,8 @@
                             <select name="target_id" id="target_page_id" class="form-control target-select">
                                 <option value="">-- یک صفحه انتخاب کنید --</option>
                                 @foreach($pages as $page)
-                                    <option value="{{ $page->id }}" {{ old('type') == 'page' && old('target_id') == $page->id ? 'selected' : '' }}>
+                                    <option
+                                        value="{{ $page->id }}" {{ old('type') == 'page' && old('target_id') == $page->id ? 'selected' : '' }}>
                                         {{ $page->title }}
                                     </option>
                                 @endforeach
@@ -122,7 +131,8 @@
                             <select name="target_id" id="target_post_id" class="form-control target-select">
                                 <option value="">-- یک خبر یا مقاله انتخاب کنید --</option>
                                 @foreach($posts as $post)
-                                    <option value="{{ $post->id }}" {{ old('type') == 'post' && old('target_id') == $post->id ? 'selected' : '' }}>
+                                    <option
+                                        value="{{ $post->id }}" {{ old('type') == 'post' && old('target_id') == $post->id ? 'selected' : '' }}>
                                         {{ $post->title }}
                                     </option>
                                 @endforeach
@@ -188,10 +198,12 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="card-title mb-1">ساختار چیدمان فهرست‌ها</h4>
-                    <small class="text-muted"><i class="fa fa-info-circle"></i> هر سطح منو را می‌توانید به طور مستقل جابجا کنید.</small>
+                    <small class="text-muted"><i class="fa fa-info-circle"></i> هر سطح منو را می‌توانید به طور مستقل
+                        جابجا کنید.</small>
                 </div>
                 <div class="card-body">
-                    <div class="menu-row-mock bg-secondary text-white font-weight-bold mb-2" style="border-radius: 4px;">
+                    <div class="menu-row-mock bg-secondary text-white font-weight-bold mb-2"
+                         style="border-radius: 4px;">
                         <div style="width: 35%;">عنوان فهرست</div>
                         <div style="width: 30%;">پیوند / آدرس صفحه</div>
                         <div style="width: 15%; text-align: center;">وضعیت</div>
@@ -213,7 +225,8 @@
             <div class="modal-content text-right" dir="rtl">
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold">ویرایش آیتم فهرست</h5>
-                    <button type="button" class="close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
                 <form id="editMenuForm" method="POST">
                     @csrf
@@ -241,14 +254,16 @@
                         <div class="form-group mb-3 edit-menu-field" id="edit_url_wrapper">
                             <label class="fw-bold font_12">لینک سفارشی :</label>
                             <div class="input-group" dir="ltr">
-                                <span class="input-group-text bg-light border-light-subtle font_11 px-2">irapec.com/</span>
+                                <span
+                                    class="input-group-text bg-light border-light-subtle font_11 px-2">irapec.com/</span>
                                 <input type="text" name="url" id="edit_url" class="form-control text-start font_12">
                             </div>
                         </div>
 
                         <div class="form-group mb-3 edit-menu-field d-none" id="edit_target_category_wrapper">
                             <label class="fw-bold font_12">انتخاب دسته‌بندی :</label>
-                            <select name="target_id" id="edit_target_category_id" class="form-control edit-target-select">
+                            <select name="target_id" id="edit_target_category_id"
+                                    class="form-control edit-target-select">
                                 <option value="">-- یک دسته‌بندی انتخاب کنید --</option>
                                 @foreach($categories as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->title }}</option>
@@ -513,6 +528,7 @@
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
+                                    "Accept": "application/json",
                                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
                                 },
                                 body: JSON.stringify({
@@ -520,8 +536,15 @@
                                     parent_id: parentId
                                 })
                             })
-                                .then(function (response) {
-                                    return response.json();
+                                .then(async function (response) {
+                                    const text = await response.text();
+
+                                    if (!response.ok) {
+                                        console.error("خطای سرور:", text);
+                                        throw new Error("Server Error " + response.status);
+                                    }
+
+                                    return JSON.parse(text);
                                 })
                                 .then(function (data) {
                                     console.log("پاسخ سرور:", data.message);
@@ -529,6 +552,7 @@
                                 .catch(function (error) {
                                     console.error("خطا در ارسال ردیف:", error);
                                 });
+
                         }
                     }
                 });

@@ -9,9 +9,10 @@ use Illuminate\Support\Str;
 class Podcast extends Model
 {
     protected $fillable = [
-        'category_id',
         'title',
         'slug',
+        'category_id',
+        'host_name',
         'summary',
         'image',
         'audio_url',
