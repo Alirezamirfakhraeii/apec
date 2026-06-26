@@ -1,0 +1,21 @@
+{
+    "Welcome!": "Welcome!",
+    "Please enter your details to sign in.": "Please enter your details to sign in.",
+    "Email Address": "Email Address",
+    "Password": "Password",
+    "Sign In": "Sign In",
+    "Remember Me": "Remember Me",
+    "Don't have an account?": "Don't have an account?",
+    "Create an Account": "Create an Account",
+    "Full Name": "Full Name",
+    "Confirm Password": "Confirm Password",
+    "Sign Up": "Sign Up",
+    "Already have an account?": "Already have an account?",
+    "Login": "Login",
+    "It is free to register and only takes a minute.": "It is free to register and only takes a minute.",
+    "Enter your full name": "Enter your full name",
+    "Enter your email": "Enter your email",
+    "Enter your password": "Enter your password",
+    "Repeat your password": "Repeat your password",
+    "auth.failed": "username or password is invalid"
+}
