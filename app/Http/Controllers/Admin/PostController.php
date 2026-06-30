@@ -21,10 +21,31 @@ class PostController extends Controller
         return view('back.admin.posts.index', $query->handle($request));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $categories = BlogCategory::with('children')->get();
-        return view('back.admin.posts.create', compact('categories'));
+
+        $types = [
+            'news' => 'خبر',
+            'page' => 'صفحه ثابت',
+            'notice' => 'اطلاعیه',
+            'report' => 'گزارش',
+            'event' => 'رویداد',
+            'question' => 'پرسشنامه',
+        ];
+
+        $selectedType = $request->get('type', 'news');
+
+        if (! array_key_exists($selectedType, $types)) {
+            $selectedType = 'news';
+        }
+
+        return view('back.admin.posts.create', compact(
+            'categories',
+            'types',
+            'selectedType'
+        ));
+
     }
 
     public function store(StorePostRequest $request, CreatePostAction $action): RedirectResponse

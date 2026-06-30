@@ -12,7 +12,7 @@ class BlogCategory extends Model
 {
     use HasSlug;
 
-    protected $fillable = ['parent_id', 'name', 'slug', 'description'];
+    protected $fillable = ['parent_id', 'name', 'slug', 'description' , 'status'];
 
     // تنظیمات ساخت خودکار اسلاگ بر اساس فیلد Name
     public function getSlugOptions() : SlugOptions

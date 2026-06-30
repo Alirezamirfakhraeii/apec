@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ادمین/نویسنده مقاله
             $table->foreignId('blog_category_id')->nullable()->constrained()->onDelete('set null'); // دسته‌بندی
+            $table->string('type'); // عنوان مقاله
             $table->string('title'); // عنوان مقاله
             $table->string('slug')->unique(); // اسلاگ سئو شده
             $table->string('image')->nullable(); // آدرس تصویر شاخص اصلی

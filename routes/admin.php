@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\MenuItemController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PodcastController;
@@ -21,6 +22,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('roles', RoleController::class)->except(['create', 'show', 'edit']);
 
     Route::resource('posts', PostController::class);
+
+    Route::resource('contact-pages', ContactPageController::class)->except('show');
 
 
     Route::post('/categories/update-order', [CategoryController::class, 'update_order'])->name('categories.update_order');

@@ -44,14 +44,18 @@
                     </div>
 
                     <!-- تصویر شاخص خبر -->
-                    @if($post->main_image_url)
-                        <div class="mb-3 text-center img-news-bartar">
-                            <img src="{{ $post->main_image_url }}"
-                                 class="img-fluid rounded w-100"
-                                 alt="{{ $post->title }}"
-                                 style="max-height: 420px; object-fit: cover;">
-                        </div>
+                    @if($post->blog_category_id == 6)
+                    @else
+                        @if($post->main_image_url)
+                            <div class="mb-3 text-center img-news-bartar">
+                                <img src="{{ $post->main_image_url }}"
+                                     class="img-fluid rounded w-100"
+                                     alt="{{ $post->title }}"
+                                     style="max-height: 420px;object-fit: contain">
+                            </div>
+                        @endif
                     @endif
+
 
                     <!-- لید یا خلاصه خبر -->
                     @if($post->summary)
@@ -129,13 +133,19 @@
 
                         @foreach($latestPosts->take(5) as $item)
                             <div class="d-flex align-items-start mb-3 pb-2 border-bottom">
-                                @if($item->image)
-                                    <img src="{{ asset($item->image) }}" class="rounded ml-2" alt="{{ $item->title }}" style="width: 55px; height: 55px; object-fit: cover;">
+                                @if($item->main_image_url)
+                                    <img src="{{ $item->main_image_url }}"
+                                         class="rounded ml-2"
+                                         alt="{{ $item->title }}"
+                                         style="width: 55px; height: 55px; object-fit: cover;">
                                 @endif
+
                                 <div style="flex: 1;">
-                                    <a href="{{ route('front.posts.show', $item->slug) }}" class="text-decoration-none text-dark d-block font_12 line-height-text mb-1">
+                                    <a href="{{ route('front.posts.show', $item->slug) }}"
+                                       class="text-decoration-none text-dark d-block font_12 line-height-text mb-1">
                                         {{ \Illuminate\Support\Str::limit($item->title, 55) }}
                                     </a>
+
                                     <small class="text-muted font_10">
                                         <i class="fa fa-calendar-alt ml-1"></i>
                                         {{ $item->published_at ? $item->published_at->format('Y-m-d') : $item->created_at->format('Y-m-d') }}

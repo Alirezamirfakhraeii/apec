@@ -68,6 +68,8 @@
             }
 
             function LaravelUploadAdapterPlugin(editor) {
+                console.log('Upload adapter registered');
+
                 editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
                     return new LaravelUploadAdapter(loader);
                 };

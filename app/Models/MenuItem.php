@@ -69,29 +69,11 @@ class MenuItem extends Model
 
     public function getHrefAttribute()
     {
-        if ($this->type === 'heading') {
+        if ($this->type === self::TYPE_HEADING) {
             return '#';
         }
 
-        if ($this->type === 'custom') {
-            if (!$this->url) {
-                return '#';
-            }
-
-            $url = trim($this->url);
-
-            if (Str::startsWith($url, ['http://', 'https://', 'mailto:', 'tel:', '#'])) {
-                return $url;
-            }
-
-            if (Str::startsWith($url, '/')) {
-                return url($url);
-            }
-
-            return url('/' . $url);
-        }
-
-        if ($this->type === 'route') {
+        if ($this->type === self::TYPE_ROUTE) {
             if (!$this->route_name || !Route::has($this->route_name)) {
                 return '#';
             }
@@ -99,32 +81,30 @@ class MenuItem extends Model
             return route($this->route_name, $this->route_params ?? []);
         }
 
+        // مهم‌ترین بخش:
+        // برای custom/page/category/post اگر url داری، همون باید لینک اصلی باشه
+        if (!empty($this->url)) {
+            return $this->normalizeUrl($this->url);
+        }
+
         if (!$this->target) {
             return '#';
         }
 
-        if ($this->type === 'category') {
-            if (Route::has('front.categories.show')) {
-                return route('front.categories.show', $this->target->slug);
-            }
-
-            return url('/category/' . $this->target->slug);
+        if ($this->type === self::TYPE_PAGE) {
+            return url('/' . $this->target->slug);
         }
 
-        if ($this->type === 'post') {
-            if (Route::has('front.posts.show')) {
-                return route('front.posts.show', $this->target->slug);
-            }
-
-            return url('/posts/' . $this->target->slug);
+        if ($this->type === self::TYPE_CATEGORY) {
+            return url('/' . $this->target->slug);
         }
 
-        if ($this->type === 'page') {
-            if (Route::has('front.pages.show')) {
-                return route('front.pages.show', $this->target->slug);
-            }
+        if ($this->type === self::TYPE_POST) {
+            return route('front.posts.show', $this->target->slug);
+        }
 
-            return url('/pages/' . $this->target->slug);
+        if ($this->type === self::TYPE_CUSTOM) {
+            return $this->normalizeUrl($this->url);
         }
 
         return '#';

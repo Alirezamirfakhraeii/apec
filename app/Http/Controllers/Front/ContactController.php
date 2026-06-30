@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\ContactPage;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ContactController extends Controller
 {
@@ -48,4 +50,16 @@ class ContactController extends Controller
 
         return redirect()->back()->with('contact_success', 'پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهیم گرفت.');
     }
+
+    public function show(): View
+    {
+        $contactPage = ContactPage::where('status', true)
+            ->latest()
+            ->firstOrFail();
+
+
+        return view('front.pages.contact', compact('contactPage'));
+    }
+
+
 }

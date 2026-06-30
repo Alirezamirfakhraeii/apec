@@ -23,14 +23,17 @@ class CreatePostAction
             return DB::transaction(function () use ($dto, $userId, &$imagePath) {
 
                 $post = Post::create([
-                    'blog_category_id' => $dto->blog_category_id,
+                    'blog_category_id' => $dto->type === 'page'
+                        ? null
+                        : $dto->blog_category_id,
+
                     'user_id' => $userId,
                     'title' => $dto->title,
                     'slug' => $this->generateUniqueSlug($dto->title),
                     'summary' => $dto->summary,
                     'body' => $dto->body,
-                    'image' => $dto->image ?? "-",
                     'meta_title' => $dto->meta_title,
+                    'type' => $dto->type,
                     'meta_description' => $dto->meta_description,
                     'status' => $dto->status,
                     'published_at' => $this->parseJalaliDate($dto->published_at),
@@ -59,7 +62,12 @@ class CreatePostAction
                         'is_main' => true,
                         'uploaded_by' => $userId,
                     ]);
+
+                    $post->update([
+                        'image' => $imagePath,
+                    ]);
                 }
+
                 return $post->load('mainImage');
             });
         } catch (Throwable $exception) {
@@ -70,7 +78,6 @@ class CreatePostAction
             throw $exception;
         }
     }
-
     private function parseJalaliDate($date)
     {
         if (!$date) return null;

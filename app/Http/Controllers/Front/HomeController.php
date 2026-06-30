@@ -20,6 +20,7 @@ class HomeController extends Controller
         if ($podcastCategory) {
             $podcastPosts = Post::with('mainImage')
                 ->where('status', 'published')
+                ->where('type', '!=', 'page')
                 ->where('blog_category_id', $podcastCategory->id)
                 ->latest('published_at')
                 ->take(5)
@@ -30,19 +31,20 @@ class HomeController extends Controller
             ->with(['posts' => function ($query) {
                 $query->with('mainImage')
                     ->where('status', 'published')
+                    ->where('type', '!=', 'page')
                     ->latest('published_at')
                     ->take(3);
             }])
             ->get();
 
-
-        $announcementCategory = BlogCategory::where('slug', 'atlaaa-rsany')->first();
+        $announcementCategory = BlogCategory::where('slug', 'notification')->first();
 
         $announcementPosts = collect();
 
         if ($announcementCategory) {
             $announcementPosts = Post::with('mainImage')
                 ->where('status', 'published')
+                ->where('type', '!=', 'page')
                 ->where('blog_category_id', $announcementCategory->id)
                 ->latest('published_at')
                 ->take(5)
@@ -67,13 +69,14 @@ class HomeController extends Controller
             ->unique('id')
             ->values();
 
-        $magazineCategory = BlogCategory::where('slug', 'nshryh-nft-o-tosaah')->first();
+        $magazineCategory = BlogCategory::where('slug', 'oil-and-development-journal')->first();
 
         $magazinePosts = collect();
 
         if ($magazineCategory) {
             $magazinePosts = Post::with('mainImage')
                 ->where('status', 'published')
+                ->where('type', '!=', 'page')
                 ->where('blog_category_id', $magazineCategory->id)
                 ->latest('published_at')
                 ->take(9)
@@ -82,37 +85,42 @@ class HomeController extends Controller
 
         $featuredPosts = Post::with('mainImage')
             ->where('status', 'published')
+            ->where('type', '!=', 'page')
             ->latest('published_at')
             ->take(5)
             ->get();
 
         $mostVisited = Post::with('mainImage')
             ->where('status', 'published')
+            ->where('type', '!=', 'page')
             ->orderBy('id', 'desc')
             ->take(10)
             ->get();
 
-
         $mostCommented = Post::with('mainImage')
             ->where('status', 'published')
+            ->where('type', '!=', 'page')
             ->latest('published_at')
             ->take(10)
             ->get();
 
         $editorsChoice = Post::with('mainImage')
             ->where('status', 'published')
+            ->where('type', '!=', 'page')
             ->latest('published_at')
             ->take(10)
             ->get();
 
         $latestPosts = Post::with('mainImage')
             ->where('status', 'published')
+            ->where('type', '!=', 'page')
             ->latest('published_at')
             ->take(10)
             ->get();
 
         $subjectOfTheDay = Post::with('mainImage')
             ->where('status', 'published')
+            ->where('type', '!=', 'page')
             ->latest('published_at')
             ->first();
 
@@ -137,36 +145,74 @@ class HomeController extends Controller
     {
         $post = Post::where('slug', $slug)
             ->where('status', 'published')
-            ->with(['user', 'tags'])
+            ->with(['user', 'tags', 'mainImage'])
             ->firstOrFail();
 
         $post->increment('views');
 
-        $latestPosts = Post::where('status', 'published')
+
+        $latestPosts = Post::with('mainImage')
+            ->where('status', 'published')
             ->where('id', '!=', $post->id)
+            ->where(function ($query) {
+                $query->whereNull('type')
+                    ->orWhere('type', '!=', 'page');
+            })
             ->latest('published_at')
             ->take(5)
             ->get();
 
-        $featuredPosts = Post::where('status', 'published')
+        $featuredPosts = Post::with('mainImage')
+            ->where('status', 'published')
+            ->where('blog_category_id', '!=',6)
+            ->where('id', '!=', $post->id)
+            ->where(function ($query) {
+                $query->whereNull('type')
+                    ->orWhere('type', '!=', 'page');
+            })
             ->latest('published_at')
             ->take(8)
             ->get();
 
-        return view('front.posts.show', compact('post', 'latestPosts', 'featuredPosts'));
+
+        if ($post->type === 'page') {
+            return view('front.templates.internal-page', [
+                'mode' => 'page',
+
+                // برای قالب internal-page
+                'page' => $post,
+
+                // اگر جایی داخل قالب از post استفاده کردی
+                'post' => $post,
+
+                // برای سایدبار / آخرین مطالب
+                'latestPosts' => $latestPosts,
+                'featuredPosts' => $featuredPosts,
+
+                // برای جلوگیری از خطای undefined در قالب‌های داینامیک
+                'menuItem' => null,
+                'currentMenuItem' => null,
+                'rootMenuItem' => null,
+                'sideMenuItems' => collect(),
+                'sidebarItems' => collect(),
+                'sidebarTitle' => null,
+                'children' => collect(),
+                'path' => $post->slug,
+                'segments' => [$post->slug],
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | اگر خبر / گزارش / اطلاعیه / رویداد بود
+        |--------------------------------------------------------------------------
+        */
+
+        return view('front.posts.show', compact(
+            'post',
+            'latestPosts',
+            'featuredPosts'
+        ));
     }
-
-
-    public function test()
-    {
-        return view('front.test');
-    }
-
-    public function menu()
-    {
-        return view('front.menu');
-    }
-
-
 
 }

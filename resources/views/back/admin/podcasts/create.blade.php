@@ -306,7 +306,7 @@
                         <div class="podcast-card-body">
 
                             <div class="podcast-section-note mb-3">
-                                در این بخش می‌توانید لینک مستقیم فایل صوتی، کد Embed یا لینک پلتفرم‌های Castbox و Spotify را وارد کنید.
+                                در این بخش می‌توانید لینک مستقیم فایل صوتی، کد Embed یا لینک پلتفرم‌های کست باکس و شنوتو را وارد کنید.
                             </div>
 
                             <div class="form-group">
@@ -343,14 +343,14 @@
 
                             <div class="form-group">
                                 <label for="castbox_url" class="podcast-label">
-                                    لینک Castbox
+                                    لینک کست باکس
                                 </label>
                                 <input type="url"
                                        name="castbox_url"
                                        id="castbox_url"
                                        value="{{ old('castbox_url') }}"
                                        class="form-control podcast-form-control @error('castbox_url') is-invalid @enderror"
-                                       placeholder="لینک Castbox">
+                                       placeholder="لینک کست باکس">
 
                                 @error('castbox_url')
                                 <span class="invalid-feedback">{{ $message }}</span>
@@ -359,14 +359,14 @@
 
                             <div class="form-group">
                                 <label for="spotify_url" class="podcast-label">
-                                    لینک Spotify
+                                    لینک شنوتو
                                 </label>
                                 <input type="url"
                                        name="spotify_url"
                                        id="spotify_url"
                                        value="{{ old('spotify_url') }}"
                                        class="form-control podcast-form-control @error('spotify_url') is-invalid @enderror"
-                                       placeholder="لینک Spotify">
+                                       placeholder="لینک شنوتو">
 
                                 @error('spotify_url')
                                 <span class="invalid-feedback">{{ $message }}</span>

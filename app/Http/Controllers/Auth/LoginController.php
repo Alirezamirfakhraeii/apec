@@ -14,7 +14,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.users.login');
+        return view('front.auth.login');
     }
 
     public function login(LoginRequest $request, LoginUserAction $action): RedirectResponse

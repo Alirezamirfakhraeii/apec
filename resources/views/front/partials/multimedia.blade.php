@@ -30,7 +30,7 @@
             <img src="{{ $mainMagazine->main_image_url }}"
                  class="w-100 h-100"
                  alt="{{ $mainMagazine->title }}"
-                 style="height: 380px; object-fit: cover; background-color: #f8f9fa;">
+                 style="height: 380px; object-fit: contain; background-color: #f8f9fa;">
 
             <div class="position-absolute w-100 p-4"
                  style="bottom: 0; right: 0; background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.12); z-index: 10;">
@@ -71,7 +71,7 @@
                                     <img src="{{ $post->main_image_url }}"
                                          class="w-100 img-fluid"
                                          alt="{{ $post->title }}"
-                                         style="height: 180px; display: block; object-fit: cover;">
+                                         style="height: 180px; display: block; object-fit: contain;">
                                 </a>
                             </div>
 

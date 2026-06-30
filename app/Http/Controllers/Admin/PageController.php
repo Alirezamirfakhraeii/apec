@@ -85,14 +85,24 @@ class PageController extends Controller
 
     public function upload(Request $request)
     {
+        if (! $request->hasFile('upload')) {
+            return response()->json([
+                'error' => [
+                    'message' => 'فایلی ارسال نشده است.'
+                ]
+            ], 400);
+        }
+
         $request->validate([
-            'upload' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
+            'upload' => 'required|image|mimes:jpg,jpeg,png,webp,gif|max:4096',
         ]);
 
-        $path = $request->file('upload')->store('uploads/editor', 'public');
+        $file = $request->file('upload');
+
+        $path = $file->store('uploads/editor', 'public');
 
         return response()->json([
-            'url' => Storage::url($path),
+            'url' => asset('storage/' . $path),
         ]);
     }
 

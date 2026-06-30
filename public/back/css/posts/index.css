@@ -211,7 +211,7 @@
 .editorial-thumb {
     width: 64px;
     height: 44px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 7px;
     border: 1px solid #e5e7eb;
     background: #f8fafc;

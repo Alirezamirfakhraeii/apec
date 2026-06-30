@@ -64,7 +64,6 @@
                                    id="title" placeholder="مثلا: درباره انجمن" value="{{ old('title') }}" required>
                             @error('title') <span class="invalid-feedback">{{ $message }}</span> @enderror
                         </div>
-
                         <div class="form-group mb-3">
                             <label for="menu_type_select" class="font_12 fw-bold">نوع پیوند :</label>
                             <select name="type" id="menu_type_select" class="form-control" required>
@@ -104,10 +103,11 @@
                             <label for="target_category_id" class="font_12 fw-bold">انتخاب دسته‌بندی :</label>
                             <select name="target_id" id="target_category_id" class="form-control target-select">
                                 <option value="">-- یک دسته‌بندی انتخاب کنید --</option>
+
                                 @foreach($categories as $cat)
                                     <option
                                         value="{{ $cat->id }}" {{ old('type') == 'category' && old('target_id') == $cat->id ? 'selected' : '' }}>
-                                        {{ $cat->title }}
+                                        {{ $cat->name }}
                                     </option>
                                 @endforeach
                             </select>

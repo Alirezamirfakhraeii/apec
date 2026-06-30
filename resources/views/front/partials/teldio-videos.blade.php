@@ -117,7 +117,7 @@
     }
 
     /* ----- بخش تصویر سمت چپ ----- */
-    .style-notice-board .horizontal-img { object-fit: cover; transform: scale(1); transition: transform 6s ease-in-out; }
+    .style-notice-board .horizontal-img { object-fit: contain; transform: scale(1); transition: transform 6s ease-in-out; }
     .style-notice-board .carousel-item.active .horizontal-img { transform: scale(1.05); }
 
     .style-notice-board .horizontal-overlay {

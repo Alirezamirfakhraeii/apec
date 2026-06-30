@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Features\Admin\MenuItems\Queries;
+use App\Models\BlogCategory;
 use App\Models\Category;
 use App\Models\MenuItem;
 use App\Models\Page;
@@ -31,8 +32,8 @@ class GetMenuItemsIndexDataQuery
 
     private function getCategories(): Collection
     {
-        return Category::query()
-            ->orderBy('title')
+        return BlogCategory::query()
+            ->orderBy('name')
             ->get();
     }
 

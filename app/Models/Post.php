@@ -24,6 +24,7 @@ class Post extends Model
         'summary',
         'meta_title',
         'meta_description',
+        'type',
         'status',
         'view_count',
         'published_at'
@@ -85,5 +86,37 @@ class Post extends Model
 
         return asset('storage/' . $image->path);
     }
+
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+    public function scopeVisibleOnHome($query)
+    {
+        return $query->where(function ($q) {
+            $q->whereNull('type')
+                ->orWhereNotIn('type', ['page', 'question']);
+        });
+    }
+
+    public function scopeOfType($query, string|array $type)
+    {
+        if (is_array($type)) {
+            return $query->whereIn('type', $type);
+        }
+
+        return $query->where('type', $type);
+    }
+
+    public function scopeNotPage($query)
+    {
+        return $query->where(function ($q) {
+            $q->whereNull('type')
+                ->orWhere('type', '!=', 'page');
+        });
+    }
+
 
 }
