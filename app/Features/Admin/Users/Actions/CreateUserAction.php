@@ -4,6 +4,7 @@ namespace App\Features\Admin\Users\Actions;
 
 use App\Features\Admin\Users\DTOs\CreateUserDTO;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class CreateUserAction
@@ -11,16 +12,32 @@ class CreateUserAction
 
     public function execute(CreateUserDTO $dto): User
     {
-        $user = User::create([
-            'name' => $dto->name,
-            'email' => $dto->email,
-            'password' => Hash::make($dto->password),
-        ]);
+        return DB::transaction(function () use ($dto) {
 
-        if ($dto->role) {
-            $user->assignRole($dto->role);
-        }
+            $user = User::create([
+                'name' => $dto->name,
+                'email' => $dto->email,
+                'password' => Hash::make($dto->password),
+                'avatar' => null,
+            ]);
 
-        return $user;
+            if ($dto->avatar) {
+                $avatarPath = $dto->avatar->store(
+                    'users/' . $user->id . '/avatar',
+                    'public'
+                );
+
+                $user->update([
+                    'avatar' => $avatarPath,
+                ]);
+            }
+
+            if ($dto->role) {
+                $user->assignRole($dto->role);
+            }
+
+            return $user;
+        });
     }
+
 }

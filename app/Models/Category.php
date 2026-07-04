@@ -31,6 +31,11 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
+    public function podcasts()
+    {
+        return $this->hasMany(Podcast::class, 'category_id');
+    }
+
 
 
 

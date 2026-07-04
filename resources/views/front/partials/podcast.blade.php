@@ -603,7 +603,7 @@
             </div>
         </div>
 
-        <a href="#" class="podcast-archive-link">
+        <a href="{{ route('front.podcasts.archive') }}" class="podcast-archive-link">
             آرشیو پادکست‌ها
             <i class="fa fa-arrow-left font_9 mr-1"></i>
         </a>

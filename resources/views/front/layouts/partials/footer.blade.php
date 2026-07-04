@@ -83,15 +83,6 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-12 text-center ">
-                    <div style="text-align: left" class="mt-1">
-                        <span class="font_12">
-                            THE WORLD'S LARGEST
-                            <span style="color: #e00000">PERSIAN</span>
-                            LANGUAGE NEWS AGENCY
-                        </span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

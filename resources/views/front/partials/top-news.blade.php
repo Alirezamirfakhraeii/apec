@@ -1,537 +1,1045 @@
-<div class="row mx-0 home-featured-row" dir="rtl">
+<div class="home-top-news-section" dir="rtl">
+    <div class="row mx-0 home-featured-row-v2">
 
-    <div class="col-lg-6 col-md-12 col-12 px-2 pb-2" style="text-align: right;">
-        <div id="premiumNewsCarousel"
-             class="carousel slide premium-carousel-wrapper"
-             data-bs-ride="carousel"
-             data-bs-interval="6000">
+        {{-- Featured carousel --}}
+        <div class="col-lg-6 col-md-12 col-12 px-2 mb-3 mb-lg-0">
+            <div id="premiumNewsCarousel"
+                 class="carousel slide hero-news-card"
+                 data-bs-ride="carousel"
+                 data-bs-interval="6000">
 
-            <div class="premium-carousel-inner-box">
+                @if(isset($featuredPosts) && $featuredPosts->count())
+                    <div class="hero-news-main">
+                        <div class="carousel-inner h-100">
 
-                <div class="premium-visuals position-relative">
-                    <div class="carousel-inner h-100">
-
-                        @foreach($featuredPosts as $index => $post)
-                            <div class="carousel-item {{ $index == 0 ? 'active' : '' }} h-100">
-                                <div class="position-relative h-100 w-100 overflow-hidden main-img-wrapper">
-
-                                    <img src="{{ $post->main_image_url }}"
-                                         class="d-block w-100 h-100 premium-img"
-                                         alt="{{ $post->title }}">
-
-                                    <div class="premium-overlay d-flex flex-column justify-content-end">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="badge premium-badge font_10 shadow-sm">
-                                                <i class="fa fa-star text-warning ml-1"></i>
-                                                خبر ویژه
-                                            </span>
-                                        </div>
+                            @foreach($featuredPosts as $index => $post)
+                                <div class="carousel-item {{ $index == 0 ? 'active' : '' }} h-100">
+                                    <article class="hero-news-slide">
 
                                         <a href="{{ route('front.posts.show', $post->slug) }}"
-                                           class="text-decoration-none">
-                                            <h2 class="h5 font-weight-bold text-white line-height-text-custom mb-0 text-shadow-md premium-title-hover">
-                                                {{ $post->title }}
-                                            </h2>
+                                           class="hero-news-image">
+                                            <img src="{{ $post->main_image_url }}"
+                                                 alt="{{ $post->title }}">
                                         </a>
-                                    </div>
 
+                                        <div class="hero-news-overlay">
+                                            <div class="hero-news-content">
+                                                <div class="hero-news-meta">
+                                                    <span class="hero-news-badge">
+                                                        <i class="fa fa-bolt"></i>
+                                                        خبر ویژه
+                                                    </span>
+
+                                                    <span class="hero-news-time">
+                                                        <i class="fa fa-clock"></i>
+                                                        {{ jdate($post->created_at)->ago() }}
+                                                    </span>
+                                                </div>
+
+                                                <a href="{{ route('front.posts.show', $post->slug) }}"
+                                                   class="hero-news-title">
+                                                    {{ $post->title }}
+                                                </a>
+
+                                                @if(!empty($post->summary))
+                                                    <p class="hero-news-summary">
+                                                        {{ Str::limit($post->summary, 145) }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                    </article>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
 
+                        </div>
+
+                        <button class="carousel-control-prev hero-carousel-control hero-carousel-prev"
+                                type="button"
+                                data-bs-target="#premiumNewsCarousel"
+                                data-bs-slide="prev">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+
+                        <button class="carousel-control-next hero-carousel-control hero-carousel-next"
+                                type="button"
+                                data-bs-target="#premiumNewsCarousel"
+                                data-bs-slide="next">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
                     </div>
-                </div>
 
-                <div class="premium-nav-list">
-                    <div class="d-flex flex-column premium-indicators">
-
+                    <div class="hero-news-list premium-indicators">
                         @foreach($featuredPosts as $index => $post)
                             <button type="button"
                                     data-bs-target="#premiumNewsCarousel"
                                     data-bs-slide-to="{{ $index }}"
-                                    class="premium-list-item border-0 text-right d-flex align-items-center w-100 {{ $index == 0 ? 'active' : '' }}"
+                                    class="hero-news-list-item {{ $index == 0 ? 'active' : '' }}"
                                     aria-current="{{ $index == 0 ? 'true' : 'false' }}">
 
-                                <div class="flex-shrink-0 premium-thumb overflow-hidden rounded-lg shadow-sm">
+                                <span class="hero-list-number">
+                                    {{ $index + 1 }}
+                                </span>
+
+                                <span class="hero-list-thumb">
                                     <img src="{{ $post->main_image_url }}"
                                          alt="{{ $post->title }}">
-                                </div>
+                                </span>
 
-                                <div class="flex-grow-1 overflow-hidden pr-1">
-                                    <h4 class="font_12 font-weight-bold mb-1 text-truncate-2 premium-list-title transition-all text-dark">
+                                <span class="hero-list-content">
+                                    <strong>
                                         {{ $post->title }}
-                                    </h4>
+                                    </strong>
 
-                                    <span class="text-muted font_10 d-flex align-items-center mt-1">
-                                        <i class="fa fa-clock ml-1 font_9"></i>
+                                    <small>
+                                        <i class="fa fa-clock"></i>
                                         {{ jdate($post->created_at)->ago() }}
-                                    </span>
-                                </div>
+                                    </small>
+                                </span>
 
-                                <div class="nav-progress-bar"></div>
+                                <span class="hero-list-progress"></span>
                             </button>
                         @endforeach
-
                     </div>
-                </div>
+                @else
+                    <div class="hero-news-empty">
+                        <i class="fa fa-newspaper"></i>
+                        <strong>هنوز خبر ویژه‌ای ثبت نشده است</strong>
+                        <span>بعد از ثبت خبرهای ویژه، اسلایدر این بخش فعال می‌شود.</span>
+                    </div>
+                @endif
 
             </div>
         </div>
-    </div>
 
-    <div class="col-lg-6 col-12 px-2">
-        <div class="row mx-0 home-featured-inner-row">
+        {{-- Right widgets --}}
+        <div class="col-lg-6 col-12 px-2">
+            <div class="row mx-0 home-featured-side-row">
 
-            <div class="col-md-6 col-12 px-2 mb-4">
-                <div class="sticky-top col_z_index" style="top: 20px;">
-                    <div class="bg-content-whit border rounded shadow-sm overflow-hidden">
+                {{-- Trending tabs --}}
+                <div class="col-md-6 col-12 px-2 mb-3 mb-md-0">
+                    <div class="news-widget-card sticky-top col_z_index" style="top: 20px;">
 
-                        <ul class="nav nav-tabs aaa border-bottom-0 bg-light">
-                            <li class="nav-item flex-fill text-center">
-                                <a class="nav-link active color-btn font_12 py-2.5 border-0 rounded-0"
-                                   data-toggle="tab"
-                                   href="#home">
-                                    پربازدیدترین ها
-                                </a>
-                            </li>
+                        <div class="news-tabs-header">
+                            <ul class="nav nav-tabs news-modern-tabs border-0" role="tablist">
+                                <li class="nav-item flex-fill text-center" role="presentation">
+                                    <a class="nav-link active"
+                                       id="most-visited-tab"
+                                       data-toggle="tab"
+                                       data-bs-toggle="tab"
+                                       href="#homeMostVisited"
+                                       data-bs-target="#homeMostVisited"
+                                       role="tab">
+                                        <i class="fa fa-eye"></i>
+                                        پربازدیدترین‌ها
+                                    </a>
+                                </li>
 
-                            <li class="nav-item flex-fill text-center">
-                                <a class="nav-link color-btn font_12 py-2.5 border-0 rounded-0"
-                                   data-toggle="tab"
-                                   href="#menu1">
-                                    پربحث ترین ها
-                                </a>
-                            </li>
-                        </ul>
+                                <li class="nav-item flex-fill text-center" role="presentation">
+                                    <a class="nav-link"
+                                       id="most-commented-tab"
+                                       data-toggle="tab"
+                                       data-bs-toggle="tab"
+                                       href="#homeMostCommented"
+                                       data-bs-target="#homeMostCommented"
+                                       role="tab">
+                                        <i class="fa fa-comments"></i>
+                                        پربحث‌ترین‌ها
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-                        <div class="tab-content bg-white">
-                            <div class="tab-pane active" id="home">
-                                @foreach($mostVisited as $post)
-                                    <div class="px-3 py-2 border-bottom last-border-0">
+                        <div class="tab-content news-tabs-content">
+                            <div class="tab-pane fade show active" id="homeMostVisited" role="tabpanel">
+                                @forelse($mostVisited as $post)
+                                    <article class="mini-rank-news">
                                         <a href="{{ route('front.posts.show', $post->slug) }}"
-                                           class="text-decoration-none d-flex align-items-center">
-                                            <div class="circle-titr flex-shrink-0"></div>
+                                           class="mini-rank-link">
+                                            <span class="mini-rank-dot"></span>
 
-                                            <span class="font_12 color-text text-truncate mr-2">
+                                            <span class="mini-rank-title">
                                                 {{ $post->title }}
                                             </span>
+
+                                            <i class="fa fa-chevron-left"></i>
                                         </a>
+                                    </article>
+                                @empty
+                                    <div class="mini-widget-empty">
+                                        خبری برای نمایش وجود ندارد.
                                     </div>
-                                @endforeach
+                                @endforelse
                             </div>
 
-                            <div class="tab-pane fade" id="menu1">
-                                @foreach($mostCommented as $post)
-                                    <div class="px-3 py-2 border-bottom last-border-0">
+                            <div class="tab-pane fade" id="homeMostCommented" role="tabpanel">
+                                @forelse($mostCommented as $post)
+                                    <article class="mini-rank-news">
                                         <a href="{{ route('front.posts.show', $post->slug) }}"
-                                           class="text-decoration-none d-flex align-items-center">
-                                            <div class="circle-titr flex-shrink-0"></div>
+                                           class="mini-rank-link">
+                                            <span class="mini-rank-dot"></span>
 
-                                            <span class="font_12 color-text text-truncate mr-2">
+                                            <span class="mini-rank-title">
                                                 {{ $post->title }}
                                             </span>
+
+                                            <i class="fa fa-chevron-left"></i>
                                         </a>
+                                    </article>
+                                @empty
+                                    <div class="mini-widget-empty">
+                                        خبری برای نمایش وجود ندارد.
                                     </div>
-                                @endforeach
+                                @endforelse
                             </div>
                         </div>
 
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6 col-12 px-2">
-                <div class="sticky-top col_z_index" style="top: 20px;">
+                {{-- Subject of day + ads --}}
+                <div class="col-md-6 col-12 px-2">
+                    <div class="sticky-top col_z_index subject-stack-equal" style="top: 20px;">
 
-                    <div class="bg-style-title p-2 rounded-top border border-bottom-0">
-                        <div class="text-p d-flex align-items-center">
-                            <div class="circle-title2 ml-2"></div>
-                            <span class="font_11 font-weight-bold style-tittle text-dark">
-                                سوژه روز
-                            </span>
-                        </div>
-                    </div>
+                        <div class="subject-day-card">
+                            <div class="subject-day-header">
+                                <div>
+                                    <span class="subject-day-kicker">
+                                        پرونده ویژه
+                                    </span>
 
-                    @if($subjectOfTheDay)
-                        <div class="style-text bg-sozhe-rooz p-3 border rounded-bottom shadow-sm">
-                            <div class="row mx-0">
-                                <div class="col-12 px-0">
+                                    <h3>
+                                        سوژه روز
+                                    </h3>
+                                </div>
+
+                                <i class="fa fa-fire"></i>
+                            </div>
+
+                            @if($subjectOfTheDay)
+                                <article class="subject-day-body">
                                     <a href="{{ route('front.posts.show', $subjectOfTheDay->slug) }}"
-                                       class="img-top-news-2 d-block overflow-hidden rounded mb-2 shadow-sm">
-
+                                       class="subject-day-image">
                                         <img src="{{ $subjectOfTheDay->main_image_url }}"
-                                             class="img-fluid text-center w-100 subject-day-img"
                                              alt="{{ $subjectOfTheDay->title }}">
-                                    </a>
-                                </div>
 
-                                <div class="col-12 px-0">
+                                        <span>
+                                            امروز
+                                        </span>
+                                    </a>
+
                                     <a href="{{ route('front.posts.show', $subjectOfTheDay->slug) }}"
-                                       class="text-p text-decoration-none d-block mb-2">
-                                        <h4 class="font_12 font-weight-bold style-tittle line-height-text text-dark hover-emerald mb-0">
-                                            {{ $subjectOfTheDay->title }}
-                                        </h4>
+                                       class="subject-day-title">
+                                        {{ $subjectOfTheDay->title }}
                                     </a>
 
-                                    <div class="row mx-0">
-                                        <div class="col-12 px-0">
-                                            <div class="bg-style-soozhe p-2 bg-light rounded" style="border: 1px solid #edf2f7;">
-                                                <div class="row mx-0">
-                                                    <div class="col-6 px-1 d-flex align-items-center justify-content-start text-muted">
-                                                        <i class="fa fa-eye ml-1.5 font_10"></i>
-                                                        <span class="font_11">
-                                                            {{ $subjectOfTheDay->views_count ?? 0 }}
-                                                        </span>
-                                                    </div>
+                                    <div class="subject-day-stats">
+                                        <span>
+                                            <i class="fa fa-eye"></i>
+                                            {{ $subjectOfTheDay->views_count ?? 0 }}
+                                        </span>
 
-                                                    <div class="col-6 px-1 d-flex align-items-center justify-content-end text-muted">
-                                                        <i class="fa fa-comment ml-1.5 font_10"></i>
-                                                        <span class="font_11">
-                                                            {{ $subjectOfTheDay->comments_count ?? 0 }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <span>
+                                            <i class="fa fa-comment"></i>
+                                            {{ $subjectOfTheDay->comments_count ?? 0 }}
+                                        </span>
                                     </div>
-
+                                </article>
+                            @else
+                                <div class="subject-day-empty">
+                                    <i class="fa fa-folder-open"></i>
+                                    <span>سوژه روز انتخاب نشده است.</span>
                                 </div>
-                            </div>
+                            @endif
                         </div>
-                    @endif
 
-                    {{-- Adv --}}
-                    <div class="row mx-0 mt-3" dir="rtl">
-                        <div class="col-12 px-0 mb-3">
-                            <div class="bg-white p-2 border rounded shadow-sm hover-shadow transition-all">
-                                <a href="URL_LINK_1" target="_blank" class="d-block overflow-hidden rounded">
+                        {{-- Adv --}}
+                        <div class="home-ads-stack">
+                            <div class="adv-card-v2">
+                                <span class="adv-label-v2">تبلیغات</span>
+
+                                <a href="URL_LINK_1" target="_blank" class="adv-link-v2">
                                     <img src="{{ asset('front/img/adv.jpg') }}"
-                                         class="img-fluid w-100 adv-img"
+                                         alt="تبلیغات">
+                                </a>
+                            </div>
+
+                            <div class="adv-card-v2">
+                                <span class="adv-label-v2">تبلیغات</span>
+
+                                <a href="URL_LINK_2" target="_blank" class="adv-link-v2">
+                                    <img src="{{ asset('front/img/adv.jpg') }}"
                                          alt="تبلیغات">
                                 </a>
                             </div>
                         </div>
 
-                        <div class="col-12 px-0">
-                            <div class="bg-white p-2 border rounded shadow-sm hover-shadow transition-all">
-                                <a href="URL_LINK_2" target="_blank" class="d-block overflow-hidden rounded">
-                                    <img src="{{ asset('front/img/adv.jpg') }}"
-                                         class="img-fluid w-100 adv-img"
-                                         alt="تبلیغات">
-                                </a>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
+
             </div>
-
         </div>
-    </div>
 
+    </div>
 </div>
 
 <style>
-    .home-featured-row,
-    .home-featured-row *,
-    .home-featured-inner-row,
-    .home-featured-inner-row * {
+    .home-top-news-section,
+    .home-top-news-section * {
         box-sizing: border-box;
     }
 
-    .home-featured-row {
+    .home-top-news-section {
+        direction: rtl;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+        margin-top: 18px;
+    }
+
+    .home-featured-row-v2,
+    .home-featured-side-row {
         width: 100%;
         max-width: 100%;
         margin-left: 0 !important;
         margin-right: 0 !important;
-        overflow: hidden;
     }
 
-    .home-featured-inner-row {
-        width: 100%;
-        max-width: 100%;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    .home-featured-row > [class*="col-"],
-    .home-featured-inner-row > [class*="col-"] {
-        min-width: 0 !important;
-        max-width: 100% !important;
-    }
-
-    .home-featured-row .row {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    .home-featured-row img {
-        max-width: 100%;
-    }
-
-    .premium-carousel-wrapper {
-        width: 100%;
-        max-width: 100%;
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(0, 0, 0, 0.04);
-        overflow: hidden;
-        height: 460px;
-    }
-
-    .premium-carousel-inner-box {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        max-width: 100%;
-        overflow: hidden;
-    }
-
-    .premium-visuals {
-        width: 100%;
-        height: 240px;
-        min-height: 240px;
-        overflow: hidden;
-        background: #fff;
-    }
-
-    .premium-visuals .carousel-inner,
-    .premium-visuals .carousel-item,
-    .premium-visuals .main-img-wrapper {
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-    }
-
-    .premium-img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        transform: scale(1);
-        transition: transform 7s ease-in-out;
-    }
-
-    .carousel-item.active .premium-img {
-        transform: scale(1.08);
-    }
-
-    .premium-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 85%;
-        padding: 24px;
-        background: linear-gradient(
-            to top,
-            rgba(15, 23, 42, 0.95) 0%,
-            rgba(15, 23, 42, 0.5) 55%,
-            transparent 100%
-        );
-    }
-
-    .premium-badge {
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 6px;
-    }
-
-    .text-shadow-md {
-        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    }
-
-    .premium-title-hover {
-        transition: color 0.3s;
-    }
-
-    .premium-title-hover:hover {
-        color: #10b981 !important;
-    }
-
-    .premium-nav-list {
-        width: 100%;
-        max-width: 100%;
-        flex: 1;
-        background-color: #f8fafc;
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 12px;
-    }
-
-    .premium-indicators {
-        width: 100%;
-        max-width: 100%;
-        gap: 10px;
-    }
-
-    .premium-nav-list::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    .premium-nav-list::-webkit-scrollbar-track {
-        background: #f1f5f9;
-        border-radius: 10px;
-    }
-
-    .premium-nav-list::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 10px;
-    }
-
-    .premium-nav-list::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-    }
-
-    .premium-list-item {
-        width: 100%;
-        max-width: 100%;
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 12px;
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    }
-
-    .premium-list-item:hover {
-        transform: translateX(-5px);
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-    }
-
-    .premium-list-item > div {
+    .home-featured-row-v2 > [class*="col-"],
+    .home-featured-side-row > [class*="col-"] {
         min-width: 0;
     }
 
-    .premium-thumb {
-        width: 65px;
-        height: 65px;
-        flex: 0 0 65px;
-        margin-left: 12px;
+    .hero-news-card {
+        height: 545px;
+        overflow: hidden;
+        border-radius: 28px;
+        background: #ffffff;
+        border: 1px solid rgba(226, 232, 240, 0.96);
+        box-shadow: 0 24px 70px rgba(15, 23, 42, 0.11);
     }
 
-    .premium-thumb img {
+    .hero-news-main {
+        position: relative;
+        height: 355px;
+        overflow: hidden;
+        background: #0f172a;
+    }
+
+    .hero-news-slide,
+    .hero-news-image {
+        position: relative;
+        display: block;
         width: 100%;
         height: 100%;
-        transition: transform 0.4s ease;
-        border-radius: 3px;
+    }
+
+    .hero-news-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
         object-fit: contain;
+        object-position: center;
+        transition: transform 6s ease;
     }
 
-    .premium-list-item:hover .premium-thumb img {
-        transform: scale(1.15);
+    .carousel-item.active .hero-news-image img {
+        transform: scale(1.06);
     }
 
-    .premium-list-item.active {
-        background: linear-gradient(90deg, #ffffff 0%, rgba(16, 185, 129, 0.08) 100%);
-        border-right: 4px solid #10b981;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-    }
-
-    .premium-list-item.active .premium-list-title {
-        color: #10b981 !important;
-    }
-
-    .nav-progress-bar {
+    .hero-news-overlay {
         position: absolute;
-        bottom: 0;
-        right: 0;
-        height: 3px;
-        background: #10b981;
-        width: 0;
+        inset: 0;
+        display: flex;
+        align-items: flex-end;
+        padding: 26px;
+        background:
+            linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.18) 34%, rgba(15, 23, 42, 0.94) 100%),
+            radial-gradient(circle at top left, rgba(37, 99, 235, 0.22), transparent 32%);
+        pointer-events: none;
     }
 
-    .premium-list-item.active .nav-progress-bar {
-        animation: progressSlide 6s linear forwards;
+    .hero-news-content {
+        width: 100%;
+        max-width: 92%;
+        pointer-events: auto;
     }
 
-    @keyframes progressSlide {
-        0% {
-            width: 0;
-        }
-
-        100% {
-            width: 100%;
-        }
+    .hero-news-meta {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-bottom: 12px;
     }
 
-    .line-height-text-custom {
-        line-height: 1.55 !important;
+    .hero-news-badge,
+    .hero-news-time {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 11px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(9px);
     }
 
-    .text-truncate-2 {
+    .hero-news-badge i {
+        color: #f59e0b;
+    }
+
+    .hero-news-title {
+        display: block;
+        color: #ffffff;
+        font-size: 23px;
+        font-weight: 950;
+        line-height: 1.75;
+        text-decoration: none;
+        text-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+        transition: color 0.22s ease;
+    }
+
+    .hero-news-title:hover {
+        color: #bfdbfe;
+        text-decoration: none;
+    }
+
+    .hero-news-summary {
+        margin: 8px 0 0;
+        color: #cbd5e1;
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .hero-carousel-control {
+        top: 18px;
+        bottom: auto;
+        width: 42px;
+        height: 42px;
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.72);
+        color: #ffffff;
+        opacity: 1;
+        backdrop-filter: blur(8px);
+        transition: 0.25s ease;
+    }
+
+    .hero-carousel-control:hover {
+        background: #2563eb;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .hero-carousel-prev {
+        right: 18px;
+        left: auto;
+    }
+
+    .hero-carousel-next {
+        right: 68px;
+        left: auto;
+    }
+
+    .hero-news-list {
+        height: 190px;
+        padding: 13px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background:
+            radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 35%),
+            #f8fafc;
+    }
+
+    .hero-news-list::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .hero-news-list::-webkit-scrollbar-track {
+        background: #edf2f7;
+        border-radius: 999px;
+    }
+
+    .hero-news-list::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 999px;
+    }
+
+    .hero-news-list-item {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+        border: 1px solid transparent;
+        outline: 0;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 18px;
+        background: #ffffff;
+        text-align: right;
+        cursor: pointer;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.045);
+        transition: all 0.25s ease;
+    }
+
+    .hero-news-list-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .hero-news-list-item:hover {
+        transform: translateX(-4px);
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.09);
+    }
+
+    .hero-news-list-item.active {
+        background: #ffffff;
+        border-color: rgba(37, 99, 235, 0.32);
+        box-shadow: 0 14px 34px rgba(37, 99, 235, 0.14);
+    }
+
+    .hero-news-list-item.active .hero-list-content strong {
+        color: #0f172a;
+    }
+
+    .hero-news-list-item.active .hero-list-content small {
+        color: #2563eb;
+    }
+
+    .hero-list-number {
+        min-width: 26px;
+        height: 26px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 12px;
+        font-weight: 950;
+    }
+
+    .hero-news-list-item.active .hero-list-number {
+        background: #2563eb;
+        color: #ffffff;
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+    }
+
+    .hero-list-thumb {
+        width: 58px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 14px;
+        flex-shrink: 0;
+        background: #e2e8f0;
+    }
+
+    .hero-list-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: 0.3s ease;
+    }
+
+    .hero-news-list-item:hover .hero-list-thumb img {
+        transform: scale(1.08);
+    }
+
+    .hero-list-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .hero-list-content strong {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        text-overflow: ellipsis;
-        line-height: 1.6;
+        color: #0f172a;
+        font-size: 12px;
+        font-weight: 900;
+        line-height: 1.65;
     }
 
-    .premium-list-title,
-    .text-truncate,
-    .text-truncate-2 {
+    .hero-list-content small {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 4px;
+        color: #64748b;
+        font-size: 10px;
+    }
+
+    .hero-list-progress {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 3px;
+        width: 0;
+        background: #60a5fa;
+    }
+
+    .hero-news-list-item.active .hero-list-progress {
+        animation: heroProgress 6s linear forwards;
+    }
+
+    @keyframes heroProgress {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    .hero-news-empty {
+        height: 100%;
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #64748b;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .hero-news-empty i {
+        font-size: 42px;
+        color: #94a3b8;
+    }
+
+    .hero-news-empty strong {
+        color: #0f172a;
+        font-size: 16px;
+    }
+
+    .hero-news-empty span {
+        font-size: 12px;
+    }
+
+    .news-widget-card,
+    .subject-day-card {
+        overflow: hidden;
+        border-radius: 24px;
+        background: #ffffff;
+        border: 1px solid rgba(226, 232, 240, 0.96);
+        box-shadow: 0 16px 46px rgba(15, 23, 42, 0.075);
+    }
+
+    /* هم‌تراز شدن ستون سوژه روز + تبلیغات با اسلایدر اصلی، بدون دست زدن به ستون وسط */
+    @media (min-width: 992px) {
+        .subject-stack-equal {
+            height: 545px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .subject-stack-equal .subject-day-card {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            margin-bottom: 14px;
+        }
+
+        .subject-stack-equal .subject-day-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .subject-stack-equal .subject-day-image {
+            height: 138px;
+            flex-shrink: 0;
+        }
+
+        .subject-stack-equal .subject-day-title {
+            margin-bottom: 10px;
+        }
+
+        .subject-stack-equal .subject-day-stats {
+            margin-top: auto;
+        }
+
+        .subject-stack-equal .home-ads-stack {
+            flex: 0 0 auto;
+            gap: 12px;
+        }
+
+        .subject-stack-equal .adv-link-v2 img {
+            height: 92px;
+        }
+    }
+
+
+    .news-tabs-header {
+        display: flex;
+        padding: 10px;
+        background: #f8fafc;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .news-modern-tabs {
+        display: flex;
+        gap: 8px;
+        background: transparent;
+    }
+
+    .news-modern-tabs .nav-link {
+        border: 0 !important;
+        border-radius: 15px !important;
+        padding: 10px 8px;
+        color: #64748b;
+        background: transparent;
+        font-size: 11px;
+        font-weight: 850;
+        white-space: nowrap;
+        transition: 0.22s ease;
+    }
+
+    .news-modern-tabs .nav-link i {
+        margin-left: 5px;
+        font-size: 10px;
+    }
+
+    .news-modern-tabs .nav-link.active,
+    .news-modern-tabs .nav-link:hover {
+        background: #eff6ff !important;
+        color: #2563eb !important;
+        box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.16);
+    }
+
+    .news-tabs-content {
+        padding: 8px 12px;
+        min-height: 322px;
+    }
+
+    .mini-rank-news {
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .mini-rank-news:last-child {
+        border-bottom: 0;
+    }
+
+    .mini-rank-link {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 12px 0;
+        color: #0f172a;
+        text-decoration: none;
+        transition: 0.22s ease;
+    }
+
+    .mini-rank-link:hover {
+        color: #2563eb;
+        text-decoration: none;
+        transform: translateX(-3px);
+    }
+
+    .mini-rank-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #2563eb;
+        box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.10);
+        flex-shrink: 0;
+    }
+
+    .mini-rank-title {
+        flex: 1;
         min-width: 0;
-        max-width: 100%;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 750;
     }
 
-    .transition-all {
-        transition: all 0.3s ease;
+    .mini-rank-link i {
+        color: #cbd5e1;
+        font-size: 9px;
+        transition: 0.22s ease;
     }
 
-    .hover-emerald {
-        transition: color 0.15s ease-in-out;
+    .mini-rank-link:hover i {
+        color: #2563eb;
     }
 
-    .hover-emerald:hover {
-        color: #10b981 !important;
+    .mini-widget-empty {
+        padding: 35px 15px;
+        color: #94a3b8;
+        font-size: 12px;
+        text-align: center;
     }
 
-    .last-border-0:last-child {
-        border-bottom: 0 !important;
+    .subject-day-card {
+        margin-bottom: 16px;
     }
 
-    .nav-tabs .nav-link.active {
-        background-color: #ffffff !important;
-        color: #10b981 !important;
-        font-weight: bold;
-        border-bottom: 2px solid #10b981 !important;
+    .subject-day-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 16px;
+        background:
+            radial-gradient(circle at top left, rgba(245, 158, 11, 0.13), transparent 38%),
+            #ffffff;
+        border-bottom: 1px solid #eef2f7;
     }
 
-    .subject-day-img,
-    .adv-img {
+    .subject-day-header h3 {
+        margin: 3px 0 0;
+        color: #0f172a;
+        font-size: 15px;
+        font-weight: 950;
+    }
+
+    .subject-day-kicker {
+        color: #2563eb;
+        font-size: 10px;
+        font-weight: 850;
+    }
+
+    .subject-day-header > i {
+        width: 38px;
+        height: 38px;
+        border-radius: 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #f59e0b;
+        background: #fffbeb;
+    }
+
+    .subject-day-body {
+        padding: 14px;
+    }
+
+    .subject-day-image {
+        position: relative;
+        display: block;
+        height: 152px;
+        overflow: hidden;
+        border-radius: 18px;
+        background: #e2e8f0;
+        margin-bottom: 12px;
+    }
+
+    .subject-day-image img {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        max-height: 150px;
-        transition: transform 0.3s;
+        object-position: center;
+        display: block;
+        transition: 0.32s ease;
+    }
+
+    .subject-day-image:hover img {
+        transform: scale(1.07);
+    }
+
+    .subject-day-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 48%, rgba(15, 23, 42, 0.70));
+    }
+
+    .subject-day-image span {
+        position: absolute;
+        right: 12px;
+        bottom: 12px;
+        z-index: 2;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+        color: #0f172a;
+        font-size: 10px;
+        font-weight: 850;
+    }
+
+    .subject-day-title {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: #0f172a;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1.8;
+        text-decoration: none;
+        margin-bottom: 12px;
+        transition: 0.22s ease;
+    }
+
+    .subject-day-title:hover {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+    .subject-day-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .subject-day-stats span {
+        height: 38px;
+        border-radius: 14px;
+        background: #f8fafc;
+        border: 1px solid #eef2f7;
+        color: #64748b;
+        font-size: 11px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+    }
+
+    .subject-day-stats i {
+        color: #2563eb;
+    }
+
+    .subject-day-empty {
+        min-height: 230px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        color: #94a3b8;
+        font-size: 12px;
+        padding: 20px;
+    }
+
+    .subject-day-empty i {
+        font-size: 32px;
+    }
+
+    .home-ads-stack {
+        display: grid;
+        gap: 14px;
+    }
+
+    .adv-card-v2 {
+        position: relative;
+        overflow: hidden;
+        padding: 7px;
+        border-radius: 20px;
+        background: #ffffff;
+        border: 1px solid rgba(226, 232, 240, 0.96);
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.075);
+        animation: advSoftPulseV2 3s ease-in-out infinite;
+        transition: 0.28s ease;
+    }
+
+    .adv-card-v2:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 22px 52px rgba(15, 23, 42, 0.14);
+    }
+
+    .adv-card-v2::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -85%;
+        width: 48%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.48), transparent);
+        z-index: 2;
+        pointer-events: none;
+        animation: advShineV2 3.7s ease-in-out infinite;
+    }
+
+    .adv-link-v2 {
+        display: block;
+        overflow: hidden;
+        border-radius: 15px;
+        background: #e2e8f0;
+    }
+
+    .adv-link-v2 img {
+        width: 100%;
+        height: 118px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        transition: 0.32s ease;
+    }
+
+    .adv-card-v2:hover .adv-link-v2 img {
+        transform: scale(1.04);
+    }
+
+    .adv-label-v2 {
+        position: absolute;
+        top: 13px;
+        right: 13px;
+        z-index: 3;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.78);
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 800;
+        backdrop-filter: blur(8px);
+    }
+
+    @keyframes advSoftPulseV2 {
+        0%, 100% {
+            box-shadow: 0 14px 36px rgba(15, 23, 42, 0.075);
+        }
+
+        50% {
+            box-shadow: 0 18px 46px rgba(37, 99, 235, 0.17);
+        }
+    }
+
+    @keyframes advShineV2 {
+        0% {
+            right: -85%;
+        }
+
+        45%, 100% {
+            right: 130%;
+        }
     }
 
     @media (max-width: 991.98px) {
-        .premium-carousel-wrapper {
-            height: auto !important;
-            margin-bottom: 20px;
+        .hero-news-card {
+            height: auto;
         }
 
-        .premium-carousel-inner-box {
-            height: auto !important;
+        .hero-news-main {
+            height: 330px;
         }
 
-        .premium-visuals {
-            height: 260px;
-            min-height: 260px;
-        }
-
-        .premium-nav-list {
-            max-height: 260px;
+        .hero-news-list {
+            height: 235px;
         }
 
         .sticky-top,
         .col_z_index {
             position: static !important;
             top: auto !important;
+        }
+
+        .news-tabs-content {
+            min-height: auto;
         }
     }
 
@@ -542,196 +1050,123 @@
             overflow-x: hidden;
         }
 
-        .home-featured-row {
-            width: 100% !important;
-            max-width: 100% !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            overflow-x: hidden !important;
+        .home-top-news-section {
+            overflow-x: hidden;
         }
 
-        .home-featured-row > [class*="col-"] {
-            flex: 0 0 100% !important;
-            width: 100% !important;
-            max-width: 100% !important;
+        .home-featured-row-v2 > [class*="col-"],
+        .home-featured-side-row > [class*="col-"] {
             padding-left: 6px !important;
             padding-right: 6px !important;
         }
 
-        .home-featured-inner-row {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            overflow-x: hidden !important;
+        .hero-news-card,
+        .news-widget-card,
+        .subject-day-card {
+            border-radius: 20px;
         }
 
-        .home-featured-inner-row > [class*="col-"] {
-            flex: 0 0 100% !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+        .hero-news-main {
+            height: 255px;
         }
 
-        .premium-carousel-wrapper {
-            width: 100% !important;
-            max-width: 100% !important;
-            height: auto !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            border-radius: 14px !important;
-            overflow: hidden !important;
+        .hero-news-overlay {
+            padding: 16px;
         }
 
-        .premium-carousel-inner-box {
-            height: auto !important;
+        .hero-news-content {
+            max-width: 100%;
         }
 
-        .premium-visuals {
-            width: 100% !important;
-            height: 210px !important;
-            min-height: 210px !important;
-            overflow: hidden !important;
-        }
-
-        .premium-visuals .carousel-inner,
-        .premium-visuals .carousel-item,
-        .premium-visuals .main-img-wrapper {
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 100% !important;
-        }
-
-        .premium-img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain !important;
-            transform: none !important;
-        }
-
-        .carousel-item.active .premium-img {
-            transform: none !important;
-        }
-
-        .premium-overlay {
-            height: 72% !important;
-            padding: 14px !important;
-            background: linear-gradient(
-                to top,
-                rgba(15, 23, 42, 0.88) 0%,
-                rgba(15, 23, 42, 0.36) 55%,
-                transparent 100%
-            ) !important;
-        }
-
-        .premium-badge {
-            font-size: 10px !important;
-            padding: 4px 8px !important;
-        }
-
-        .premium-overlay h2 {
-            font-size: 13px !important;
-            line-height: 1.8 !important;
+        .hero-news-title {
+            font-size: 16px;
+            line-height: 1.8;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        .premium-nav-list {
-            width: 100% !important;
-            max-width: 100% !important;
-            max-height: 230px !important;
-            padding: 10px !important;
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
+        .hero-news-summary {
+            display: none;
         }
 
-        .premium-indicators {
-            width: 100% !important;
-            max-width: 100% !important;
-            gap: 8px !important;
+        .hero-news-badge,
+        .hero-news-time {
+            padding: 5px 9px;
+            font-size: 10px;
         }
 
-        .premium-list-item {
-            width: 100% !important;
-            max-width: 100% !important;
-            padding: 9px !important;
-            border-radius: 10px !important;
-            transform: none !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
+        .hero-carousel-control {
+            width: 36px;
+            height: 36px;
+            border-radius: 13px;
+            top: 12px;
         }
 
-        .premium-list-item:hover {
-            transform: none !important;
+        .hero-carousel-prev {
+            right: 12px;
         }
 
-        .premium-list-item.active {
-            border-right-width: 3px !important;
+        .hero-carousel-next {
+            right: 54px;
         }
 
-        .premium-thumb {
-            width: 48px !important;
-            height: 48px !important;
-            flex: 0 0 48px !important;
-            margin-left: 9px !important;
+        .hero-news-list {
+            height: 228px;
+            padding: 10px;
         }
 
-        .premium-thumb img {
-            object-fit: contain !important;
-            transform: none !important;
+        .hero-news-list-item {
+            padding: 8px;
+            border-radius: 14px;
+            gap: 8px;
         }
 
-        .premium-list-item:hover .premium-thumb img {
-            transform: none !important;
+        .hero-list-number {
+            min-width: 23px;
+            height: 23px;
+            border-radius: 8px;
+            font-size: 10px;
         }
 
-        .premium-list-title {
-            font-size: 11px !important;
-            line-height: 1.7 !important;
-            word-break: break-word;
+        .hero-list-thumb {
+            width: 48px;
+            height: 44px;
+            border-radius: 12px;
         }
 
-        .premium-list-item span {
-            font-size: 9px !important;
+        .hero-list-content strong {
+            font-size: 11px;
+            line-height: 1.65;
         }
 
-        .nav-tabs {
-            max-width: 100% !important;
-            overflow: hidden !important;
-            flex-wrap: nowrap !important;
+        .hero-list-content small {
+            font-size: 9px;
         }
 
-        .nav-tabs .nav-item {
-            min-width: 0 !important;
+        .news-modern-tabs .nav-link {
+            padding: 9px 5px;
+            font-size: 10px;
         }
 
-        .nav-tabs .nav-link {
-            font-size: 11px !important;
-            white-space: nowrap;
-            padding-left: 6px !important;
-            padding-right: 6px !important;
+        .subject-day-image {
+            height: 170px;
         }
 
-        .subject-day-img,
-        .adv-img {
-            max-height: 170px !important;
-            object-fit: cover !important;
+        .adv-link-v2 img {
+            height: 150px;
         }
     }
 </style>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var myPremiumCarousel = document.getElementById('premiumNewsCarousel');
-        var premiumIndicators = document.querySelectorAll('.premium-indicators .premium-list-item');
+        var premiumCarousel = document.getElementById('premiumNewsCarousel');
+        var premiumIndicators = document.querySelectorAll('.premium-indicators .hero-news-list-item');
 
-        if (myPremiumCarousel) {
-            myPremiumCarousel.addEventListener('slide.bs.carousel', function (e) {
+        if (premiumCarousel && premiumIndicators.length) {
+            premiumCarousel.addEventListener('slide.bs.carousel', function (e) {
                 var nextIdx = e.to;
 
                 premiumIndicators.forEach(function (btn, idx) {
@@ -739,7 +1174,7 @@
                         btn.classList.add('active');
                         btn.setAttribute('aria-current', 'true');
 
-                        var progressBar = btn.querySelector('.nav-progress-bar');
+                        var progressBar = btn.querySelector('.hero-list-progress');
 
                         if (progressBar) {
                             progressBar.style.animation = 'none';
@@ -747,15 +1182,15 @@
                             progressBar.style.animation = null;
                         }
 
-                        var container = btn.parentElement;
+                        var list = btn.parentElement;
 
-                        if (container) {
-                            var containerVisibleHeight = container.clientHeight;
+                        if (list) {
+                            var visibleHeight = list.clientHeight;
                             var itemTop = btn.offsetTop;
                             var itemHeight = btn.clientHeight;
 
-                            container.scrollTo({
-                                top: itemTop - (containerVisibleHeight / 2) + (itemHeight / 2),
+                            list.scrollTo({
+                                top: itemTop - (visibleHeight / 2) + (itemHeight / 2),
                                 behavior: 'smooth'
                             });
                         }

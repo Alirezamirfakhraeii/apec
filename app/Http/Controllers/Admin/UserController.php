@@ -45,9 +45,16 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user, UpdateUserAction $action)
     {
-        $dto = UpdateUserDTO::fromArray($request->validated());
-        $user = $action->execute($dto, $user);
-        return redirect()->route('admin.users.index')->with('success', "اطلاعات کاربر «{$user->name}» با موفقیت ویرایش شد.");
+        $dto = UpdateUserDTO::fromArray([
+            ...$request->validated(),
+            'avatar' => $request->file('avatar'),
+        ]);
+
+        $user = $action->execute($user, $dto);
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', "اطلاعات کاربر «{$user->name}» با موفقیت ویرایش شد.");
     }
 
     public function destroy(User $user)

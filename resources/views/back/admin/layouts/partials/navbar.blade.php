@@ -1,3 +1,10 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+$user = Auth::user();
+?>
+
+
 <div class="main-header sticky side-header nav nav-item">
     <div class="container-fluid">
         <div class="main-header-left">
@@ -63,7 +70,12 @@
 
                 <!-- منوی پروفایل ادمین لاگین شده -->
                 <div class="dropdown main-profile-menu nav nav-item nav-link">
-                    <a class="profile-user d-flex" href="#"><img alt="avatar" src="{{ asset('back/img/faces/6.jpg') }}"></a>
+                    <a class="profile-user d-flex" href="#">
+                        <img
+                            alt="{{ auth()->user()->name ?? 'avatar' }}"
+                            src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('back/img/faces/6.jpg') }}"
+                        >
+                    </a>
                     <div class="dropdown-menu">
                         <div class="main-header-profile bg-primary p-3">
                             <div class="d-flex wd-100p">
@@ -84,7 +96,8 @@
                             <i class="bx bx-log-out"></i> خروج از سیستم
                         </a>
 
-                        <form id="header-logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                        <form id="header-logout-form" action="{{ route('admin.logout') }}" method="POST"
+                              style="display: none;">
                             @csrf
                         </form>
                     </div>

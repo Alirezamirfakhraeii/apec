@@ -25,6 +25,8 @@ class UpdateUserRequest extends FormRequest
             'password' => 'nullable|string|min:8',
 
             'role' => 'nullable|exists:roles,name',
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+
         ];
     }
 
@@ -35,6 +37,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'ایمیل',
             'password' => 'رمز عبور',
             'role' => 'نقش',
+            'avatar' => 'عکس',
         ];
 
     }

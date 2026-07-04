@@ -6,39 +6,37 @@ use App\Features\Admin\Users\DTOs\UpdateUserDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class UpdateUserAction
 {
     public function execute(User $user, UpdateUserDTO $dto): User
     {
-        if (
-            $user->id === Auth::id()
-            && $user->hasRole('Super Auth')
-            && $dto->role !== 'Super Auth'
-        ) {
-            throw ValidationException::withMessages([
-                'role' => 'شما نمی‌توانید نقش خودتان را از Super Auth تغییر دهید!',
-            ]);
-        }
-
         $data = [
             'name' => $dto->name,
             'email' => $dto->email,
         ];
 
-        if ($dto->password) {
+        if (!empty($dto->password)) {
             $data['password'] = Hash::make($dto->password);
+        }
+
+        if ($dto->avatar) {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            $data['avatar'] = $dto->avatar->store(
+                'users/' . $user->id . '/avatar',
+                'public'
+            );
         }
 
         $user->update($data);
 
-        if ($dto->role) {
-            $user->syncRoles([$dto->role]);
-        } else {
-            $user->syncRoles([]);
-        }
+        $user->syncRoles($dto->role ? [$dto->role] : []);
 
-        return $user->fresh('roles');
+        return $user;
     }
 }

@@ -19,6 +19,7 @@ class StoreUserRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8',
             'role' => 'nullable|exists:roles,name',
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 
@@ -29,6 +30,7 @@ class StoreUserRequest extends FormRequest
             'email' => 'ایمیل',
             'password' => 'رمز عبور',
             'role' => 'نقش',
+            'avatar' => 'عکس'
         ];
     }
 }
