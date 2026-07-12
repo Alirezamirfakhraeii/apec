@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Features\Auth\Actions\LoginUserAction;
-use App\Features\Auth\DTOs\LoginDTO;
+use App\Features\User\Auth\Actions\LoginUserAction;
+use App\Features\User\Auth\DTOs\LoginDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\RedirectResponse;

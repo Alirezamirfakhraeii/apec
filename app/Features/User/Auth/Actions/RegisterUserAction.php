@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Features\Auth\Actions;
+namespace App\Features\User\Auth\Actions;
 
-use App\Features\Auth\DTOs\RegisterData;
+use App\Features\User\Auth\DTOs\RegisterData;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

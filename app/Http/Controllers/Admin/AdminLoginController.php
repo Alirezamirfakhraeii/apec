@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Features\Auth\Actions\AdminLoginAction;
-use App\Features\Auth\DTOs\AdminLoginDTO;
+use App\Features\Admin\Auth\Actions\AdminLoginAction;
+use App\Features\Admin\Auth\DTOs\LoginDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+
 
 class AdminLoginController extends Controller
 {
@@ -15,16 +18,19 @@ class AdminLoginController extends Controller
         return view('back.admin.auth.login');
     }
 
-    public function login(Request $request, AdminLoginAction $action)
+    public function login(LoginRequest $request, AdminLoginAction $action)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $dto = LoginDTO::fromRequest($request);
 
-        $dto = AdminLoginDTO::fromRequest($request);
+        $loggedIn = $action->execute($dto);
 
-        $action->execute($dto);
+        if (! $loggedIn) {
+            throw ValidationException::withMessages([
+                'email' => 'ایمیل یا رمز عبور اشتباه است.',
+            ]);
+        }
+
+        $request->session()->regenerate();
 
         return redirect()->route('admin.dashboard');
     }

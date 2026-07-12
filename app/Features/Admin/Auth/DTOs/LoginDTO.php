@@ -1,16 +1,15 @@
 <?php
 
-
-namespace App\Features\Auth\DTOs;
+namespace App\Features\Admin\Auth\DTOs;
 
 use App\Http\Requests\LoginRequest;
 
-class LoginDTO
+readonly class LoginDTO
 {
     public function __construct(
-        public readonly string $email,
-        public readonly string $password,
-        public readonly bool $remember
+        public string $email,
+        public string $password,
+        public bool   $remember
     ) {}
 
     /**

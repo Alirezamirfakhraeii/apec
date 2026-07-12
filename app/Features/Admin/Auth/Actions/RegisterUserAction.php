@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\Auth\Actions;
+namespace App\Features\Admin\Auth\Actions;
 
 use App\Features\Auth\DTOs\RegisterData;
 use App\Models\User;

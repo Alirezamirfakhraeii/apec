@@ -20,10 +20,13 @@ require __DIR__.'/admin.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('front.posts.show');
+
 Route::get('/page/{slug}', [PageController::class, 'show'])->name('front.pages.show');
+Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('front.posts.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('front.categories.show');
 Route::get('/blog/category/{slug}', [BlogCategoryController::class, 'show'])->name('front.blog-categories.show');
+
+
 
 Route::get('/news', [NewsController::class, 'index'])
     ->name('front.news.index');
@@ -50,6 +53,7 @@ Route::get('lang/{locale}', function ($locale) {
 
 
 
+Route::get('/board-of-directors', [PageController::class, 'boardOfDirectors'])->name('front.board-of-directors');
 
 Route::get('/{path}', [DynamicPageController::class, 'show'])
     ->where('path', '.*')

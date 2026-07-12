@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Features\Auth\Actions;
 
-use App\Features\Auth\DTOs\AdminLoginDTO;
+namespace App\Features\Admin\Auth\Actions;
+
+use App\Features\Admin\Auth\DTOs\LoginDTO;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class AdminLoginAction
 {
-    public function execute(AdminLoginDTO $dto): bool
+    public function execute(LoginDTO $dto)
     {
 
         if (!Auth::attempt(['email' => $dto->email, 'password' => $dto->password])) {
@@ -22,14 +23,9 @@ class AdminLoginAction
             Auth::logout();
             request()->session()->invalidate();
             request()->session()->regenerateToken();
-
             throw ValidationException::withMessages([
                 'email' => ['شما دسترسی ورود به پنل مدیریت را ندارید.'],
             ]);
         }
-
-        request()->session()->regenerate();
-
-        return true;
     }
 }

@@ -1,0 +1,90 @@
+.commite-block {
+    padding: 70px 0;
+    background: #f8fafc;
+}
+
+.commite-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 38px;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 36px;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+}
+
+.commite-content-left .commite-text {
+    order: 1;
+}
+
+.commite-content-left .commite-image {
+    order: 2;
+}
+
+.commite-content-right .commite-text {
+    order: 2;
+}
+
+.commite-content-right .commite-image {
+    order: 1;
+}
+
+.commite-text h2 {
+    margin: 0 0 18px;
+    font-size: 30px;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.7;
+}
+
+.commite-body {
+    color: #475569;
+    font-size: 15px;
+    line-height: 2.25;
+}
+
+.commite-body p {
+    margin-bottom: 14px;
+}
+
+.commite-image {
+    overflow: hidden;
+    border-radius: 24px;
+    background: #e2e8f0;
+}
+
+.commite-image img {
+    width: 100%;
+    height: 370px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .commite-block {
+        padding: 40px 0;
+    }
+
+    .commite-card {
+        grid-template-columns: 1fr;
+        padding: 22px;
+        gap: 24px;
+    }
+
+    .commite-content-left .commite-text,
+    .commite-content-left .commite-image,
+    .commite-content-right .commite-text,
+    .commite-content-right .commite-image {
+        order: initial;
+    }
+
+    .commite-image img {
+        height: 240px;
+    }
+
+    .commite-text h2 {
+        font-size: 23px;
+    }
+}

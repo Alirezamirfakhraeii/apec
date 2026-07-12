@@ -13,19 +13,19 @@ class Page extends Model
         'body',
         'meta_title',
         'meta_description',
+        'template',
         'status',
+        'template_data',
     ];
 
     protected $casts = [
-        'route_params' => 'array',
         'status' => 'boolean',
-        'open_in_new_tab' => 'boolean',
+        'template_data' => 'array',
     ];
 
     public function target()
     {
         return $this->morphTo();
     }
-
 
 }

@@ -1,114 +1,165 @@
 @extends('back.admin.layouts.master')
 
-@section('content')
-    <div class="breadcrumb-header justify-content-between">
-        <div class="my-auto">
-            <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">بخش محتوا</h4>
-                <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ مدیریت صفحات</span>
-            </div>
-        </div>
 
-        <div class="d-flex my-xl-auto right-content">
-            <a href="{{ route('admin.pages.create') }}" class="btn btn-primary">
-                ایجاد صفحه جدید
+<head>
+    <link rel="stylesheet" href="{{ asset('back/css/pages/index.css') }}">
+</head>
+
+
+@section('content')
+    <div class="news-admin-wrapper" dir="rtl">
+        <div class="news-page-header">
+            <div>
+                <h1>مدیریت صفحات</h1>
+                <p>صفحات ثابت، لندینگ‌ها و صفحات دارای تمپلیت را مدیریت کنید.</p>
+            </div>
+
+            <a href="{{ route('admin.pages.create') }}" class="news-create-btn">
+                ساخت صفحه جدید
             </a>
         </div>
-    </div>
 
-    <div class="row row-sm">
-        <div class="col-xl-12 col-lg-12 col-md-12">
-            <div class="card box-shadow-0">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-1">لیست صفحات</h4>
-                    <small class="text-muted">مدیریت صفحات ثابت سایت</small>
-                </div>
+        @if(session('success'))
+            <div class="alert alert-success mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
 
-                <div class="card-body pt-0" dir="rtl" style="text-align: right;">
-                    @if(session('success'))
-                        <div class="alert alert-success mt-2" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover mb-0 text-center">
-                            <thead class="bg-secondary text-white">
-                            <tr>
-                                <th style="width: 60px;">#</th>
-                                <th>عنوان صفحه</th>
-                                <th>اسلاگ</th>
-                                <th style="width: 120px;">وضعیت</th>
-                                <th style="width: 180px;">تاریخ ایجاد</th>
-                                <th style="width: 220px;">عملیات</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            @forelse($pages as $page)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-
-                                    <td class="text-right">
-                                        <strong>{{ $page->title }}</strong>
-
-                                        @if($page->summary)
-                                            <div class="text-muted font_11 mt-1">
-                                                {{ \Illuminate\Support\Str::limit($page->summary, 80) }}
-                                            </div>
-                                        @endif
-                                    </td>
-
-                                    <td dir="ltr" class="text-left">
-                                        {{ $page->slug }}
-                                    </td>
-
-                                    <td>
-                                        @if($page->status)
-                                            <span class="badge badge-success">فعال</span>
-                                        @else
-                                            <span class="badge badge-danger">غیرفعال</span>
-                                        @endif
-                                    </td>
-
-                                    <td>
-                                        {{ $page->created_at ? $page->created_at->format('Y/m/d') : '-' }}
-                                    </td>
-
-                                    <td>
-                                        <a href="{{ route('admin.pages.edit', $page->id) }}"
-                                           class="btn btn-sm btn-info">
-                                            ویرایش
-                                        </a>
-
-                                        <form action="{{ route('admin.pages.destroy', $page->id) }}"
-                                              method="POST"
-                                              class="d-inline-block"
-                                              onsubmit="return confirm('آیا از حذف این صفحه مطمئن هستید؟')">
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                حذف
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">
-                                        هنوز هیچ صفحه‌ای ثبت نشده است.
-                                    </td>
-                                </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
+        <div class="filter-card mb-4">
+            <form action="{{ route('admin.pages.index') }}" method="GET">
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label">جستجو</label>
+                        <input
+                            type="text"
+                            name="q"
+                            value="{{ request('q') }}"
+                            class="form-control"
+                            placeholder="عنوان، اسلاگ یا خلاصه"
+                        >
                     </div>
 
-                    <div class="mt-3">
-                        {{ $pages->links() }}
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">تمپلیت</label>
+                        <select name="template" class="form-control">
+                            <option value="">همه تمپلیت‌ها</option>
+                            @foreach($templates as $key => $template)
+                                <option value="{{ $key }}" @selected(request('template') === $key)>
+                                    {{ $template['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">وضعیت</label>
+                        <select name="status" class="form-control">
+                            <option value="">همه</option>
+                            <option value="active" @selected(request('status') === 'active')>فعال</option>
+                            <option value="inactive" @selected(request('status') === 'inactive')>غیرفعال</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3 d-flex align-items-end">
+                        <button type="submit" class="news-create-btn w-100">
+                            فیلتر
+                        </button>
                     </div>
                 </div>
+            </form>
+        </div>
+
+        <div class="editorial-table-card">
+            <div class="editorial-table-header">
+                <h2>لیست صفحات</h2>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table editorial-table">
+                    <thead>
+                    <tr>
+                        <th>عنوان</th>
+                        <th>اسلاگ</th>
+                        <th>تمپلیت</th>
+                        <th>وضعیت</th>
+                        <th>تاریخ ساخت</th>
+                        <th>عملیات</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @forelse($pages as $page)
+                        <tr>
+                            <td>
+                                <strong class="editorial-post-title">{{ $page->title }}</strong>
+
+                                @if($page->summary)
+                                    <div class="text-muted small mt-1">
+                                        {{ \Illuminate\Support\Str::limit($page->summary, 80) }}
+                                    </div>
+                                @endif
+                            </td>
+
+                            <td>
+                                /{{ $page->slug }}
+                            </td>
+
+                            <td>
+                                    <span class="editorial-category">
+                                        {{ $templates[$page->template]['label'] ?? $page->template }}
+                                    </span>
+                            </td>
+
+                            <td>
+                                @if($page->status)
+                                    <span class="editorial-status published">فعال</span>
+                                @else
+                                    <span class="editorial-status draft">غیرفعال</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                {{ $page->created_at?->format('Y/m/d') }}
+                            </td>
+
+                            <td>
+                                <div class="editorial-actions">
+                                    <a
+                                        href="{{ route('admin.pages.edit', $page) }}"
+                                        class="editorial-action-btn"
+                                    >
+                                        ویرایش
+                                    </a>
+
+                                    <form
+                                        action="{{ route('admin.pages.destroy', $page) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('آیا از حذف این صفحه مطمئن هستید؟')"
+                                        style="display: inline-block;"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="editorial-action-btn">
+                                            حذف
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                هنوز صفحه‌ای ثبت نشده است.
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="editorial-footer">
+                {{ $pages->links() }}
             </div>
         </div>
     </div>

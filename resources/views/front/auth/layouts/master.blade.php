@@ -73,6 +73,6 @@
     </div>
 </div>
 
-@include('auth.layouts.scripts')
+@include('front.auth.layouts.scripts')
 </body>
 </html>

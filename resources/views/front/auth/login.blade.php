@@ -1,4 +1,4 @@
-@extends('auth.layouts.master')
+@extends('front.auth.layouts.master')
 
 @section('title', 'ورود به حساب کاربری')
 

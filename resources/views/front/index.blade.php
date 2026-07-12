@@ -3,30 +3,30 @@
 @section('content')
     <div class="container mt-4">
         <div class="row">
-{{--            اسلایدر --}}
-            @include('front.partials.slider')
+            {{--اسلایدر --}}
+            @include('front.main.slider')
 
             <!-- ستون سمت راست: اخبار برتر -->
 
-            @include('front.partials.top-news')
+            @include('front.main.top-news')
 
             <!-- ستون سمت راست: اخبار برتر -->
-            @include('front.partials.category-blog')
+            @include('front.main.category-blog')
 
             <!-- ستون سمت چپ: تب‌ها و سوژه روز -->
-            @include('front.partials.sidebar-tabs')
+            @include('front.main.sidebar-tabs')
         </div>
 
         <!-- بخش ویدیوهای تلدیو -->
-        @include('front.partials.teldio-videos')
+        @include('front.main.teldio-videos')
 
         <!-- بخش چند رسانه‌ای -->
-        @include('front.partials.multimedia')
+        @include('front.main.multimedia')
 
         <!-- بخش عکس روز -->
-        @include('front.partials.podcast')
+        @include('front.main.podcast')
 
 
-        @include('front.partials.contact_us')
+        @include('front.main.contact_us')
     </div>
 @endsection

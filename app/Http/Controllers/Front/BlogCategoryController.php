@@ -12,6 +12,7 @@ class BlogCategoryController extends Controller
 
     public function show($slug)
     {
+
         $category = BlogCategory::where('slug', $slug)
             ->where('status', true)
             ->firstOrFail();

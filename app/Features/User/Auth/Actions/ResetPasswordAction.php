@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Features\Auth\Actions;
+namespace App\Features\User\Auth\Actions;
 
 
 class ResetPasswordAction

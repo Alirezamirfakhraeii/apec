@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Features\Auth\Actions;
+namespace App\Features\User\Auth\Actions;
 
-use App\Features\Auth\DTOs\LoginDTO;
+use App\Features\User\Auth\DTOs\LoginDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
+use App\Models\BoardMember;
 use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Post;
@@ -11,44 +12,30 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function show($slug)
+    public function boardOfDirectors()
     {
+        $page = Page::where('slug', 'board-of-directors')->first();
 
-        $category = BlogCategory::where('slug', $slug)
+        $members = BoardMember::where('is_active', true)
+            ->orderBy('sort_order')
+            ->latest()
+            ->get();
+
+        return view('front.board-members.index', compact('page', 'members'));
+    }
+
+    public function show(string $slug)
+    {
+        $page = Page::with([
+            'blocks.type',
+            'blocks.values.field',
+            'blocks.items.values.field',
+        ])
+            ->where('slug', $slug)
             ->where('status', true)
             ->firstOrFail();
 
-        $posts = Post::where('blog_category_id', $category->id)
-            ->where('status', 'published')
-            ->latest('published_at')
-            ->paginate(12);
-
-        $currentMenu = MenuItem::where('type', 'blog_category')
-            ->where('target_id', $category->id)
-            ->with(['parent', 'children'])
-            ->first();
-
-
-
-        $sectionMenu = $currentMenu?->parent ?: $currentMenu;
-
-        $sidebarItems = $sectionMenu
-            ? $sectionMenu->children()
-                ->where('status', true)
-                ->orderBy('order')
-                ->get()
-            : collect();
-
-        $segments = request()->segments();
-
-        return view('front.pages.section', [
-            'mode' => 'category',
-            'page' => null,
-            'category' => $category,
-            'posts' => $posts,
-            'segments' => $segments,
-            'sidebarTitle' => $sectionMenu?->title,
-            'sidebarItems' => $sidebarItems,
-        ]);
+        return view('front.pages.show', compact('page'));
     }
+
 }

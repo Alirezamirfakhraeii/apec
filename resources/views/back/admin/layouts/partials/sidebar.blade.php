@@ -78,6 +78,7 @@
     $hasFaqPagesRoute = \Illuminate\Support\Facades\Route::has('admin.faq-pages.index');
     $hasAboutPagesRoute = \Illuminate\Support\Facades\Route::has('admin.about-pages.index');
     $hasAdvertisingPagesRoute = \Illuminate\Support\Facades\Route::has('admin.advertising-pages.index');
+    $hasBoardMembersRoute = Route::has('admin.board-members.index');
 
     $staticPagesIsOpen = request()->routeIs(
         'admin.contact-pages.*',
@@ -350,6 +351,18 @@
                             تماس با ما
 
                             @unless($hasContactPagesRoute)
+                                <span class="menu-soon-badge">به‌زودی</span>
+                            @endunless
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="slide-item {{ request()->routeIs('admin.board-members.*') ? 'active' : '' }} {{ ! $hasBoardMembersRoute ? 'disabled' : '' }}"
+                           href="{{ $hasBoardMembersRoute ? route('admin.board-members.index') : '#' }}"
+                           @unless($hasBoardMembersRoute) onclick="return false;" @endunless>
+                            اعضای هیئت مدیره
+
+                            @unless($hasBoardMembersRoute)
                                 <span class="menu-soon-badge">به‌زودی</span>
                             @endunless
                         </a>

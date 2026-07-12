@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\Auth\DTOs;
+namespace App\Features\User\Auth\DTOs;
 
 readonly class RegisterData {
     public function __construct(

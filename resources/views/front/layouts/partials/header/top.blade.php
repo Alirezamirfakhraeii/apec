@@ -33,39 +33,57 @@
                 </form>
             </div>
 
-            {{-- Date + Language --}}
+            {{-- Login + Language --}}
             <div class="col-lg-3 col-md-9 col-6 order-2 order-lg-3 text-left">
 
                 <div class="d-inline-flex align-items-center justify-content-end header-left-actions">
 
-                    {{-- Date --}}
-                    <div class="d-none d-md-inline-flex align-items-center header-date-pill ml-2">
-                        <i class="fa fa-calendar-alt ml-1"></i>
+                    {{-- Login Button --}}
+                    @guest
+                        <a href="{{ route('login') }}" class="header-login-btn ml-2">
+                            <i class="fa fa-sign-in-alt ml-1"></i>
+                            <span>ورود</span>
+                            <span class="login-divider"></span>
+                            <span>ثبت‌نام</span>
+                        </a>
+                    @else
+                        <div class="dropdown header-user-dropdown ml-2">
+                            <button class="btn header-user-btn dropdown-toggle"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false">
+                                <i class="fa fa-user ml-1"></i>
+                                <span>{{ auth()->user()->name ?? 'حساب کاربری' }}</span>
+                            </button>
 
-                        <span>
-                            {{ verta()->format('Y/m/d') }}
-                        </span>
+                            <div class="dropdown-menu dropdown-menu-left text-right header-user-menu">
+                                <a class="dropdown-item font_12" href="#">
+                                    <i class="fa fa-user-circle ml-1"></i>
+                                    پروفایل
+                                </a>
 
-                        <span class="mx-1 text-muted">|</span>
-
-                        <strong>
-                            {{ verta()->format('H:i') }}
-                        </strong>
-                    </div>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item font_12 text-danger">
+                                        <i class="fa fa-sign-out-alt ml-1"></i>
+                                        خروج
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endguest
 
                     {{-- Language --}}
                     <div class="dropdown header-lang-dropdown">
-                        <button class="btn header-lang-btn dropdown-toggle"
+                        <button class="btn header-lang-btn dropdown-toggle header-lang-flag-only"
                                 type="button"
                                 data-toggle="dropdown"
                                 aria-expanded="false">
 
                             @if(app()->getLocale() === 'en')
-                                <span class="ml-1">🇬🇧</span>
-                                <span>EN</span>
+                                <img src="{{ asset('front/img/flags/en.png') }}" alt="EN" class="header-flag-img">
                             @else
-                                <span class="ml-1">🇮🇷</span>
-                                <span>FA</span>
+                                <img src="{{ asset('front/img/flags/ir.png') }}" alt="FA" class="header-flag-img">
                             @endif
 
                         </button>
@@ -73,13 +91,13 @@
                         <div class="dropdown-menu dropdown-menu-left text-right header-lang-menu">
                             <a class="dropdown-item font_12 {{ app()->getLocale() === 'fa' ? 'active' : '' }}"
                                href="{{ route('lang.switch', 'fa') }}">
-                                <span class="ml-1">🇮🇷</span>
+                                <img src="{{ asset('front/img/flags/ir.png') }}" alt="FA" class="lang-menu-flag">
                                 فارسی
                             </a>
 
                             <a class="dropdown-item font_12 {{ app()->getLocale() === 'en' ? 'active' : '' }}"
                                href="{{ route('lang.switch', 'en') }}">
-                                <span class="ml-1">🇬🇧</span>
+                                <img src="{{ asset('front/img/flags/en.png') }}" alt="EN" class="lang-menu-flag">
                                 English
                             </a>
                         </div>
@@ -94,6 +112,7 @@
     </div>
 </div>
 <!--end header area -->
+
 <style>
     .clean-news-header {
         position: relative;
@@ -101,13 +120,15 @@
     }
 
     .clean-news-header .dropdown,
-    .clean-news-header .header-lang-dropdown {
+    .clean-news-header .header-lang-dropdown,
+    .clean-news-header .header-user-dropdown {
         position: relative;
         z-index: 10000;
     }
 
     .clean-news-header .dropdown-menu,
-    .header-lang-menu {
+    .header-lang-menu,
+    .header-user-menu {
         z-index: 10001 !important;
         border: 0;
         border-radius: 14px;
@@ -181,24 +202,83 @@
         background: #2563eb;
     }
 
-    .header-date-pill {
+    .header-login-btn {
         height: 40px;
-        padding: 0 11px;
-        border-radius: 14px;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        color: #64748b;
-        font-size: 11px;
-        white-space: nowrap;
-    }
-
-    .header-date-pill i {
-        color: #2563eb;
-    }
-
-    .header-date-pill strong {
+        padding: 0 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        border: 1px solid #d0d7de;
+        background: #ffffff;
         color: #0f172a;
-        font-size: 11px;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none !important;
+        white-space: nowrap;
+        transition: all 0.25s ease;
+    }
+
+    .header-login-btn i {
+        font-size: 14px;
+        color: #0f172a;
+    }
+
+    .header-login-btn:hover {
+        color: #ef394e;
+        border-color: #ef394e;
+        box-shadow: 0 8px 22px rgba(239, 57, 78, 0.12);
+    }
+
+    .header-login-btn:hover i {
+        color: #ef394e;
+    }
+
+    .login-divider {
+        width: 1px;
+        height: 14px;
+        background: #cbd5e1;
+        margin: 0 8px;
+        display: inline-block;
+    }
+
+    .header-user-btn {
+        height: 40px;
+        max-width: 145px;
+        padding: 0 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        border: 1px solid #d0d7de;
+        background: #ffffff;
+        color: #0f172a;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .header-user-btn:hover,
+    .header-user-btn:focus {
+        color: #ef394e;
+        border-color: #ef394e;
+        box-shadow: 0 8px 22px rgba(239, 57, 78, 0.12);
+    }
+
+    .header-user-menu .dropdown-item {
+        border-radius: 10px;
+        padding: 8px 10px;
+        background: transparent;
+        border: 0;
+        width: 100%;
+        text-align: right;
+        cursor: pointer;
+    }
+
+    .header-user-menu .dropdown-item:hover {
+        background: #f8fafc;
     }
 
     .header-lang-btn {
@@ -248,9 +328,62 @@
             font-size: 12px;
         }
 
+        .header-login-btn {
+            height: 38px;
+            padding: 0 10px;
+            font-size: 11px;
+        }
+
+        .header-login-btn i {
+            font-size: 13px;
+        }
+
+        .login-divider {
+            margin: 0 6px;
+        }
+
         .header-lang-btn {
             height: 38px;
             min-width: 72px;
         }
+
+        .header-user-btn {
+            height: 38px;
+            max-width: 115px;
+            font-size: 11px;
+        }
     }
+
+    .header-lang-flag-only {
+        width: 44px;
+        min-width: 44px;
+        height: 40px;
+        padding: 0;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header-lang-flag-only::after {
+        display: none;
+    }
+
+    .header-flag-img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .lang-menu-flag {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-left: 6px;
+    }
+
+
 </style>
