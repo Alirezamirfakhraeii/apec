@@ -44,15 +44,20 @@ class PageController extends Controller
 
     public function create()
     {
-        $page = new Page([
-            'template' => 'default',
-            'status' => true,
-        ]);
+        $templates = config('page_templates', []);
 
-        $templates = config('page_templates');
-        $templateFields = [];
 
-        return view('back.admin.pages.create', compact('page', 'templates', 'templateFields'));
+        $selectedTemplate = old('template', 'default');
+
+        $templateFields = $templates[$selectedTemplate]['fields'] ?? [];
+
+        $page = new Page();
+
+        return view('back.admin.pages.create', compact(
+            'page',
+            'templates',
+            'templateFields'
+        ));
     }
 
     public function store(Request $request)
@@ -100,43 +105,40 @@ class PageController extends Controller
 
     public function update(Request $request, Page $page)
     {
-        $templates = config('page_templates');
+        $templates = config('page_templates', []);
         $allowedTemplates = array_keys($templates);
 
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:pages,slug,' . $page->id],
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('pages', 'slug')->ignore($page->id),
+            ],
             'summary' => ['nullable', 'string'],
             'template' => ['required', 'string', Rule::in($allowedTemplates)],
             'body' => ['nullable', 'string'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string'],
             'status' => ['nullable', 'boolean'],
+
             'template_data' => ['nullable', 'array'],
             'template_files' => ['nullable', 'array'],
+            'template_files.*' => ['nullable', 'image', 'max:5120'],
         ]);
 
         $templateData = $page->template_data ?? [];
-
-        /*
-         * وقتی تمپلیت عوض شد، بهتره داده‌های قبلی پاک بشن
-         * چون فیلدهای تمپلیت قبلی ممکنه به تمپلیت جدید ربطی نداشته باشن.
-         */
-        if ($page->template !== $data['template']) {
-            $templateData = [];
-        }
 
         foreach ($request->input('template_data', []) as $key => $value) {
             $templateData[$key] = $value;
         }
 
-        if ($request->hasFile('template_files')) {
-            foreach ($request->file('template_files') as $key => $file) {
-                if (! empty($templateData[$key]) && Storage::disk('public')->exists($templateData[$key])) {
-                    Storage::disk('public')->delete($templateData[$key]);
-                }
+        foreach ($request->file('template_files', []) as $key => $file) {
+            if ($file && $file->isValid()) {
+                $path = $file->store('pages/template-files', 'public');
 
-                $templateData[$key] = $file->store('pages/templates', 'public');
+                $templateData[$key] = $path;
             }
         }
 
@@ -154,7 +156,7 @@ class PageController extends Controller
 
         return redirect()
             ->route('admin.pages.edit', $page)
-            ->with('success', 'صفحه با موفقیت ذخیره شد.');
+            ->with('success', 'صفحه با موفقیت ویرایش شد.');
     }
 
     public function destroy(Page $page)

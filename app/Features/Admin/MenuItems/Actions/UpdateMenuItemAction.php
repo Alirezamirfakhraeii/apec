@@ -12,16 +12,20 @@ use Illuminate\Support\Facades\DB;
 
 class UpdateMenuItemAction
 {
-    public function execute(MenuItem $menuItem, UpdateMenuItemDTO $data): MenuItem
-    {
+    public function execute(
+        MenuItem $menuItem,
+        UpdateMenuItemDTO $data
+    ): MenuItem {
         $updatedMenuItem = DB::transaction(function () use ($menuItem, $data) {
             $payload = [
                 'title' => $data->title,
                 'type' => $data->type,
 
-                // برای route و heading آدرس لازم نیست
-                // ولی برای page/category/post/custom آدرس لازمه چون DynamicPageController با url پیدا می‌کند
-                'url' => in_array($data->type, ['custom', 'category', 'page', 'post'], true)
+                'url' => in_array(
+                    $data->type,
+                    ['custom', 'category', 'page', 'post'],
+                    true
+                )
                     ? $data->url
                     : null,
 
@@ -37,17 +41,14 @@ class UpdateMenuItemAction
                     : null,
 
                 'icon' => $data->icon,
-                'parent_id' => $data->parentId,
                 'status' => $data->status,
                 'open_in_new_tab' => $data->openInNewTab,
+
+                /*
+                 * parent_id و position اینجا تغییر نمی‌کنند.
+                 * جایگاه منو فقط با Drag & Drop تغییر می‌کند.
+                 */
             ];
-
-            if ($menuItem->parent_id !== $data->parentId) {
-                $lastPosition = MenuItem::where('parent_id', $data->parentId)
-                    ->max('position') ?? 0;
-
-                $payload['position'] = $lastPosition + 1;
-            }
 
             $menuItem->update($payload);
 
@@ -59,8 +60,9 @@ class UpdateMenuItemAction
         return $updatedMenuItem;
     }
 
-    private function resolveTargetType(UpdateMenuItemDTO $data): ?string
-    {
+    private function resolveTargetType(
+        UpdateMenuItemDTO $data
+    ): ?string {
         return match ($data->type) {
             'category' => Category::class,
             'post' => Post::class,
@@ -69,9 +71,14 @@ class UpdateMenuItemAction
         };
     }
 
-    private function resolveTargetId(UpdateMenuItemDTO $data): ?int
-    {
-        return in_array($data->type, ['category', 'post', 'page'], true)
+    private function resolveTargetId(
+        UpdateMenuItemDTO $data
+    ): ?int {
+        return in_array(
+            $data->type,
+            ['category', 'post', 'page'],
+            true
+        )
             ? $data->targetId
             : null;
     }

@@ -22,28 +22,43 @@ class UpdateMenuItemDTO
 
     public static function fromRequest(UpdateMenuItemRequest $request): self
     {
+        $type = $request->input('type');
+
+        $rawParentId = $request->input('parent_id');
+
         return new self(
             title: $request->input('title'),
-            type: $request->input('type'),
 
-            url: $request->input('type') === 'custom'
+            type: $type,
+
+            url: $type === 'custom'
                 ? $request->input('url')
                 : null,
 
-            targetId: in_array($request->input('type'), ['category', 'post', 'page'], true)
+            targetId: in_array($type, ['category', 'post', 'page'], true)
+            && $request->filled('target_id')
                 ? (int) $request->input('target_id')
                 : null,
 
-            routeName: $request->input('type') === 'route'
+            routeName: $type === 'route'
                 ? $request->input('route_name')
                 : null,
 
-            routeParams: $request->input('type') === 'route' && $request->filled('route_params')
-                ? json_decode($request->input('route_params'), true)
+            routeParams: $type === 'route'
+            && $request->filled('route_params')
+                ? json_decode(
+                    $request->input('route_params'),
+                    true
+                )
                 : null,
 
-            parentId: $request->filled('parent_id')
-                ? (int) $request->input('parent_id')
+            /*
+             * صفر، رشته خالی و null یعنی آیتم ریشه
+             */
+            parentId: $rawParentId !== null
+            && $rawParentId !== ''
+            && (int) $rawParentId > 0
+                ? (int) $rawParentId
                 : null,
 
             status: (int) $request->input('status'),

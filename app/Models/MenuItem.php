@@ -67,47 +67,85 @@ class MenuItem extends Model
         return $this->morphTo();
     }
 
-    public function getHrefAttribute()
+    public function getHrefAttribute(): string
     {
-        if ($this->type === self::TYPE_HEADING) {
+        return match ($this->type) {
+            'page' => $this->pageHref(),
+
+            'category' => $this->categoryHref(),
+
+            'post' => $this->postHref(),
+
+            'route' => $this->routeHref(),
+
+            'custom' => $this->customHref(),
+
+            'heading' => '#',
+
+            default => '#',
+        };
+    }
+
+    private function pageHref(): string
+    {
+        if (!$this->target instanceof \App\Models\Page) {
             return '#';
         }
 
-        if ($this->type === self::TYPE_ROUTE) {
-            if (!$this->route_name || !Route::has($this->route_name)) {
-                return '#';
-            }
+        return route('front.pages.show', [
+            'slug' => $this->target->slug,
+        ]);
+    }
 
-            return route($this->route_name, $this->route_params ?? []);
-        }
-
-        // مهم‌ترین بخش:
-        // برای custom/page/category/post اگر url داری، همون باید لینک اصلی باشه
-        if (!empty($this->url)) {
-            return $this->normalizeUrl($this->url);
-        }
-
-        if (!$this->target) {
+    private function categoryHref(): string
+    {
+        if (!$this->target instanceof \App\Models\Category) {
             return '#';
         }
 
-        if ($this->type === self::TYPE_PAGE) {
-            return url('/' . $this->target->slug);
+        return route('front.categories.show', [
+            'slug' => $this->target->slug,
+        ]);
+    }
+
+    private function postHref(): string
+    {
+        if (!$this->target instanceof \App\Models\Post) {
+            return '#';
         }
 
-        if ($this->type === self::TYPE_CATEGORY) {
-            return url('/' . $this->target->slug);
+        return route('front.posts.show', [
+            'slug' => $this->target->slug,
+        ]);
+    }
+
+    private function routeHref(): string
+    {
+        if (!$this->route_name || !\Illuminate\Support\Facades\Route::has($this->route_name)) {
+            return '#';
         }
 
-        if ($this->type === self::TYPE_POST) {
-            return route('front.posts.show', $this->target->slug);
+        return route(
+            $this->route_name,
+            $this->route_params ?? []
+        );
+    }
+
+    private function customHref(): string
+    {
+        if (!$this->url) {
+            return '#';
         }
 
-        if ($this->type === self::TYPE_CUSTOM) {
-            return $this->normalizeUrl($this->url);
+        if (
+            str_starts_with($this->url, 'http://') ||
+            str_starts_with($this->url, 'https://') ||
+            str_starts_with($this->url, '//')
+        ) {
+            return $this->url;
         }
 
-        return '#';
+        return url('/' . ltrim($this->url, '/'));
     }
 
     public function getIsLinkableAttribute()

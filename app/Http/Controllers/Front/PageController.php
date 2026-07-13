@@ -26,16 +26,22 @@ class PageController extends Controller
 
     public function show(string $slug)
     {
-        $page = Page::with([
-            'blocks.type',
-            'blocks.values.field',
-            'blocks.items.values.field',
-        ])
+        $page = Page::query()
             ->where('slug', $slug)
-            ->where('status', true)
+            ->where('status', 1)
             ->firstOrFail();
 
-        return view('front.pages.show', compact('page'));
+        $templates = config('page_templates');
+
+        $template = $templates[$page->template]
+            ?? $templates['default'];
+
+        $pageData = $page->template_data ?? [];
+
+        return view($template['view'], [
+            'page' => $page,
+            'pageData' => $pageData,
+        ]);
     }
 
 }

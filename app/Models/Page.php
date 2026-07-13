@@ -10,18 +10,20 @@ class Page extends Model
         'title',
         'slug',
         'summary',
+        'template',
+        'template_data',
         'body',
         'meta_title',
         'meta_description',
-        'template',
         'status',
-        'template_data',
     ];
 
     protected $casts = [
         'status' => 'boolean',
         'template_data' => 'array',
+        'published_at' => 'datetime',
     ];
+
 
     public function target()
     {
