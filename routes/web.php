@@ -54,8 +54,5 @@ Route::get('lang/{locale}', function ($locale) {
 
 
 Route::get('/board-of-directors', [PageController::class, 'boardOfDirectors'])->name('front.board-of-directors');
-
-Route::get('/{path}', [DynamicPageController::class, 'show'])
-    ->where('path', '.*')
-    ->name('front.dynamic');
+Route::get('/{path}', [DynamicPageController::class, 'show'])->where('path', '.*')->name('front.dynamic');
 

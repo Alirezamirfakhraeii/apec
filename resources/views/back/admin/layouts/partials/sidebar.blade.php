@@ -74,11 +74,20 @@
 </style>
 
 @php
-    use Illuminate\Support\Facades\Auth;$hasContactPagesRoute = \Illuminate\Support\Facades\Route::has('admin.contact-pages.index');
-    $hasFaqPagesRoute = \Illuminate\Support\Facades\Route::has('admin.faq-pages.index');
-    $hasAboutPagesRoute = \Illuminate\Support\Facades\Route::has('admin.about-pages.index');
-    $hasAdvertisingPagesRoute = \Illuminate\Support\Facades\Route::has('admin.advertising-pages.index');
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Route;
+
+    $hasContactPagesRoute = Route::has('admin.contact-pages.index');
+    $hasFaqPagesRoute = Route::has('admin.faq-pages.index');
+    $hasAboutPagesRoute = Route::has('admin.about-pages.index');
+    $hasAdvertisingPagesRoute = Route::has('admin.advertising-pages.index');
     $hasBoardMembersRoute = Route::has('admin.board-members.index');
+
+    $hasCompanyIndexRoute = Route::has('admin.company.index');
+    $hasCompanyCreateRoute = Route::has('admin.company.create');
+    $hasCompanyReportsRoute = Route::has('admin.company.reports');
+
+    $companyIsOpen = request()->routeIs('admin.company.*');
 
     $staticPagesIsOpen = request()->routeIs(
         'admin.contact-pages.*',
@@ -88,11 +97,8 @@
     );
 
     $user = Auth::user();
-
-
-
-
 @endphp
+
 
 <aside class="app-sidebar sidebar-scroll">
     <div class="main-sidebar-header active">
@@ -197,6 +203,96 @@
                 </ul>
             </li>
             @endrole
+
+            {{-- مدیریت اعضا --}}
+            <li class="side-item side-item-category">مدیریت اعضا</li>
+
+            <li class="slide {{ $companyIsOpen ? 'is-expanded' : '' }}">
+                <a class="side-menu__item" data-bs-toggle="slide" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="side-menu__icon"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+
+                    <span class="side-menu__label">مدیریت اعضا</span>
+                    <i class="angle fe fe-chevron-down"></i>
+                </a>
+
+                <ul class="slide-menu {{ $companyIsOpen ? 'open' : '' }}">
+
+                    {{-- لیست اعضا --}}
+                    <li>
+                        <a
+                            class="slide-item
+                    {{ request()->routeIs(
+                        'admin.company.index',
+                        'admin.company.show',
+                        'admin.company.edit'
+                    ) ? 'active' : '' }}
+                    {{ ! $hasCompanyIndexRoute ? 'disabled' : '' }}"
+                            href="{{ $hasCompanyIndexRoute ? route('admin.company.index') : '#' }}"
+                            @unless($hasCompanyIndexRoute)
+                                onclick="return false;"
+                            @endunless
+                        >
+                            لیست اعضا
+
+                            @unless($hasCompanyIndexRoute)
+                                <span class="menu-soon-badge">به‌زودی</span>
+                            @endunless
+                        </a>
+                    </li>
+
+                    {{-- ثبت عضو جدید --}}
+                    <li>
+                        <a
+                            class="slide-item
+                    {{ request()->routeIs('admin.company.create') ? 'active' : '' }}
+                    {{ ! $hasCompanyCreateRoute ? 'disabled' : '' }}"
+                            href="{{ $hasCompanyCreateRoute ? route('admin.company.create') : '#' }}"
+                            @unless($hasCompanyCreateRoute)
+                                onclick="return false;"
+                            @endunless
+                        >
+                            ثبت عضو جدید
+
+                            @unless($hasCompanyCreateRoute)
+                                <span class="menu-soon-badge">به‌زودی</span>
+                            @endunless
+                        </a>
+                    </li>
+
+                    {{-- گزارش اعضا --}}
+                    <li>
+                        <a
+                            class="slide-item
+                    {{ request()->routeIs('admin.company.reports') ? 'active' : '' }}
+                    {{ ! $hasCompanyReportsRoute ? 'disabled' : '' }}"
+                            href="{{ $hasCompanyReportsRoute ? route('admin.company.reports') : '#' }}"
+                            @unless($hasCompanyReportsRoute)
+                                onclick="return false;"
+                            @endunless
+                        >
+                            گزارش اعضا
+
+                            @unless($hasCompanyReportsRoute)
+                                <span class="menu-soon-badge">به‌زودی</span>
+                            @endunless
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
 
             {{-- بخش محتوا --}}
             <li class="side-item side-item-category">بخش محتوا</li>
