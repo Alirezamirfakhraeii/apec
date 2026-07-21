@@ -1,345 +1,292 @@
-@php
-    use Illuminate\Support\Str;
-
-    $activeFilters = collect([
-        request('q'),
-        request('membership_status'),
-        request('membership_type'),
-        request('activity_type'),
-        request('date_from'),
-        request('date_to'),
-     request('sort') !== null && request('sort') !== 'name_asc'
-    ? request('sort')
-    : null,
-    ])->filter(function ($value) {
-        return $value !== null && $value !== '';
-    })->count();
-
-    $pagination = $companies->appends(request()->query());
-@endphp
-
 @extends('back.admin.layouts.master')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('back/css/posts/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('back/css/companies/index.css') }}">
 @endpush
 
 @section('content')
 
-    <div class="news-admin-wrapper">
+    @php
+        $activeFilters = collect([
+            request('q'),
+            request('membership_status'),
+            request('membership_type'),
+            request('activity_type'),
+            request('date_from'),
+            request('date_to'),
+            request('sort') && request('sort') !== 'name_asc'
+                ? request('sort')
+                : null,
+            request('per_page') && (int) request('per_page') !== 10
+                ? request('per_page')
+                : null,
+        ])->filter()->count();
 
-        <br>
+        $pagination = $companies->appends(request()->query());
+    @endphp
+
+    <div class="company-admin-wrapper">
 
         {{-- هدر صفحه --}}
-        <div class="news-page-header mb-4 d-flex align-items-center justify-content-between">
-            <div>
-                <h4 class="news-page-title">
-                    <i class="fa fa-building ml-2"></i>
-                    مدیریت اعضا
-                </h4>
+        <div class="company-page-header">
+            <div class="company-page-heading">
+                <span class="company-page-icon">
+                    <i class="fa fa-building"></i>
+                </span>
 
-                <div class="news-page-subtitle">
-                    مدیریت، جستجو، فیلتر و مشاهده اطلاعات شرکت‌های عضو انجمن
+                <div>
+                    <h1>مدیریت اعضا و شرکت‌ها</h1>
+
+                    <p>
+                        مشاهده، جستجو و مدیریت اطلاعات شرکت‌های عضو انجمن
+                    </p>
                 </div>
             </div>
 
             <a href="{{ route('admin.company.create') }}"
-               class="btn news-create-btn">
+               class="company-create-btn">
 
-                <i class="fa fa-plus-circle ml-2"></i>
-                ثبت عضو جدید
+                <i class="fa fa-plus ml-1"></i>
+                ثبت شرکت جدید
             </a>
         </div>
 
-        {{-- پیام موفقیت --}}
+        {{-- پیام‌ها --}}
         @if(session()->has('success'))
-            <div class="alert alert-success font_13 border-0 shadow-sm rounded mb-4"
-                 role="alert">
-
-                <button aria-label="Close"
-                        class="close"
-                        data-bs-dismiss="alert"
-                        type="button"
-                        style="line-height: 0;">
-
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
+            <div class="alert alert-success company-alert">
                 <i class="fa fa-check-circle ml-2"></i>
-                {{ session()->get('success') }}
+                {{ session('success') }}
             </div>
         @endif
 
-        {{-- کارت‌های آماری --}}
-        <div class="row row-sm mb-4">
+        @if(session()->has('error'))
+            <div class="alert alert-danger company-alert">
+                <i class="fa fa-exclamation-circle ml-2"></i>
+                {{ session('error') }}
+            </div>
+        @endif
+
+        {{-- آمار --}}
+        <div class="row row-sm company-stats-row">
 
             <div class="col-xl-3 col-md-6">
-                <div class="card stat-card p-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="stat-label">
-                                کل اعضای سیستم
-                            </div>
+                <div class="company-stat-card">
+                    <div>
+                        <span class="company-stat-label">کل شرکت‌ها</span>
 
-                            <h4 class="stat-value">
-                                {{ number_format($totalCompanies) }}
-                            </h4>
-                        </div>
-
-                        <div class="stat-icon">
-                            <i class="fa fa-building"></i>
-                        </div>
+                        <strong class="company-stat-value">
+                            {{ number_format($totalCompanies) }}
+                        </strong>
                     </div>
+
+                    <span class="company-stat-icon">
+                        <i class="fa fa-building"></i>
+                    </span>
                 </div>
             </div>
 
             <div class="col-xl-3 col-md-6">
-                <div class="card stat-card p-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="stat-label">
-                                نتایج جستجو
-                            </div>
+                <div class="company-stat-card">
+                    <div>
+                        <span class="company-stat-label">نتایج فیلترشده</span>
 
-                            <h4 class="stat-value">
-                                {{ number_format($companies->total()) }}
-                            </h4>
-                        </div>
-
-                        <div class="stat-icon">
-                            <i class="fa fa-list-ul"></i>
-                        </div>
+                        <strong class="company-stat-value">
+                            {{ number_format($companies->total()) }}
+                        </strong>
                     </div>
+
+                    <span class="company-stat-icon">
+                        <i class="fa fa-search"></i>
+                    </span>
                 </div>
             </div>
 
             <div class="col-xl-3 col-md-6">
-                <div class="card stat-card p-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="stat-label">
-                                صفحه فعلی
-                            </div>
+                <div class="company-stat-card">
+                    <div>
+                        <span class="company-stat-label">صفحه فعلی</span>
 
-                            <h4 class="stat-value">
-                                {{ $companies->currentPage() }}
-
-                                <span class="font_12 text-muted">
-                                    از {{ $companies->lastPage() }}
-                                </span>
-                            </h4>
-                        </div>
-
-                        <div class="stat-icon">
-                            <i class="fa fa-clone"></i>
-                        </div>
+                        <strong class="company-stat-value">
+                            {{ $companies->currentPage() }}
+                        </strong>
                     </div>
+
+                    <span class="company-stat-icon">
+                        <i class="fa fa-file-alt"></i>
+                    </span>
                 </div>
             </div>
 
             <div class="col-xl-3 col-md-6">
-                <div class="card stat-card p-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="stat-label">
-                                فیلترهای فعال
-                            </div>
+                <div class="company-stat-card">
+                    <div>
+                        <span class="company-stat-label">فیلترهای فعال</span>
 
-                            <h4 class="stat-value">
-                                {{ $activeFilters }}
-                            </h4>
-                        </div>
-
-                        <div class="stat-icon">
-                            <i class="fa fa-filter"></i>
-                        </div>
+                        <strong class="company-stat-value">
+                            {{ $activeFilters }}
+                        </strong>
                     </div>
+
+                    <span class="company-stat-icon">
+                        <i class="fa fa-filter"></i>
+                    </span>
                 </div>
             </div>
 
         </div>
 
         {{-- فیلترها --}}
-        <div class="card filter-card mb-4">
-            <div class="card-body">
+        <div class="company-filter-card">
 
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <div>
-                        <h6 class="filter-title mb-1">
-                            <i class="fa fa-search ml-2"></i>
-                            جستجو و فیلتر اعضا
-                        </h6>
+            <div class="company-filter-header">
+                <div>
+                    <h2>
+                        <i class="fa fa-search ml-1"></i>
+                        جستجو و فیلتر
+                    </h2>
 
-                        <div class="filter-subtitle">
-                            نام شرکت، شناسه ملی، شماره عضویت، وضعیت و نوع فعالیت را مشخص کنید.
-                        </div>
-                    </div>
-
-                    @if($activeFilters > 0)
-                        <a href="{{ route('admin.company.index') }}"
-                           class="btn btn-outline-secondary filter-reset-btn">
-
-                            <i class="fa fa-times ml-1"></i>
-                            حذف فیلترها
-                        </a>
-                    @endif
+                    <p>
+                        اطلاعات موردنظر را وارد کرده و نتایج را محدود کنید.
+                    </p>
                 </div>
 
-                <form action="{{ route('admin.company.index') }}"
-                      method="GET">
+                @if($activeFilters > 0)
+                    <a href="{{ route('admin.company.index') }}"
+                       class="company-reset-btn">
 
-                    <div class="row row-sm">
+                        <i class="fa fa-times ml-1"></i>
+                        حذف فیلترها
+                    </a>
+                @endif
+            </div>
 
-                        {{-- جستجو --}}
-                        <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                            <label>
-                                جستجوی عضو
-                            </label>
+            <form action="{{ route('admin.company.index') }}"
+                  method="GET">
+
+                <div class="row row-sm">
+
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label for="q">جستجوی عمومی</label>
 
                             <input type="text"
                                    name="q"
-                                   value="{{ request('q') }}"
+                                   id="q"
                                    class="form-control"
-                                   placeholder="نام، شناسه ملی، شماره عضویت...">
+                                   value="{{ request('q') }}"
+                                   placeholder="نام، شناسه ملی، شماره عضویت، تلفن یا ایمیل">
                         </div>
+                    </div>
 
-                        {{-- وضعیت عضویت --}}
-                        <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
-                            <label>
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="form-group">
+                            <label for="membership_status">
                                 وضعیت عضویت
                             </label>
 
                             <select name="membership_status"
+                                    id="membership_status"
                                     class="form-control">
 
-                                <option value="">
-                                    همه وضعیت‌ها
-                                </option>
+                                <option value="">همه وضعیت‌ها</option>
 
-                                <option value="فعال"
-                                    {{ request('membership_status') === 'فعال' ? 'selected' : '' }}>
-                                    فعال
-                                </option>
+                                @foreach(['فعال', 'تعلیق', 'لغو'] as $status)
+                                    <option value="{{ $status }}"
+                                        {{ request('membership_status') === $status ? 'selected' : '' }}>
 
-                                <option value="تعلیق"
-                                    {{ request('membership_status') === 'تعلیق' ? 'selected' : '' }}>
-                                    تعلیق
-                                </option>
-
-                                <option value="لغو"
-                                    {{ request('membership_status') === 'لغو' ? 'selected' : '' }}>
-                                    لغو
-                                </option>
-                            </select>
-                        </div>
-
-                        {{-- نوع عضویت --}}
-                        <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
-                            <label>
-                                نوع عضویت
-                            </label>
-
-                            <select name="membership_type"
-                                    class="form-control">
-
-                                <option value="">
-                                    همه انواع
-                                </option>
-
-                                <option value="اصلی"
-                                    {{ request('membership_type') === 'اصلی' ? 'selected' : '' }}>
-                                    اصلی
-                                </option>
-
-                                <option value="وابسته"
-                                    {{ request('membership_type') === 'وابسته' ? 'selected' : '' }}>
-                                    وابسته
-                                </option>
-                            </select>
-                        </div>
-
-                        {{-- نوع فعالیت --}}
-                        <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                            <label>
-                                نوع فعالیت
-                            </label>
-
-                            <input type="text"
-                                   name="activity_type"
-                                   value="{{ request('activity_type') }}"
-                                   class="form-control"
-                                   placeholder="بخشی از عنوان فعالیت...">
-                        </div>
-
-                        {{-- تعداد نمایش --}}
-                        <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
-                            <label>
-                                تعداد نمایش
-                            </label>
-
-                            <select name="per_page"
-                                    class="form-control">
-
-                                @foreach([10, 20, 50, 100] as $perPage)
-                                    <option value="{{ $perPage }}"
-                                        {{ (int) request('per_page', 10) === $perPage ? 'selected' : '' }}>
-                                        {{ $perPage }} رکورد
+                                        {{ $status }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
+                    </div>
 
-                        {{-- از تاریخ --}}
-                        <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
-                            <label>
-                                ثبت‌شده از تاریخ
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="form-group">
+                            <label for="membership_type">
+                                نوع عضویت
                             </label>
+
+                            <select name="membership_type"
+                                    id="membership_type"
+                                    class="form-control">
+
+                                <option value="">همه انواع</option>
+
+                                @foreach(['اصلی', 'وابسته'] as $type)
+                                    <option value="{{ $type }}"
+                                        {{ request('membership_type') === $type ? 'selected' : '' }}>
+
+                                        {{ $type }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label for="activity_type">نوع فعالیت</label>
+
+                            <input type="text"
+                                   name="activity_type"
+                                   id="activity_type"
+                                   class="form-control"
+                                   value="{{ request('activity_type') }}"
+                                   placeholder="مثلاً تولید، پیمانکاری یا EPC">
+                        </div>
+                    </div>
+
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="form-group">
+                            <label for="date_from">از تاریخ</label>
 
                             <input type="date"
                                    name="date_from"
-                                   value="{{ request('date_from') }}"
-                                   class="form-control">
+                                   id="date_from"
+                                   class="form-control"
+                                   value="{{ request('date_from') }}">
                         </div>
+                    </div>
 
-                        {{-- تا تاریخ --}}
-                        <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
-                            <label>
-                                ثبت‌شده تا تاریخ
-                            </label>
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="form-group">
+                            <label for="date_to">تا تاریخ</label>
 
                             <input type="date"
                                    name="date_to"
-                                   value="{{ request('date_to') }}"
-                                   class="form-control">
+                                   id="date_to"
+                                   class="form-control"
+                                   value="{{ request('date_to') }}">
                         </div>
+                    </div>
 
-                        {{-- مرتب‌سازی --}}
-                        <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
-                            <label>
-                                مرتب‌سازی
-                            </label>
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="form-group">
+                            <label for="sort">مرتب‌سازی</label>
 
                             <select name="sort"
+                                    id="sort"
                                     class="form-control">
 
-                                <option value="latest"
-                                    {{ request('sort', 'latest') === 'latest' ? 'selected' : '' }}>
-                                    جدیدترین رکوردها
-                                </option>
-
-                                <option value="oldest"
-                                    {{ request('sort') === 'oldest' ? 'selected' : '' }}>
-                                    قدیمی‌ترین رکوردها
-                                </option>
-
-                                <option value="latest"
-                                    {{ request('sort') === 'latest' ? 'selected' : '' }}>
-                                    جدیدترین رکوردها
+                                <option value="name_asc"
+                                    {{ request('sort', 'name_asc') === 'name_asc' ? 'selected' : '' }}>
+                                    نام صعودی
                                 </option>
 
                                 <option value="name_desc"
                                     {{ request('sort') === 'name_desc' ? 'selected' : '' }}>
-                                    نام شرکت؛ نزولی
+                                    نام نزولی
+                                </option>
+
+                                <option value="latest"
+                                    {{ request('sort') === 'latest' ? 'selected' : '' }}>
+                                    جدیدترین
+                                </option>
+
+                                <option value="oldest"
+                                    {{ request('sort') === 'oldest' ? 'selected' : '' }}>
+                                    قدیمی‌ترین
                                 </option>
 
                                 <option value="membership"
@@ -348,410 +295,283 @@
                                 </option>
                             </select>
                         </div>
-
                     </div>
 
-                    <div class="d-flex justify-content-end">
-                        <button type="submit"
-                                class="btn btn-primary filter-submit-btn">
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="form-group">
+                            <label for="per_page">تعداد نمایش</label>
 
-                            <i class="fa fa-filter ml-2"></i>
+                            <select name="per_page"
+                                    id="per_page"
+                                    class="form-control">
+
+                                @foreach([10, 20, 50, 100] as $perPage)
+                                    <option value="{{ $perPage }}"
+                                        {{ (int) request('per_page', 10) === $perPage ? 'selected' : '' }}>
+
+                                        {{ $perPage }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-12 company-filter-actions">
+                        <button type="submit"
+                                class="company-filter-submit">
+
+                            <i class="fa fa-filter ml-1"></i>
                             اعمال فیلتر
                         </button>
+
+                        <a href="{{ route('admin.company.index') }}"
+                           class="company-filter-clear">
+
+                            پاک‌کردن
+                        </a>
                     </div>
 
-                </form>
-            </div>
+                </div>
+            </form>
+
         </div>
 
-        {{-- جدول اعضا --}}
-        <div class="card editorial-table-card">
+        {{-- جدول --}}
+        <div class="company-table-card">
 
-            <div class="editorial-table-header">
+            <div class="company-table-header">
                 <div>
-                    <h4 class="card-title editorial-title mb-1">
-                        <i class="fa fa-address-book ml-2"></i>
-                        فهرست اعضای انجمن
-                    </h4>
+                    <h2>
+                        <i class="fa fa-list ml-1"></i>
+                        فهرست شرکت‌ها
+                    </h2>
 
-                    <div class="editorial-subtitle">
+                    <p>
                         {{ number_format($companies->total()) }}
-                        عضو مطابق با جستجوی شما پیدا شد.
-                    </div>
+                        شرکت پیدا شد.
+                    </p>
                 </div>
 
-                <div class="d-none d-md-flex align-items-center">
-                    <span class="editorial-page-badge">
-                        صفحه {{ $companies->currentPage() }}
-                        از {{ $companies->lastPage() }}
-                    </span>
-                </div>
+                <span class="company-page-badge">
+                    صفحه {{ $companies->currentPage() }}
+                    از {{ $companies->lastPage() }}
+                </span>
             </div>
 
-            <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table company-table mb-0">
 
-                <div class="table-responsive">
-                    <table class="table editorial-table mb-0 font_13 text-center">
+                    <thead>
+                    <tr>
+                        <th class="company-row-number">ردیف</th>
+                        <th class="company-logo-column">لوگو</th>
+                        <th class="text-right">اطلاعات شرکت</th>
+                        <th>شناسه ملی</th>
+                        <th>عضویت</th>
+                        <th>وضعیت</th>
+                        <th class="company-action-column">عملیات</th>
+                    </tr>
+                    </thead>
 
-                        <thead>
+                    <tbody>
+                    @forelse($companies as $key => $company)
                         <tr>
-                            <th style="width: 5%;">
-                                ردیف
-                            </th>
 
-                            <th style="width: 7%;">
-                                شرکت
-                            </th>
+                            <td class="company-row-number">
+                                {{ $companies->firstItem() + $key }}
+                            </td>
 
-                            <th class="text-right" style="width: 25%;">
-                                نام شرکت
-                            </th>
-
-                            <th style="width: 12%;">
-                                شناسه ملی
-                            </th>
-
-                            <th style="width: 10%;">
-                                شماره عضویت
-                            </th>
-
-                            <th style="width: 10%;">
-                                نوع عضویت
-                            </th>
-
-                            <th style="width: 10%;">
-                                وضعیت
-                            </th>
-
-                            <th style="width: 10%;">
-                                تلفن
-                            </th>
-
-                            <th style="width: 11%;">
-                                عملیات
-                            </th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @forelse($companies as $key => $company)
-
-                            <tr>
-                                {{-- ردیف --}}
-                                <td class="editorial-index">
-                                    {{ $companies->firstItem() + $key }}
-                                </td>
-
-                                {{-- آیکن شرکت --}}
-                                <td>
-                                    <div class="editorial-empty-thumb mx-auto">
+                            <td>
+                                @if($company->logo_url)
+                                    <div class="company-logo-box">
+                                        <img src="{{ $company->logo_url }}"
+                                             alt="{{ $company->registered_name }}">
+                                    </div>
+                                @else
+                                    <div class="company-logo-placeholder">
                                         <i class="fa fa-building"></i>
                                     </div>
-                                </td>
+                                @endif
+                            </td>
 
-                                {{-- نام شرکت --}}
-                                <td class="text-right">
-                                    <a href="{{ route('admin.company.edit', $company->id) }}"
-                                       class="editorial-post-title d-block">
+                            <td class="text-right">
+                                <a href="{{ route('admin.company.edit', $company) }}"
+                                   class="company-name">
 
-                                        {{ Str::limit(
-                                            $company->registered_name ?: 'نام شرکت ثبت نشده',
-                                            65
-                                        ) }}
+                                    {{ $company->registered_name ?: 'بدون نام ثبتی' }}
+                                </a>
+
+                                <div class="company-secondary-text">
+                                    {{ $company->company_short_name ?: 'نام اختصاری ثبت نشده' }}
+                                </div>
+
+                                @if($company->company_name_en)
+                                    <div class="company-en-name"
+                                         dir="ltr">
+
+                                        {{ $company->company_name_en }}
+                                    </div>
+                                @endif
+                            </td>
+
+                            <td>
+                                <span class="company-national-id"
+                                      dir="ltr">
+
+                                    {{ $company->national_id ?: '—' }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="company-membership-type">
+                                    {{ $company->membership_type ?: 'نامشخص' }}
+                                </span>
+
+                                <div class="company-secondary-text">
+                                    شماره:
+                                    {{ $company->membership_number ?: '—' }}
+                                </div>
+                            </td>
+
+                            <td>
+                                @if($company->membership_status === 'فعال')
+                                    <span class="company-status company-status-active">
+                                        فعال
+                                    </span>
+                                @elseif($company->membership_status === 'تعلیق')
+                                    <span class="company-status company-status-suspended">
+                                        تعلیق
+                                    </span>
+                                @elseif($company->membership_status === 'لغو')
+                                    <span class="company-status company-status-cancelled">
+                                        لغو
+                                    </span>
+                                @else
+                                    <span class="company-status company-status-unknown">
+                                        نامشخص
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td>
+                                <div class="company-actions">
+
+                                    <a href="{{ route('admin.company.edit', $company) }}"
+                                       class="company-action-btn company-edit-btn"
+                                       title="ویرایش">
+
+                                        <i class="fa fa-edit"></i>
                                     </a>
 
-                                    <div class="editorial-date mt-1">
-                                        @if($company->company_short_name)
-                                            <i class="fa fa-tag ml-1"></i>
-                                            {{ $company->company_short_name }}
-                                        @else
-                                            <i class="fa fa-calendar ml-1"></i>
-                                            ثبت در سیستم:
-                                            {{ optional($company->created_at)->format('Y/m/d') }}
-                                        @endif
-                                    </div>
-                                </td>
+                                    <form action="{{ route('admin.company.destroy', $company) }}"
+                                          method="POST"
+                                          onsubmit="return confirm('آیا از حذف این شرکت اطمینان دارید؟');">
 
-                                {{-- شناسه ملی --}}
-                                <td>
-                                    @if($company->national_id)
-                                        <span dir="ltr">
-                                                {{ $company->national_id }}
-                                            </span>
-                                    @else
-                                        <span class="text-muted">
-                                                ثبت نشده
-                                            </span>
-                                    @endif
-                                </td>
+                                        @csrf
+                                        @method('DELETE')
 
-                                {{-- شماره عضویت --}}
-                                <td>
-                                    @if($company->membership_number)
-                                        <span class="editorial-category">
-                                                {{ $company->membership_number }}
-                                            </span>
-                                    @else
-                                        <span class="text-muted">
-                                                بدون شماره
-                                            </span>
-                                    @endif
-                                </td>
+                                        <button type="submit"
+                                                class="company-action-btn company-delete-btn"
+                                                title="حذف">
 
-                                {{-- نوع عضویت --}}
-                                <td>
-                                        <span class="editorial-category">
-                                            {{ $company->membership_type ?: 'نامشخص' }}
-                                        </span>
-                                </td>
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
 
-                                {{-- وضعیت عضویت --}}
-                                <td>
-                                    @if($company->membership_status === 'فعال')
-                                        <span class="editorial-status published">
-                                                فعال
-                                            </span>
+                                </div>
+                            </td>
 
-                                    @elseif($company->membership_status === 'تعلیق')
-                                        <span class="editorial-status draft">
-                                                تعلیق
-                                            </span>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7">
+                                <div class="company-empty-state">
 
-                                    @elseif($company->membership_status === 'لغو')
-                                        <span class="editorial-status draft">
-                                                لغو
-                                            </span>
+                                    <span class="company-empty-icon">
+                                        <i class="fa fa-building"></i>
+                                    </span>
 
-                                    @else
-                                        <span class="editorial-status draft">
-                                                نامشخص
-                                            </span>
-                                    @endif
-                                </td>
+                                    <h3>شرکتی پیدا نشد</h3>
 
-                                {{-- تلفن --}}
-                                <td>
-                                    @if($company->phone)
-                                        <span dir="ltr">
-                                                {{ $company->phone }}
-                                            </span>
-                                    @else
-                                        <span class="text-muted">
-                                                ثبت نشده
-                                            </span>
-                                    @endif
-                                </td>
+                                    <p>
+                                        فیلترها را تغییر دهید یا شرکت جدیدی ثبت کنید.
+                                    </p>
 
-                                {{-- عملیات --}}
-                                <td>
-                                    <div class="editorial-actions">
+                                    <a href="{{ route('admin.company.create') }}"
+                                       class="company-create-btn">
 
-                                        <a href="{{ route('admin.company.show', $company->id) }}"
-                                           class="editorial-action-btn editorial-edit-btn"
-                                           title="مشاهده">
+                                        ثبت شرکت جدید
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
 
-                                            <i class="fa fa-eye"></i>
-                                        </a>
+                </table>
+            </div>
 
-                                        <a href="{{ route('admin.company.edit', $company->id) }}"
-                                           class="editorial-action-btn editorial-edit-btn"
-                                           title="ویرایش">
+            <div class="company-table-footer">
 
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-
-                                        <form action="{{ route('admin.company.destroy', $company->id) }}"
-                                              method="POST"
-                                              onsubmit="return confirm('آیا از حذف این عضو اطمینان دارید؟');"
-                                              class="editorial-delete-form">
-
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit"
-                                                    class="editorial-action-btn editorial-delete-btn"
-                                                    title="حذف">
-
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
-
-                                    </div>
-                                </td>
-                            </tr>
-
-                        @empty
-
-                            <tr>
-                                <td colspan="9"
-                                    class="editorial-empty-state">
-
-                                    <i class="fa fa-folder-open d-block mb-3"></i>
-
-                                    <div class="fw-bold text-dark mb-1">
-                                        عضوی پیدا نشد
-                                    </div>
-
-                                    <div class="text-muted">
-                                        با تغییر فیلترها یا حذف جستجو دوباره امتحان کنید.
-                                    </div>
-
-                                    @if($activeFilters > 0)
-                                        <a href="{{ route('admin.company.index') }}"
-                                           class="btn btn-outline-secondary mt-3 px-4">
-
-                                            حذف همه فیلترها
-                                        </a>
-                                    @else
-                                        <a href="{{ route('admin.company.create') }}"
-                                           class="btn btn-primary mt-3 px-4">
-
-                                            ثبت اولین عضو
-                                        </a>
-                                    @endif
-                                </td>
-                            </tr>
-
-                        @endforelse
-                        </tbody>
-
-                    </table>
+                <div class="company-result-info">
+                    @if($companies->total() > 0)
+                        نمایش
+                        <strong>{{ $companies->firstItem() }}</strong>
+                        تا
+                        <strong>{{ $companies->lastItem() }}</strong>
+                        از
+                        <strong>{{ number_format($companies->total()) }}</strong>
+                        شرکت
+                    @else
+                        هیچ شرکتی برای نمایش وجود ندارد.
+                    @endif
                 </div>
 
-                {{-- فوتر و صفحه‌بندی --}}
-                <div class="editorial-footer">
+                @if($companies->hasPages())
+                    <nav class="company-pagination-nav">
+                        <ul class="company-pagination">
 
-                    <div class="editorial-pagination-info">
-                        @if($companies->total() > 0)
-                            نمایش
+                            <li class="{{ $companies->onFirstPage() ? 'disabled' : '' }}">
+                                @if($companies->onFirstPage())
+                                    <span>قبلی</span>
+                                @else
+                                    <a href="{{ $pagination->previousPageUrl() }}">
+                                        قبلی
+                                    </a>
+                                @endif
+                            </li>
 
-                            <strong>
-                                {{ $companies->firstItem() }}
-                            </strong>
-
-                            تا
-
-                            <strong>
-                                {{ $companies->lastItem() }}
-                            </strong>
-
-                            از
-
-                            <strong>
-                                {{ number_format($companies->total()) }}
-                            </strong>
-
-                            عضو
-                        @else
-                            هیچ عضوی برای نمایش وجود ندارد
-                        @endif
-                    </div>
-
-                    <div class="editorial-pagination-links">
-
-                        @if($companies->hasPages())
-
-                            @php
-                                $currentPage = $companies->currentPage();
-                                $lastPage = $companies->lastPage();
-
-                                $startPage = max($currentPage - 2, 1);
-                                $endPage = min($startPage + 4, $lastPage);
-                                $startPage = max($endPage - 4, 1);
-                            @endphp
-
-                            <nav class="custom-pagination-nav"
-                                 aria-label="Page navigation">
-
-                                <ul class="editorial-pagination">
-
-                                    {{-- قبلی --}}
-                                    <li class="{{ $companies->onFirstPage() ? 'disabled' : '' }}">
-                                        @if($companies->onFirstPage())
-                                            <span>
-                                                قبلی
-                                            </span>
-                                        @else
-                                            <a href="{{ $pagination->previousPageUrl() }}">
-                                                قبلی
-                                            </a>
-                                        @endif
-                                    </li>
-
-                                    {{-- صفحه اول --}}
-                                    @if($startPage > 1)
-                                        <li>
-                                            <a href="{{ $pagination->url(1) }}">
-                                                1
-                                            </a>
-                                        </li>
-
-                                        @if($startPage > 2)
-                                            <li class="dots">
-                                                <span>...</span>
-                                            </li>
-                                        @endif
+                            @foreach($pagination->getUrlRange(
+                                max(1, $companies->currentPage() - 2),
+                                min($companies->lastPage(), $companies->currentPage() + 2)
+                            ) as $page => $url)
+                                <li class="{{ $page === $companies->currentPage() ? 'active' : '' }}">
+                                    @if($page === $companies->currentPage())
+                                        <span>{{ $page }}</span>
+                                    @else
+                                        <a href="{{ $url }}">
+                                            {{ $page }}
+                                        </a>
                                     @endif
+                                </li>
+                            @endforeach
 
-                                    {{-- صفحات میانی --}}
-                                    @for($page = $startPage; $page <= $endPage; $page++)
-                                        <li class="{{ $page === $currentPage ? 'active' : '' }}">
+                            <li class="{{ $companies->hasMorePages() ? '' : 'disabled' }}">
+                                @if($companies->hasMorePages())
+                                    <a href="{{ $pagination->nextPageUrl() }}">
+                                        بعدی
+                                    </a>
+                                @else
+                                    <span>بعدی</span>
+                                @endif
+                            </li>
 
-                                            @if($page === $currentPage)
-                                                <span>
-                                                    {{ $page }}
-                                                </span>
-                                            @else
-                                                <a href="{{ $pagination->url($page) }}">
-                                                    {{ $page }}
-                                                </a>
-                                            @endif
-                                        </li>
-                                    @endfor
-
-                                    {{-- صفحه آخر --}}
-                                    @if($endPage < $lastPage)
-
-                                        @if($endPage < $lastPage - 1)
-                                            <li class="dots">
-                                                <span>...</span>
-                                            </li>
-                                        @endif
-
-                                        <li>
-                                            <a href="{{ $pagination->url($lastPage) }}">
-                                                {{ $lastPage }}
-                                            </a>
-                                        </li>
-                                    @endif
-
-                                    {{-- بعدی --}}
-                                    <li class="{{ $companies->hasMorePages() ? '' : 'disabled' }}">
-
-                                        @if($companies->hasMorePages())
-                                            <a href="{{ $pagination->nextPageUrl() }}">
-                                                بعدی
-                                            </a>
-                                        @else
-                                            <span>
-                                                بعدی
-                                            </span>
-                                        @endif
-                                    </li>
-
-                                </ul>
-                            </nav>
-
-                        @else
-                            <span class="single-page-label">
-                                فقط یک صفحه
-                            </span>
-                        @endif
-
-                    </div>
-                </div>
+                        </ul>
+                    </nav>
+                @endif
 
             </div>
+
         </div>
 
     </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Company extends Model
 {
@@ -24,4 +25,15 @@ class Company extends Model
         'activity_mc' => 'boolean',
         'activity_manufacturing' => 'boolean',
     ];
+
+
+    public function getLogoUrlAttribute(): ?string
+    {
+        if (! $this->logo) {
+            return null;
+        }
+
+        return Storage::disk('public')->url($this->logo);
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\MenuItem;
 use App\Models\Post;
 use App\Models\Setting;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        Paginator::useBootstrapFive();
+
+
+
+
         View::composer('*', function ($view) {
             $frontMenuItems = Cache::remember('global_front_menu_items', now()->addDays(7), function () {
                 return MenuItem::with([
@@ -63,5 +70,8 @@ class AppServiceProvider extends ServiceProvider
                 'footerCategories' => $footerCategories
             ]);
         });
+
+
     }
+
 }

@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Features\Admin\Company\Actions\StoreCompanyAction;
+use App\Features\Admin\Company\Actions\UpdateCompanyAction;
+use App\Features\Admin\Company\DTOs\CompanyData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Company\StoreCompanyRequest;
+use App\Http\Requests\Admin\Company\UpdateCompanyRequest;
 use App\Models\Company;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\ToArray;
 use Throwable;
@@ -171,9 +178,32 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(
+        StoreCompanyRequest $request,
+        StoreCompanyAction $storeCompanyAction
+    ): RedirectResponse
     {
-        //
+        try {
+            $companyData = CompanyData::fromRequest($request);
+
+            $company = $storeCompanyAction->execute($companyData);
+
+            return redirect()
+                ->route('admin.company.edit', $company)
+                ->with(
+                    'success',
+                    'اطلاعات شرکت با موفقیت ثبت شد.'
+                );
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'خطایی هنگام ثبت اطلاعات شرکت رخ داد.'
+                );
+        }
     }
 
     /**
@@ -187,25 +217,79 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Company $company)
     {
-        //
+        return view('back.admin.companies.edit', compact('company')
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(
+        UpdateCompanyRequest $request,
+        Company $company,
+        UpdateCompanyAction $updateCompanyAction
+    ): RedirectResponse {
+        try {
+            $companyData = CompanyData::fromRequest($request);
+
+            $updatedCompany = $updateCompanyAction->execute(
+                $company,
+                $companyData
+            );
+
+            return redirect()
+                ->route('admin.company.edit', $updatedCompany)
+                ->with(
+                    'success',
+                    'اطلاعات شرکت با موفقیت ویرایش شد.'
+                );
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'خطایی هنگام ویرایش اطلاعات شرکت رخ داد.'
+                );
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Company $company): RedirectResponse
     {
-        //
+        try {
+            $logoPath = $company->logo;
+
+            DB::transaction(function () use ($company) {
+                $company->delete();
+            });
+
+            if (
+                $logoPath &&
+                Storage::disk('public')->exists($logoPath)
+            ) {
+                Storage::disk('public')->delete($logoPath);
+            }
+
+            return redirect()
+                ->route('admin.company.index')
+                ->with(
+                    'success',
+                    'شرکت با موفقیت حذف شد.'
+                );
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return back()->with(
+                'error',
+                'خطایی هنگام حذف شرکت رخ داد.'
+            );
+        }
     }
 
     public function importExcel(Request $request)

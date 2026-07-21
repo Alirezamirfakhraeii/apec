@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Front\BlogCategoryController;
 use App\Http\Controllers\Front\CategoryController;
+use App\Http\Controllers\Front\CompanyController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\DynamicPageController;
 use App\Http\Controllers\Front\HomeController;
@@ -39,6 +40,12 @@ Route::get('/podcasts', [PodcastController::class, 'archive'])
 
 Route::get('/contact-us', [ContactController::class, 'index'])->name('front.contact.index');
 Route::post('/contact-us', [ContactController::class, 'store'])->name('front.contact.store');
+
+Route::get('/association/members', [CompanyController::class, 'index'])
+    ->name('companies.index');
+
+Route::get('/companies/{company}', [CompanyController::class, 'show'])
+    ->name('companies.show');
 
 
 Route::get('/contact', [ContactController::class, 'show'])->name('front.contact');
