@@ -367,6 +367,20 @@ abstract class CompanyRequest extends FormRequest
                 'nullable',
                 'boolean',
             ],
+
+
+            'activity_field_ids' => [
+                'nullable',
+                'array',
+            ],
+
+            'activity_field_ids.*' => [
+                'integer',
+                'distinct',
+                'exists:activity_fields,id',
+            ],
+
+
         ];
     }
 
@@ -501,6 +515,7 @@ abstract class CompanyRequest extends FormRequest
             '*.boolean' =>
                 'مقدار انتخاب‌شده باید بله یا خیر باشد.',
         ];
+
     }
 
     public function attributes(): array

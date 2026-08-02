@@ -6,6 +6,7 @@ use App\Http\Controllers\Front\CompanyController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\DynamicPageController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\MediaDownloadController;
 use App\Http\Controllers\Front\NewsController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Front\PodcastController;
@@ -63,3 +64,4 @@ Route::get('lang/{locale}', function ($locale) {
 Route::get('/board-of-directors', [PageController::class, 'boardOfDirectors'])->name('front.board-of-directors');
 Route::get('/{path}', [DynamicPageController::class, 'show'])->where('path', '.*')->name('front.dynamic');
 
+Route::get('/media/{media}/download', [MediaDownloadController::class, 'download'])->name('media.download');

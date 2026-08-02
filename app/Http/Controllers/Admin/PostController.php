@@ -12,6 +12,8 @@ use App\Models\BlogCategory;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Str;
 
 class PostController extends Controller
 {
@@ -75,6 +77,54 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->route('admin.posts.index')->with('success', 'مطلب حذف شد.');
+    }
+
+
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'upload' => [
+                'required',
+                'image',
+                'mimes:jpg,jpeg,png,webp,gif',
+                'max:5120',
+            ],
+        ]);
+
+        try {
+            $file = $request->file('upload');
+
+            $fileName = Str::uuid()
+                . '.'
+                . strtolower($file->getClientOriginalExtension());
+
+            $path = $file->storeAs(
+                'posts/ckeditor',
+                $fileName,
+                'public'
+            );
+
+            /*
+             * خروجی نمونه:
+             * https://example.com/storage/posts/ckeditor/image.jpg
+             */
+            $imageUrl = asset('storage/' . $path);
+
+            return response()->json([
+                'uploaded' => true,
+                'url'      => $imageUrl,
+            ]);
+        } catch (\Throwable $exception) {
+            report($exception);
+
+            return response()->json([
+                'uploaded' => false,
+                'error' => [
+                    'message' => 'آپلود تصویر با خطا مواجه شد.',
+                ],
+            ], 500);
+        }
     }
 
 

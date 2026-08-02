@@ -34,7 +34,6 @@
                 </div>
 
                 <div class="company-logo-box">
-
                     @if($company->logo)
                         <img src="{{ asset('storage/' . $company->logo) }}"
                              alt="{{ $company->registered_name }}"

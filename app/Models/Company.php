@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 
 class Company extends Model
@@ -35,5 +36,18 @@ class Company extends Model
 
         return Storage::disk('public')->url($this->logo);
     }
+
+    public function activityFields(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            ActivityField::class,
+            'company_activity_field',
+            'company_id',
+            'activity_field_id'
+        );
+    }
+
+
+
 
 }

@@ -8,6 +8,7 @@ use App\Features\Admin\Company\DTOs\CompanyData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Company\StoreCompanyRequest;
 use App\Http\Requests\Admin\Company\UpdateCompanyRequest;
+use App\Models\ActivityField;
 use App\Models\Company;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,7 +27,10 @@ class CompanyController extends Controller
     {
         $totalCompanies = Company::query()->count();
 
-        $query = Company::query();
+        $query = Company::query()->with([
+            'activityFields',
+            'ranks',
+        ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -172,7 +176,22 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('back.admin.companies.create');
+        $activityFields = ActivityField::query()
+            ->where('is_active', true)
+            ->orderByRaw("
+            CASE section
+                WHEN 'discipline' THEN 1
+                WHEN 'work_field' THEN 2
+                WHEN 'industry' THEN 3
+                ELSE 4
+            END
+        ")
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('back.admin.companies.create', compact(
+            'activityFields'
+        ));
     }
 
     /**
@@ -219,7 +238,21 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return view('back.admin.companies.edit', compact('company')
+        $activityFields = ActivityField::query()
+            ->where('is_active', true)
+            ->orderByRaw("
+            CASE section
+                WHEN 'discipline' THEN 1
+                WHEN 'work_field' THEN 2
+                WHEN 'industry' THEN 3
+                ELSE 4
+            END
+        ")
+            ->orderBy('sort_order')
+            ->get();
+
+
+        return view('back.admin.companies.edit', compact('company' , 'activityFields')
         );
     }
 

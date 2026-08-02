@@ -20,6 +20,7 @@ class StoreCompanyRequest extends CompanyRequest
             Rule::unique('companies', 'national_id'),
         ];
 
+
         return $rules;
     }
 }

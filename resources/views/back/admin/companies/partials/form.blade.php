@@ -90,6 +90,11 @@
                 'company' => $company,
             ])
 
+            @include('back.admin.companies.partials.sections.activity-fields', [
+          'company' => $company,
+          'activityFields' => $activityFields,
+          ])
+
         </div>
 
         <div class="col-xl-4 col-lg-4 col-md-12">
@@ -111,13 +116,15 @@
                 'company' => $company,
             ])
 
+
+
+
             @if(!$isEdit)
                 @include('back.admin.companies.partials.sections.excel-import')
             @endif
 
             <button type="submit"
                     class="btn btn-primary btn-block btn-lg font_14 fw-bold box-shadow-3">
-
                 <i class="fa fa-check-circle ml-1"></i>
                 {{ $submitLabel }}
             </button>

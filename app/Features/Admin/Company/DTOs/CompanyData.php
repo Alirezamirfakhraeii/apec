@@ -5,13 +5,13 @@ namespace App\Features\Admin\Company\DTOs;
 use App\Http\Requests\Admin\Company\CompanyRequest;
 use Illuminate\Http\UploadedFile;
 
-final readonly class
-CompanyData
+final readonly class CompanyData
 {
     public function __construct(
         private array $attributes,
         public ?UploadedFile $logo,
         public bool $removeLogo,
+        public array $activityFieldIds = [],
     ) {
     }
 
@@ -33,12 +33,26 @@ CompanyData
         $removeLogo = $request->boolean('remove_logo');
 
         /*
-         * فیلدهای کنترلی و فایل نباید مستقیم
-         * وارد Company::create یا update شوند.
+         * شناسه حوزه‌های فعالیت متعلق به جدول واسط هستند،
+         * نه جدول companies.
+         */
+        $activityFieldIds = collect(
+            $validated['activity_field_ids'] ?? []
+        )
+            ->map(fn ($id) => (int) $id)
+            ->filter(fn ($id) => $id > 0)
+            ->unique()
+            ->values()
+            ->all();
+
+        /*
+         * فیلدهای کنترلی، فایل و اطلاعات جدول واسط
+         * نباید مستقیم وارد Company::create یا update شوند.
          */
         unset(
             $validated['logo'],
-            $validated['remove_logo']
+            $validated['remove_logo'],
+            $validated['activity_field_ids']
         );
 
         $validated = self::normalizeBooleanFields($validated);
@@ -47,6 +61,7 @@ CompanyData
             attributes: $validated,
             logo: $logo,
             removeLogo: $removeLogo,
+            activityFieldIds: $activityFieldIds,
         );
     }
 
@@ -89,6 +104,7 @@ CompanyData
 
             if ($attributes[$field] === null || $attributes[$field] === '') {
                 $attributes[$field] = null;
+
                 continue;
             }
 

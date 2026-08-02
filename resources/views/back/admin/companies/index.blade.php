@@ -382,10 +382,11 @@
                             </td>
 
                             <td>
-                                @if($company->logo_url)
+                                @if($company->logo)
                                     <div class="company-logo-box">
-                                        <img src="{{ $company->logo_url }}"
-                                             alt="{{ $company->registered_name }}">
+                                        <img src="{{ asset('storage/' . $company->logo) }}"
+                                             alt="{{ $company->registered_name }}"
+                                             loading="lazy">
                                     </div>
                                 @else
                                     <div class="company-logo-placeholder">

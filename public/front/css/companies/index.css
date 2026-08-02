@@ -736,3 +736,256 @@
         font-size: 15px;
     }
 }
+
+
+
+.companies-advanced-filter-btn {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid #dfe4ec;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #243248;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.companies-advanced-filter-btn:hover {
+    border-color: #8fa3c4;
+    background: #f2f6fb;
+    color: #17243a;
+}
+
+.companies-selected-count {
+    min-width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    padding: 0 7px;
+    border-radius: 20px;
+    background: #243248;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
+
+.companies-advanced-filters {
+    margin-top: 8px;
+    padding: 22px;
+    border: 1px solid #e3e8ef;
+    border-radius: 14px;
+    background: #f8fafc;
+}
+
+.companies-advanced-header {
+    margin-bottom: 20px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid #e3e8ef;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.companies-advanced-title {
+    margin-bottom: 5px;
+    color: #1f2d42;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.companies-advanced-description {
+    margin: 0;
+    color: #7c8798;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.companies-clear-all-activities,
+.companies-clear-group {
+    border: 0;
+    background: transparent;
+    color: #c04a4a;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.companies-activity-group {
+    height: 100%;
+    border: 1px solid #e0e6ee;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.companies-activity-group-header {
+    min-height: 70px;
+    padding: 13px 15px;
+    border-bottom: 1px solid #edf0f5;
+    background: #fbfcfe;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.companies-activity-heading {
+    display: flex;
+    align-items: center;
+}
+
+.companies-activity-icon {
+    width: 38px;
+    height: 38px;
+    margin-left: 9px;
+    border-radius: 9px;
+    background: #edf2f8;
+    color: #2d405f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.companies-activity-heading h4 {
+    margin: 0 0 3px;
+    color: #27364c;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.companies-group-selected-count {
+    color: #8a95a6;
+    font-size: 10px;
+}
+
+.companies-activity-options {
+    max-height: 330px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.companies-activity-option {
+    position: relative;
+    width: 100%;
+    min-height: 43px;
+    margin-bottom: 7px;
+    padding: 8px 10px;
+    border: 1px solid #e7ebf1;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.companies-activity-option:last-child {
+    margin-bottom: 0;
+}
+
+.companies-activity-option:hover {
+    border-color: #aebbd0;
+    background: #f8fafc;
+}
+
+.companies-activity-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.companies-custom-checkbox {
+    width: 21px;
+    height: 21px;
+    margin-left: 8px;
+    border: 2px solid #c6ceda;
+    border-radius: 5px;
+    background: #fff;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.companies-custom-checkbox i {
+    opacity: 0;
+    font-size: 9px;
+    transform: scale(0.7);
+    transition: all 0.2s ease;
+}
+
+.companies-activity-option-title {
+    color: #3b4657;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.companies-activity-checkbox:checked + .companies-custom-checkbox {
+    border-color: #263b59;
+    background: #263b59;
+}
+
+.companies-activity-checkbox:checked + .companies-custom-checkbox i {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.companies-activity-option:has(.companies-activity-checkbox:checked) {
+    border-color: #8799b6;
+    background: #f1f5fa;
+}
+
+.companies-activity-option:has(.companies-activity-checkbox:checked)
+.companies-activity-option-title {
+    color: #1d304d;
+    font-weight: 700;
+}
+
+.companies-filter-footer {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #e4e8ee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.companies-filter-summary {
+    color: #7a8595;
+    font-size: 12px;
+}
+
+.companies-filter-summary strong {
+    color: #263b59;
+}
+
+.companies-empty-filter {
+    padding: 20px 10px;
+    color: #929cab;
+    text-align: center;
+    font-size: 11px;
+}
+
+@media (max-width: 991px) {
+    .companies-advanced-header,
+    .companies-filter-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .companies-filter-actions {
+        width: 100%;
+    }
+
+    .companies-filter-actions .btn {
+        flex: 1;
+    }
+}

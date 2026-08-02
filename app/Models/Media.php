@@ -22,8 +22,25 @@ class Media extends Model
         'uploaded_by',
     ];
 
+
+
+    protected $casts = [
+        'size' => 'integer',
+        'width' => 'integer',
+        'height' => 'integer',
+        'is_main' => 'boolean',
+    ];
+
+
     public function mediable(): MorphTo
     {
         return $this->morphTo();
     }
+
+    public function uploader()
+    {
+        return $this->belongsTo(User::class, 'uploaded_by');
+    }
+
+
 }

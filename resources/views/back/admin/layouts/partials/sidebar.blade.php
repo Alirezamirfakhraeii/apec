@@ -87,6 +87,8 @@
     $hasCompanyCreateRoute = Route::has('admin.company.create');
     $hasCompanyReportsRoute = Route::has('admin.company.reports');
 
+    $hasMediaRoute = Route::has('admin.media.index');
+
     $companyIsOpen = request()->routeIs('admin.company.*');
 
     $staticPagesIsOpen = request()->routeIs(
@@ -319,6 +321,39 @@
                     </svg>
 
                     <span class="side-menu__label">مدیریت صفحات</span>
+                </a>
+            </li>
+
+            <li class="slide">
+                <a
+                    class="side-menu__item
+                 {{ request()->routeIs('admin.media.*') ? 'active' : '' }}
+                    {{ ! $hasMediaRoute ? 'disabled' : '' }}"
+                    href="{{ $hasMediaRoute ? route('admin.media.index') : '#' }}"
+                    @unless($hasMediaRoute)
+                        onclick="return false;"
+                    @endunless
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="side-menu__icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <path d="M21 15l-5-5L5 21"></path>
+                    </svg>
+
+                    <span class="side-menu__label">کتابخانه رسانه‌ها</span>
+
+                    @unless($hasMediaRoute)
+                        <span class="menu-soon-badge">به‌زودی</span>
+                    @endunless
                 </a>
             </li>
 

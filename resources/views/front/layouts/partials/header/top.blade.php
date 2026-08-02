@@ -1,4 +1,3 @@
-<!--begin header area -->
 <div class="container my-3 clean-news-header" dir="rtl">
     <div class="px-0 py-2">
 
@@ -47,24 +46,76 @@
                             <span>ثبت‌نام</span>
                         </a>
                     @else
-                        <div class="dropdown header-user-dropdown ml-2">
-                            <button class="btn header-user-btn dropdown-toggle"
+                        @php
+                            $user = auth()->user();
+                            $isAdmin = $user && $user->hasRole('admin');
+                        @endphp
+
+                        <div class="btn-group dropdown header-user-dropdown ml-2">
+
+                            {{-- نام کاربر؛ برای ادمین لینک داشبورد است --}}
+                            @if($isAdmin)
+                                <a href="{{ route('admin.dashboard') }}"
+                                   class="btn header-user-btn header-user-main-btn"
+                                   title="ورود به داشبورد مدیریت">
+
+                                    <i class="fa fa-user ml-1"></i>
+
+                                    <span>
+                                        {{ $user->name ?? 'حساب کاربری' }}
+                                    </span>
+                                </a>
+                            @else
+                                <span class="btn header-user-btn header-user-main-btn">
+
+                                    <i class="fa fa-user ml-1"></i>
+
+                                    <span>
+                                        {{ $user->name ?? 'حساب کاربری' }}
+                                    </span>
+                                </span>
+                            @endif
+
+                            {{-- فلش بازکردن منوی حساب کاربری --}}
+                            <button class="btn header-user-btn header-user-toggle-btn dropdown-toggle dropdown-toggle-split"
                                     type="button"
                                     data-toggle="dropdown"
+                                    aria-haspopup="true"
                                     aria-expanded="false">
-                                <i class="fa fa-user ml-1"></i>
-                                <span>{{ auth()->user()->name ?? 'حساب کاربری' }}</span>
+
+                                <span class="sr-only">
+                                    بازکردن منوی حساب کاربری
+                                </span>
                             </button>
 
                             <div class="dropdown-menu dropdown-menu-left text-right header-user-menu">
-                                <a class="dropdown-item font_12" href="#">
-                                    <i class="fa fa-user-circle ml-1"></i>
-                                    پروفایل
-                                </a>
 
-                                <form method="POST" action="{{ route('logout') }}">
+                                @if($isAdmin)
+                                    <a class="dropdown-item font_12"
+                                       href="{{ route('admin.dashboard') }}">
+
+                                        <i class="fa fa-tachometer-alt ml-1"></i>
+                                        داشبورد مدیریت
+                                    </a>
+                                @else
+                                    <a class="dropdown-item font_12"
+                                       href="#">
+
+                                        <i class="fa fa-user-circle ml-1"></i>
+                                        پروفایل
+                                    </a>
+                                @endif
+
+                                <div class="dropdown-divider"></div>
+
+                                <form method="POST"
+                                      action="{{ route('logout') }}">
+
                                     @csrf
-                                    <button type="submit" class="dropdown-item font_12 text-danger">
+
+                                    <button type="submit"
+                                            class="dropdown-item font_12 text-danger">
+
                                         <i class="fa fa-sign-out-alt ml-1"></i>
                                         خروج
                                     </button>
@@ -267,6 +318,47 @@
         box-shadow: 0 8px 22px rgba(239, 57, 78, 0.12);
     }
 
+    .header-user-dropdown.btn-group {
+        direction: rtl;
+        display: inline-flex;
+        align-items: stretch;
+        vertical-align: middle;
+    }
+
+    .header-user-main-btn {
+        max-width: 145px;
+        min-width: 0;
+        border-radius: 0 10px 10px 0 !important;
+        text-decoration: none !important;
+    }
+
+    .header-user-main-btn span {
+        display: block;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .header-user-main-btn:hover,
+    .header-user-main-btn:focus {
+        text-decoration: none !important;
+    }
+
+    .header-user-toggle-btn {
+        width: 38px;
+        min-width: 38px;
+        max-width: 38px;
+        padding: 0;
+        border-right: 0;
+        border-radius: 10px 0 0 10px !important;
+        overflow: visible;
+    }
+
+    .header-user-toggle-btn::after {
+        margin: 0;
+    }
+
     .header-user-menu .dropdown-item {
         border-radius: 10px;
         padding: 8px 10px;
@@ -351,6 +443,16 @@
             height: 38px;
             max-width: 115px;
             font-size: 11px;
+        }
+
+        .header-user-main-btn {
+            max-width: 115px;
+        }
+
+        .header-user-toggle-btn {
+            width: 34px;
+            min-width: 34px;
+            max-width: 34px;
         }
     }
 
