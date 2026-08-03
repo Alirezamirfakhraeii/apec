@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BoardMemberController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\CompanyProjectController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\CompanyReportController;
@@ -135,6 +136,10 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::delete('/media/{media}', [MediaController::class, 'destroy'])
             ->name('media.destroy');
+
+
+
+        Route::resource('company-projects', CompanyProjectController::class);
 
 
 

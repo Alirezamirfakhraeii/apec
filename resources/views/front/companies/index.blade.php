@@ -409,14 +409,6 @@
                 @include('front.companies.partials.grid')
             @endif
 
-            {{-- Modalهای شرکت‌ها --}}
-            @foreach($companies as $company)
-                @include(
-                    'front.companies.partials.modal',
-                    ['company' => $company]
-                )
-            @endforeach
-
             {{-- صفحه‌بندی --}}
             @if($companies->hasPages())
                 <div class="companies-pagination">
@@ -439,8 +431,54 @@
         </div>
     </section>
 
+    {{-- مودال‌ها عمداً بیرون container و section قرار گرفته‌اند
+         تا position و overflow والدها باعث رفتن مودال زیر هدر ثابت نشود. --}}
+    @foreach($companies as $company)
+        @include(
+            'front.companies.partials.modal',
+            ['company' => $company]
+        )
+    @endforeach
 
     <style>
+        /* =========================================================
+   Fixed header offset
+========================================================= */
+
+        /*
+         | ارتفاع هدر ثابت سایت را اینجا تنظیم کن.
+         | اگر هدر تو کوتاه‌تر یا بلندتر است فقط عدد زیر را تغییر بده.
+         */
+        :root {
+            --companies-fixed-header-offset: 105px;
+        }
+
+        .companies-page {
+            position: relative;
+            padding-top: var(--companies-fixed-header-offset);
+        }
+
+        /*
+         | مودال و backdrop باید از هدر ثابت سایت بالاتر باشند.
+         */
+        .company-modal.modal {
+            z-index: 10050 !important;
+        }
+
+        .modal-backdrop {
+            z-index: 10040 !important;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --companies-fixed-header-offset: 82px;
+            }
+        }
+
         /* =========================================================
    Companies Pagination
 ========================================================= */

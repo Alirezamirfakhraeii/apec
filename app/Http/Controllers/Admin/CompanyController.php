@@ -29,7 +29,6 @@ class CompanyController extends Controller
 
         $query = Company::query()->with([
             'activityFields',
-            'ranks',
         ]);
 
         /*

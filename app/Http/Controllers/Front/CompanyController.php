@@ -91,8 +91,6 @@ class CompanyController extends Controller
                         ])
                         ->orderBy('activity_fields.sort_order');
                 },
-
-                'ranks',
             ]);
 
         /*

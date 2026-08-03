@@ -45,8 +45,6 @@ Route::post('/contact-us', [ContactController::class, 'store'])->name('front.con
 Route::get('/association/members', [CompanyController::class, 'index'])
     ->name('companies.index');
 
-Route::get('/companies/{company}', [CompanyController::class, 'show'])
-    ->name('companies.show');
 
 
 Route::get('/contact', [ContactController::class, 'show'])->name('front.contact');

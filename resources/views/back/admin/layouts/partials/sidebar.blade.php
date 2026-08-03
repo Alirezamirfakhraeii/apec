@@ -98,6 +98,9 @@
         'admin.advertising-pages.*'
     );
 
+    $hasCompanyProjectsRoute = Route::has('admin.company-projects.index');
+
+
     $user = Auth::user();
 @endphp
 
@@ -225,7 +228,7 @@
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
 
-                    <span class="side-menu__label">مدیریت اعضا</span>
+                    <span class="side-menu__label">مدیریت شرکت ها</span>
                     <i class="angle fe fe-chevron-down"></i>
                 </a>
 
@@ -291,6 +294,29 @@
                             @endunless
                         </a>
                     </li>
+
+                    <li>
+                        <a
+                            class="slide-item
+        {{ request()->routeIs('admin.company-projects.*') ? 'active' : '' }}
+        {{ ! $hasCompanyProjectsRoute ? 'disabled' : '' }}"
+                            href="{{ $hasCompanyProjectsRoute
+            ? route('admin.company-projects.index')
+            : '#'
+        }}"
+                            @unless($hasCompanyProjectsRoute)
+                                onclick="return false;"
+                            @endunless
+                        >
+                            پروژه‌های اعضا
+
+                            @unless($hasCompanyProjectsRoute)
+                                <span class="menu-soon-badge">به‌زودی</span>
+                            @endunless
+                        </a>
+                    </li>
+
+
 
                 </ul>
             </li>
