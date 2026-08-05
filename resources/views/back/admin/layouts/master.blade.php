@@ -146,6 +146,9 @@
 <script src="https://cdn.jsdelivr.net/npm/persian-date/dist/persian-date.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/js/persian-datepicker.min.js"></script>
 
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+
+
 <script>
     $(document).ready(function () {
         $('#published_at').persianDatepicker({

@@ -3,31 +3,282 @@
 @section('title', $page->meta_title ?: $page->title)
 
 @push('styles')
-    <link rel="stylesheet"
-          href="{{ asset('front/css/pages/committee.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ asset('front/css/pages/committee.css') }}"
+    >
 
     <style>
         /*
         |--------------------------------------------------------------------------
-        | قائم‌مقام‌ها
+        | ستون اعضای کمیته
         |--------------------------------------------------------------------------
         */
 
+        .chairman-sidebar-card {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-self: start;
+        }
+
+        .committee-members-heading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 2px 0 -2px;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .committee-members-heading::before,
+        .committee-members-heading::after {
+            width: 30px;
+            height: 1px;
+            content: "";
+            background: #dbe4ee;
+        }
+
+        .committee-member-card {
+            position: relative;
+            width: 100%;
+            max-width: 285px;
+            margin: 0 auto;
+            padding: 14px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e6edf5;
+            border-radius: 21px;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .committee-member-card::before {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            left: 20px;
+            height: 3px;
+            content: "";
+            background: linear-gradient(90deg, #c9a44d, #e8d39b, #c9a44d);
+            border-radius: 0 0 10px 10px;
+            opacity: 0.9;
+        }
+
+        .committee-member-card:hover {
+            border-color: #d8e2ec;
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.09);
+            transform: translateY(-3px);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | قاب تصویر اعضا
+        |--------------------------------------------------------------------------
+        */
+
+        .committee-member-media {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at top right, rgba(255, 255, 255, 0.95), transparent 44%),
+                linear-gradient(145deg, #f8fafc, #edf2f7);
+            border: 1px solid #edf2f7;
+            border-radius: 17px;
+        }
+
+        .committee-member-card--chairman .committee-member-media {
+            height: 225px;
+            padding: 10px;
+        }
+
+        .committee-member-card--deputy .committee-member-media,
+        .committee-member-card--secretary .committee-member-media {
+            width: 175px;
+            height: 175px;
+            margin: 0 auto;
+            padding: 8px;
+        }
+
+        .committee-member-image-shell {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #f8fafc;
+            border: 1px solid #e9eef4;
+            border-radius: 13px;
+        }
+
+        .committee-member-image,
+        .committee-member-placeholder {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 0 !important;
+            border-radius: 13px;
+        }
+
+        .committee-member-image {
+            object-fit: cover;
+            object-position: center top;
+            background: #f8fafc;
+            transition: transform 0.35s ease;
+        }
+
+        .committee-member-card:hover .committee-member-image {
+            transform: scale(1.025);
+        }
+
+        .committee-member-card--secretary .committee-member-image {
+            padding: 8px;
+            object-fit: contain;
+            object-position: center;
+            background: #ffffff;
+        }
+
+        .committee-member-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            background: linear-gradient(145deg, #ffffff, #eef2f7);
+        }
+
+        .committee-member-card--chairman .committee-member-placeholder svg {
+            width: 58px;
+            height: 58px;
+        }
+
+        .committee-member-card--deputy .committee-member-placeholder svg,
+        .committee-member-card--secretary .committee-member-placeholder svg {
+            width: 44px;
+            height: 44px;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | مشخصات زیر عکس
+        |--------------------------------------------------------------------------
+        */
+
+        .committee-member-info {
+            margin-top: 11px;
+            padding: 11px 12px 10px;
+            text-align: center;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #edf2f7;
+            border-radius: 15px;
+        }
+
+        .committee-member-role {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 24px;
+            padding: 3px 10px;
+            color: #9a761f;
+            background: #fff8e7;
+            border: 1px solid #f0dfae;
+            border-radius: 999px;
+            font-size: 8.5px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .committee-member-name {
+            margin-top: 7px;
+            color: #0f172a;
+            font-size: 13px;
+            font-weight: 900;
+            line-height: 1.75;
+        }
+
+        .committee-member-position {
+            margin-top: 2px;
+            color: #64748b;
+            font-size: 9.5px;
+            font-weight: 700;
+            line-height: 1.8;
+        }
+
+        .committee-member-meta {
+            margin-top: 10px;
+            padding: 9px 11px;
+            background: #f8fafc;
+            border: 1px solid #e5edf5;
+            border-radius: 14px;
+        }
+
+        .committee-meta-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 6px 0;
+        }
+
+        .committee-meta-row:not(:last-child) {
+            border-bottom: 1px solid #e8eef5;
+        }
+
+        .committee-meta-label {
+            flex-shrink: 0;
+            color: #94a3b8;
+            font-size: 8.5px;
+            font-weight: 800;
+            line-height: 1.8;
+        }
+
+        .committee-meta-value {
+            color: #334155;
+            font-size: 9.5px;
+            font-weight: 800;
+            line-height: 1.8;
+            text-align: left;
+        }
+
         .committee-deputies-wrapper {
             display: grid;
-            gap: 18px;
-            margin-top: 18px;
+            grid-template-columns: 1fr;
+            gap: 12px;
         }
 
-        .deputy-profile-card {
-            position: static !important;
-            top: auto !important;
-            width: 100%;
-            margin: 0;
+        .committee-secretary-wrapper {
+            display: flex;
+            justify-content: center;
         }
 
-        .deputy-profile-card .avatar-frame-box {
-            margin-bottom: 0;
+        /*
+        |--------------------------------------------------------------------------
+        | کوچک‌تر کردن عنوان‌های صفحه
+        |--------------------------------------------------------------------------
+        */
+
+        .hero-main-title {
+            font-size: 29px !important;
+            line-height: 1.6 !important;
+        }
+
+        .hero-summary-text {
+            font-size: 12px !important;
+            line-height: 2 !important;
+        }
+
+        .block-inner-title {
+            margin-bottom: 12px !important;
+            font-size: 15px !important;
+            line-height: 1.8 !important;
+        }
+
+        .rich-text-content {
+            font-size: 12px !important;
+            line-height: 2.05 !important;
         }
 
         /*
@@ -37,7 +288,7 @@
         */
 
         .committee-workgroups-section {
-            padding: 65px 0 75px;
+            padding: 55px 0 65px;
             background: linear-gradient(
                 180deg,
                 #f8fafc 0%,
@@ -50,7 +301,7 @@
             align-items: flex-end;
             justify-content: space-between;
             gap: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
         }
 
         .committee-workgroups-heading-main {
@@ -59,25 +310,25 @@
 
         .committee-workgroups-eyebrow {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: #64748b;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 800;
         }
 
         .committee-workgroups-heading h2 {
             margin: 0;
             color: #0f172a;
-            font-size: 27px;
+            font-size: 21px;
             font-weight: 900;
             line-height: 1.7;
         }
 
         .committee-workgroups-heading p {
             max-width: 650px;
-            margin: 5px 0 0;
+            margin: 4px 0 0;
             color: #64748b;
-            font-size: 12px;
+            font-size: 10.5px;
             line-height: 2;
         }
 
@@ -86,35 +337,35 @@
             align-items: center;
             gap: 5px;
             flex-shrink: 0;
-            padding: 7px 12px;
+            padding: 6px 11px;
             color: #475569;
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 9px;
-            font-size: 11px;
+            font-size: 9.5px;
             font-weight: 800;
         }
 
         .committee-workgroups-count strong {
             color: #0f172a;
-            font-size: 15px;
+            font-size: 13px;
         }
 
         .committee-workgroups-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 15px;
+            gap: 14px;
         }
 
         .committee-workgroup-card {
             display: grid;
-            grid-template-columns: 165px minmax(0, 1fr);
+            grid-template-columns: 125px minmax(0, 1fr);
             overflow: hidden;
-            height: 175px;
+            height: 150px;
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            box-shadow: 0 7px 22px rgba(15, 23, 42, 0.055);
+            border-radius: 13px;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
             transition:
                 transform 0.25s ease,
                 box-shadow 0.25s ease,
@@ -123,13 +374,13 @@
 
         .committee-workgroup-card:hover {
             border-color: #cbd5e1;
-            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.1);
-            transform: translateY(-3px);
+            box-shadow: 0 11px 27px rgba(15, 23, 42, 0.09);
+            transform: translateY(-2px);
         }
 
         .committee-workgroup-image {
             position: relative;
-            height: 175px;
+            height: 150px;
             overflow: hidden;
             background: #e2e8f0;
         }
@@ -141,8 +392,9 @@
             transition: transform 0.4s ease;
         }
 
-        .committee-workgroup-card:hover .committee-workgroup-image img {
-            transform: scale(1.045);
+        .committee-workgroup-card:hover
+        .committee-workgroup-image img {
+            transform: scale(1.04);
         }
 
         .committee-workgroup-placeholder {
@@ -160,25 +412,24 @@
         }
 
         .committee-workgroup-placeholder svg {
-            width: 45px;
-            height: 45px;
+            width: 38px;
+            height: 38px;
         }
 
         .committee-workgroup-number {
             position: absolute;
-            right: 10px;
-            bottom: 10px;
+            right: 7px;
+            bottom: 7px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 34px;
-            height: 34px;
+            width: 29px;
+            height: 29px;
             color: #ffffff;
             background: rgba(15, 23, 42, 0.86);
             border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 9px;
-            backdrop-filter: blur(7px);
-            font-size: 10px;
+            border-radius: 8px;
+            font-size: 8.5px;
             font-weight: 900;
         }
 
@@ -187,21 +438,21 @@
             justify-content: center;
             flex-direction: column;
             min-width: 0;
-            padding: 15px 18px;
+            padding: 12px 14px;
         }
 
         .committee-workgroup-topline {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
+            gap: 5px;
+            margin-bottom: 3px;
             color: #94a3b8;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
         }
 
         .committee-workgroup-topline::before {
-            width: 13px;
+            width: 11px;
             height: 2px;
             content: "";
             background: #475569;
@@ -213,9 +464,9 @@
             overflow: hidden;
             margin: 0;
             color: #0f172a;
-            font-size: 15px;
+            font-size: 12.5px;
             font-weight: 900;
-            line-height: 1.8;
+            line-height: 1.75;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
         }
@@ -223,22 +474,22 @@
         .committee-workgroup-description {
             display: -webkit-box;
             overflow: hidden;
-            margin-top: 6px;
+            margin-top: 5px;
             color: #64748b;
-            font-size: 10px;
-            line-height: 1.95;
+            font-size: 9px;
+            line-height: 1.9;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
         }
 
         .committee-workgroups-empty {
-            padding: 25px;
+            padding: 22px;
             color: #64748b;
             background: #ffffff;
             border: 1px dashed #cbd5e1;
-            border-radius: 14px;
+            border-radius: 13px;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         /*
@@ -248,9 +499,11 @@
         */
 
         .dynamic-wp-content img {
+            display: block;
             max-width: 100%;
             height: auto;
-            border-radius: 14px;
+            margin: 15px auto;
+            border-radius: 11px;
         }
 
         .dynamic-wp-content table {
@@ -275,11 +528,28 @@
             .committee-deputies-wrapper {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
+            .committee-secretary-wrapper {
+                display: flex;
+                justify-content: center;
+            }
+
+            .committee-member-card {
+                max-width: 255px;
+            }
         }
 
         @media (max-width: 768px) {
+            .hero-main-title {
+                font-size: 24px !important;
+            }
+
+            .block-inner-title {
+                font-size: 14px !important;
+            }
+
             .committee-workgroups-section {
-                padding: 45px 0 55px;
+                padding: 42px 0 50px;
             }
 
             .committee-workgroups-heading {
@@ -288,24 +558,30 @@
             }
 
             .committee-workgroups-heading h2 {
-                font-size: 22px;
+                font-size: 18px;
             }
 
             .committee-workgroup-card {
-                grid-template-columns: 125px minmax(0, 1fr);
-                height: 155px;
+                grid-template-columns: 110px minmax(0, 1fr);
+                height: 140px;
             }
 
             .committee-workgroup-image {
-                height: 155px;
+                height: 140px;
             }
 
             .committee-workgroup-content {
-                padding: 12px 14px;
+                padding: 10px 12px;
             }
 
-            .committee-workgroup-description {
-                -webkit-line-clamp: 2;
+            .committee-member-card--chairman .committee-member-media {
+                height: 205px;
+            }
+
+            .committee-member-card--deputy .committee-member-media,
+            .committee-member-card--secretary .committee-member-media {
+                width: 155px;
+                height: 155px;
             }
         }
 
@@ -313,38 +589,44 @@
             .committee-deputies-wrapper {
                 grid-template-columns: 1fr;
             }
+
+            .committee-member-card {
+                max-width: 235px;
+            }
         }
 
         @media (max-width: 480px) {
+            .hero-main-title {
+                font-size: 21px !important;
+            }
+
             .committee-workgroup-card {
-                grid-template-columns: 105px minmax(0, 1fr);
-                height: 145px;
-                border-radius: 13px;
+                grid-template-columns: 90px minmax(0, 1fr);
+                height: 130px;
+                border-radius: 12px;
             }
 
             .committee-workgroup-image {
-                height: 145px;
+                height: 130px;
             }
 
             .committee-workgroup-content {
-                padding: 10px 12px;
+                padding: 9px 10px;
             }
 
             .committee-workgroup-title {
-                font-size: 13px;
+                font-size: 11.5px;
             }
 
             .committee-workgroup-description {
-                font-size: 9px;
+                font-size: 8.5px;
                 -webkit-line-clamp: 2;
             }
 
-            .committee-workgroup-number {
-                right: 7px;
-                bottom: 7px;
-                width: 29px;
-                height: 29px;
-                font-size: 9px;
+            .committee-member-card--deputy .committee-member-media,
+            .committee-member-card--secretary .committee-member-media {
+                width: 140px;
+                height: 140px;
             }
         }
     </style>
@@ -394,7 +676,7 @@
 
         /*
         |--------------------------------------------------------------------------
-        | بررسی مقادیر checkbox
+        | بررسی مقادیر Checkbox
         |--------------------------------------------------------------------------
         */
 
@@ -420,7 +702,9 @@
         |--------------------------------------------------------------------------
         */
 
-        $heroImage = $pageData['header_image'] ?? null;
+        $heroImage =
+            $pageData['header_image']
+            ?? null;
 
         $committeeTitle =
             $pageData['committee_title']
@@ -431,16 +715,6 @@
             $pageData['committee_description']
             ?? $page->summary
             ?? null;
-
-        $hasMainContent =
-            filled($page->body) ||
-            filled($committeeDescription) ||
-            filled($pageData['chairman_name'] ?? null) ||
-            filled($pageData['chairman_image'] ?? null) ||
-            filled($pageData['chairman_position'] ?? null) ||
-            filled($pageData['chairman_degree'] ?? null) ||
-            filled($pageData['chairman_company'] ?? null) ||
-            filled($pageData['chairman_bio'] ?? null);
 
         /*
         |--------------------------------------------------------------------------
@@ -460,14 +734,24 @@
 
         if ($hasDeputies) {
             $deputies->push([
-                'name' => $pageData['deputy_1_name'] ?? null,
-                'image' => $pageData['deputy_1_image'] ?? null,
+                'number' => 1,
+                'name' =>
+                    $pageData['deputy_1_name']
+                    ?? null,
+                'image' =>
+                    $pageData['deputy_1_image']
+                    ?? null,
             ]);
 
             if ($hasSecondDeputy) {
                 $deputies->push([
-                    'name' => $pageData['deputy_2_name'] ?? null,
-                    'image' => $pageData['deputy_2_image'] ?? null,
+                    'number' => 2,
+                    'name' =>
+                        $pageData['deputy_2_name']
+                        ?? null,
+                    'image' =>
+                        $pageData['deputy_2_image']
+                        ?? null,
                 ]);
             }
         }
@@ -479,6 +763,63 @@
                     filled($deputy['image']);
             })
             ->values();
+
+        /*
+        |--------------------------------------------------------------------------
+        | دبیر کمیته
+        |--------------------------------------------------------------------------
+        */
+
+        $secretary = [
+            'name' =>
+                $pageData['secretary_name']
+                ?? null,
+
+            'image' =>
+                $pageData['secretary_image']
+                ?? null,
+
+            'position' =>
+                $pageData['secretary_position']
+                ?? null,
+
+            'degree' =>
+                $pageData['secretary_degree']
+                ?? null,
+
+            'company' =>
+                $pageData['secretary_company']
+                ?? null,
+
+            'bio' =>
+                $pageData['secretary_bio']
+                ?? null,
+        ];
+
+        $hasSecretary = collect($secretary)
+            ->contains(function ($value) {
+                return filled($value);
+            });
+
+        /*
+        |--------------------------------------------------------------------------
+        | بررسی وجود محتوای اصلی
+        |--------------------------------------------------------------------------
+        */
+
+        $hasMainContent =
+            filled($page->body) ||
+            filled($committeeDescription) ||
+
+            filled($pageData['chairman_name'] ?? null) ||
+            filled($pageData['chairman_image'] ?? null) ||
+            filled($pageData['chairman_position'] ?? null) ||
+            filled($pageData['chairman_degree'] ?? null) ||
+            filled($pageData['chairman_company'] ?? null) ||
+            filled($pageData['chairman_bio'] ?? null) ||
+
+            $deputies->isNotEmpty() ||
+            $hasSecretary;
 
         /*
         |--------------------------------------------------------------------------
@@ -496,16 +837,19 @@
                     'number' => $number,
 
                     'title' =>
-                        $pageData["workgroup_{$number}_title"]
-                        ?? null,
+                        $pageData[
+                            "workgroup_{$number}_title"
+                        ] ?? null,
 
                     'image' =>
-                        $pageData["workgroup_{$number}_image"]
-                        ?? null,
+                        $pageData[
+                            "workgroup_{$number}_image"
+                        ] ?? null,
 
                     'description' =>
-                        $pageData["workgroup_{$number}_description"]
-                        ?? null,
+                        $pageData[
+                            "workgroup_{$number}_description"
+                        ] ?? null,
                 ];
             })
             ->filter(function ($workgroup) {
@@ -517,8 +861,10 @@
             ->values();
     @endphp
 
-    <main class="premium-committee-wrapper"
-          dir="rtl">
+    <main
+        class="premium-committee-wrapper"
+        dir="rtl"
+    >
 
         {{-- هدر صفحه --}}
         <section
@@ -533,11 +879,15 @@
 
             <div class="container hero-container">
 
-                <nav class="premium-breadcrumb"
-                     aria-label="breadcrumb">
+                <nav
+                    class="premium-breadcrumb"
+                    aria-label="breadcrumb"
+                >
 
-                    <a href="{{ url('/') }}"
-                       class="breadcrumb-link">
+                    <a
+                        href="{{ url('/') }}"
+                        class="breadcrumb-link"
+                    >
                         صفحه اصلی
                     </a>
 
@@ -585,207 +935,203 @@
 
                     <div class="layout-grid-container">
 
-                        {{-- رئیس و قائم‌مقام‌ها --}}
+                        {{-- اعضای کمیته --}}
                         <aside class="chairman-sidebar-card">
 
-                            {{-- کارت رئیس کمیته --}}
-                            <div class="sticky-card-wrapper">
+                            {{-- رئیس کمیته --}}
+                            <div class="committee-member-card committee-member-card--chairman">
 
-                                <div class="avatar-frame-box">
+                                <div class="committee-member-media">
+                                    <div class="committee-member-image-shell">
 
-                                    @if(!empty($pageData['chairman_image']))
+                                        @if(!empty($pageData['chairman_image']))
+                                            <img
+                                                src="{{ $imageUrl($pageData['chairman_image']) }}"
+                                                alt="{{ $pageData['chairman_name'] ?? 'رئیس کمیته' }}"
+                                                class="committee-member-image"
+                                            >
+                                        @else
+                                            <div class="committee-member-placeholder">
+                                                <svg
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <circle
+                                                        cx="12"
+                                                        cy="8"
+                                                        r="5"
+                                                        stroke="currentColor"
+                                                        stroke-width="1.5"
+                                                    />
 
-                                        <img
-                                            src="{{ $imageUrl($pageData['chairman_image']) }}"
-                                            alt="{{ $pageData['chairman_name'] ?? 'رئیس کمیته' }}"
-                                            class="chairman-avatar"
-                                        >
-
-                                    @else
-
-                                        <div class="avatar-placeholder-svg">
-
-                                            <svg viewBox="0 0 24 24"
-                                                 fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-
-                                                <circle
-                                                    cx="12"
-                                                    cy="8"
-                                                    r="5"
-                                                    stroke="currentColor"
-                                                    stroke-width="1.5"
-                                                />
-
-                                                <path
-                                                    d="M3 22C3 17.5817 7.02944 14 12 14C16.9706 14 21 17.5817 21 22"
-                                                    stroke="currentColor"
-                                                    stroke-width="1.5"
-                                                    stroke-linecap="round"
-                                                />
-
-                                            </svg>
-
-                                        </div>
-
-                                    @endif
-
-                                    <div class="avatar-floating-badge">
-
-                                        <span class="badge-title">
-                                            رئیس کمیته
-                                        </span>
-
-                                        <span class="badge-name">
-                                            {{ $pageData['chairman_name']
-                                                ?? 'نام رئیس کمیته ثبت نشده' }}
-                                        </span>
+                                                    <path
+                                                        d="M3 22C3 17.5817 7.02944 14 12 14C16.9706 14 21 17.5817 21 22"
+                                                        stroke="currentColor"
+                                                        stroke-width="1.5"
+                                                        stroke-linecap="round"
+                                                    />
+                                                </svg>
+                                            </div>
+                                        @endif
 
                                     </div>
+                                </div>
 
+                                <div class="committee-member-info">
+                                    <span class="committee-member-role">
+                                        رئیس کمیته
+                                    </span>
+
+                                    <div class="committee-member-name">
+                                        {{ $pageData['chairman_name']
+                                            ?? 'نام رئیس کمیته ثبت نشده' }}
+                                    </div>
+
+                                    @if(!empty($pageData['chairman_position']))
+                                        <div class="committee-member-position">
+                                            {{ $pageData['chairman_position'] }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 @if(
                                     !empty($pageData['chairman_degree']) ||
                                     !empty($pageData['chairman_company'])
                                 )
-
-                                    <div class="chairman-meta-metrics">
+                                    <div class="committee-member-meta">
 
                                         @if(!empty($pageData['chairman_degree']))
+                                            <div class="committee-meta-row">
+                                                <span class="committee-meta-label">
+                                                    تخصص
+                                                </span>
 
-                                            <div class="metric-row-item">
-
-                                                <div class="metric-icon-sphere">
-
-                                                    <svg viewBox="0 0 24 24"
-                                                         fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-
-                                                        <path
-                                                            d="M3 10L12 5L21 10L12 15L3 10Z"
-                                                            stroke="currentColor"
-                                                            stroke-width="1.6"
-                                                            stroke-linejoin="round"
-                                                        />
-
-                                                        <path
-                                                            d="M7 12.5V17L12 20L17 17V12.5"
-                                                            stroke="currentColor"
-                                                            stroke-width="1.6"
-                                                            stroke-linejoin="round"
-                                                        />
-
-                                                    </svg>
-
-                                                </div>
-
-                                                <div class="metric-texts">
-
-                                                    <span class="metric-label">
-                                                        مرتبه علمی / تخصص
-                                                    </span>
-
-                                                    <span class="metric-value">
-                                                        {{ $pageData['chairman_degree'] }}
-                                                    </span>
-
-                                                </div>
-
+                                                <span class="committee-meta-value">
+                                                    {{ $pageData['chairman_degree'] }}
+                                                </span>
                                             </div>
-
                                         @endif
 
                                         @if(!empty($pageData['chairman_company']))
+                                            <div class="committee-meta-row">
+                                                <span class="committee-meta-label">
+                                                    سازمان
+                                                </span>
 
-                                            <div class="metric-row-item">
-
-                                                <div class="metric-icon-sphere">
-
-                                                    <svg viewBox="0 0 24 24"
-                                                         fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-
-                                                        <path
-                                                            d="M4 21V7L12 3V21"
-                                                            stroke="currentColor"
-                                                            stroke-width="1.6"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                        />
-
-                                                        <path
-                                                            d="M12 10L20 7V21"
-                                                            stroke="currentColor"
-                                                            stroke-width="1.6"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                        />
-
-                                                        <path
-                                                            d="M2 21H22"
-                                                            stroke="currentColor"
-                                                            stroke-width="1.6"
-                                                            stroke-linecap="round"
-                                                        />
-
-                                                    </svg>
-
-                                                </div>
-
-                                                <div class="metric-texts">
-
-                                                    <span class="metric-label">
-                                                        سازمان / مجموعه وابسته
-                                                    </span>
-
-                                                    <span class="metric-value">
-                                                        {{ $pageData['chairman_company'] }}
-                                                    </span>
-
-                                                </div>
-
+                                                <span class="committee-meta-value">
+                                                    {{ $pageData['chairman_company'] }}
+                                                </span>
                                             </div>
-
                                         @endif
 
                                     </div>
-
                                 @endif
 
                             </div>
 
-                            {{-- قائم‌مقام‌ها با همان استایل رئیس --}}
+                            {{-- قائم‌مقام‌ها --}}
                             @if(
                                 $hasDeputies &&
                                 $deputies->isNotEmpty()
                             )
 
+                                <div class="committee-members-heading">
+                                    قائم‌مقام‌ها
+                                </div>
+
                                 <div class="committee-deputies-wrapper">
 
                                     @foreach($deputies as $deputy)
 
-                                        <div class="sticky-card-wrapper deputy-profile-card">
+                                        <div class="committee-member-card committee-member-card--deputy">
 
-                                            <div class="avatar-frame-box">
+                                            <div class="committee-member-media">
+                                                <div class="committee-member-image-shell">
 
-                                                @if(!empty($deputy['image']))
+                                                    @if(!empty($deputy['image']))
+                                                        <img
+                                                            src="{{ $imageUrl($deputy['image']) }}"
+                                                            alt="{{ $deputy['name'] ?: 'قائم‌مقام کمیته' }}"
+                                                            class="committee-member-image"
+                                                            loading="lazy"
+                                                        >
+                                                    @else
+                                                        <div class="committee-member-placeholder">
+                                                            <svg
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <circle
+                                                                    cx="12"
+                                                                    cy="8"
+                                                                    r="5"
+                                                                    stroke="currentColor"
+                                                                    stroke-width="1.5"
+                                                                />
 
+                                                                <path
+                                                                    d="M3 22C3 17.5817 7.02944 14 12 14C16.9706 14 21 17.5817 21 22"
+                                                                    stroke="currentColor"
+                                                                    stroke-width="1.5"
+                                                                    stroke-linecap="round"
+                                                                />
+                                                            </svg>
+                                                        </div>
+                                                    @endif
+
+                                                </div>
+                                            </div>
+
+                                            <div class="committee-member-info">
+                                                <span class="committee-member-role">
+                                                    قائم‌مقام
+                                                    {{ $deputy['number'] }}
+                                                </span>
+
+                                                <div class="committee-member-name">
+                                                    {{ $deputy['name']
+                                                        ?: 'نام قائم‌مقام ثبت نشده' }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    @endforeach
+
+                                </div>
+
+                            @endif
+
+                            {{-- دبیر کمیته؛ زیر قائم‌مقام‌ها --}}
+                            @if($hasSecretary)
+
+                                <div class="committee-members-heading">
+                                    دبیر کمیته
+                                </div>
+
+                                <div class="committee-secretary-wrapper">
+
+                                    <div class="committee-member-card committee-member-card--secretary">
+
+                                        <div class="committee-member-media">
+                                            <div class="committee-member-image-shell">
+
+                                                @if(!empty($secretary['image']))
                                                     <img
-                                                        src="{{ $imageUrl($deputy['image']) }}"
-                                                        alt="{{ $deputy['name'] ?: 'قائم‌مقام کمیته' }}"
-                                                        class="chairman-avatar"
+                                                        src="{{ $imageUrl($secretary['image']) }}"
+                                                        alt="{{ $secretary['name'] ?: 'دبیر کمیته' }}"
+                                                        class="committee-member-image"
                                                         loading="lazy"
                                                     >
-
                                                 @else
-
-                                                    <div class="avatar-placeholder-svg">
-
-                                                        <svg viewBox="0 0 24 24"
-                                                             fill="none"
-                                                             xmlns="http://www.w3.org/2000/svg">
-
+                                                    <div class="committee-member-placeholder">
+                                                        <svg
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
                                                             <circle
                                                                 cx="12"
                                                                 cy="8"
@@ -800,31 +1146,64 @@
                                                                 stroke-width="1.5"
                                                                 stroke-linecap="round"
                                                             />
-
                                                         </svg>
-
                                                     </div>
-
                                                 @endif
 
-                                                <div class="avatar-floating-badge">
-
-                                                    <span class="badge-title">
-                                                        قائم‌مقام کمیته
-                                                    </span>
-
-                                                    <span class="badge-name">
-                                                        {{ $deputy['name']
-                                                            ?: 'نام قائم‌مقام ثبت نشده' }}
-                                                    </span>
-
-                                                </div>
-
                                             </div>
-
                                         </div>
 
-                                    @endforeach
+                                        <div class="committee-member-info">
+                                            <span class="committee-member-role">
+                                                دبیر کمیته
+                                            </span>
+
+                                            <div class="committee-member-name">
+                                                {{ $secretary['name']
+                                                    ?: 'نام دبیر ثبت نشده' }}
+                                            </div>
+
+                                            @if(!empty($secretary['position']))
+                                                <div class="committee-member-position">
+                                                    {{ $secretary['position'] }}
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        @if(
+                                            !empty($secretary['degree']) ||
+                                            !empty($secretary['company'])
+                                        )
+                                            <div class="committee-member-meta">
+
+                                                @if(!empty($secretary['degree']))
+                                                    <div class="committee-meta-row">
+                                                        <span class="committee-meta-label">
+                                                            تخصص
+                                                        </span>
+
+                                                        <span class="committee-meta-value">
+                                                            {{ $secretary['degree'] }}
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+                                                @if(!empty($secretary['company']))
+                                                    <div class="committee-meta-row">
+                                                        <span class="committee-meta-label">
+                                                            سازمان
+                                                        </span>
+
+                                                        <span class="committee-meta-value">
+                                                            {{ $secretary['company'] }}
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+                                            </div>
+                                        @endif
+
+                                    </div>
 
                                 </div>
 
@@ -840,12 +1219,30 @@
                                 <div class="premium-text-block bio-block">
 
                                     <h3 class="block-inner-title">
-                                        رزومه و بیوگرافی علمی
+                                        رزومه و بیوگرافی علمی رئیس کمیته
                                     </h3>
 
                                     <div class="rich-text-content">
                                         {!! nl2br(
                                             e($pageData['chairman_bio'])
+                                        ) !!}
+                                    </div>
+
+                                </div>
+
+                            @endif
+
+                            @if(!empty($secretary['bio']))
+
+                                <div class="premium-text-block bio-block secretary-bio-block">
+
+                                    <h3 class="block-inner-title">
+                                        معرفی و سوابق دبیر کمیته
+                                    </h3>
+
+                                    <div class="rich-text-content">
+                                        {!! nl2br(
+                                            e($secretary['bio'])
                                         ) !!}
                                     </div>
 
@@ -917,8 +1314,7 @@
                             </h2>
 
                             <p>
-                                معرفی کارگروه‌های تخصصی و حوزه فعالیت هر
-                                کارگروه
+                                معرفی کارگروه‌های تخصصی و حوزه فعالیت هر کارگروه
                             </p>
 
                         </div>
@@ -957,10 +1353,11 @@
 
                                             <div class="committee-workgroup-placeholder">
 
-                                                <svg viewBox="0 0 24 24"
-                                                     fill="none"
-                                                     xmlns="http://www.w3.org/2000/svg">
-
+                                                <svg
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <circle
                                                         cx="8"
                                                         cy="8"
@@ -990,7 +1387,6 @@
                                                         stroke-width="1.5"
                                                         stroke-linecap="round"
                                                     />
-
                                                 </svg>
 
                                             </div>

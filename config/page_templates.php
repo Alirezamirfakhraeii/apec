@@ -65,6 +65,57 @@ $committeeFields = [
         'col' => 'col-md-12',
     ],
 
+
+    /*
+|--------------------------------------------------------------------------
+| دبیر کمیته
+|--------------------------------------------------------------------------
+*/
+
+    [
+        'key' => 'secretary_image',
+        'label' => 'تصویر دبیر کمیته',
+        'type' => 'image',
+        'group' => 'secretary',
+        'col' => 'col-md-6',
+    ],
+    [
+        'key' => 'secretary_name',
+        'label' => 'نام و نام خانوادگی دبیر کمیته',
+        'type' => 'text',
+        'group' => 'secretary',
+        'col' => 'col-md-6',
+    ],
+    [
+        'key' => 'secretary_position',
+        'label' => 'سمت دبیر کمیته',
+        'type' => 'text',
+        'group' => 'secretary',
+        'col' => 'col-md-6',
+    ],
+    [
+        'key' => 'secretary_degree',
+        'label' => 'مدرک یا تخصص دبیر کمیته',
+        'type' => 'text',
+        'group' => 'secretary',
+        'col' => 'col-md-6',
+    ],
+    [
+        'key' => 'secretary_company',
+        'label' => 'شرکت یا سازمان دبیر کمیته',
+        'type' => 'text',
+        'group' => 'secretary',
+        'col' => 'col-md-6',
+    ],
+    [
+        'key' => 'secretary_bio',
+        'label' => 'معرفی و سوابق دبیر کمیته',
+        'type' => 'textarea',
+        'group' => 'secretary',
+        'col' => 'col-md-12',
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | قائم‌مقام‌ها
@@ -308,6 +359,12 @@ return [
                 'label' => 'رئیس کمیته',
                 'description' => 'مشخصات و سوابق رئیس کمیته',
                 'icon' => 'fa fa-user',
+            ],
+
+            'secretary' => [
+                'label' => 'دبیر کمیته',
+                'description' => 'مشخصات و سوابق دبیر کمیته',
+                'icon' => 'fa fa-user-circle',
             ],
 
             'deputies' => [
