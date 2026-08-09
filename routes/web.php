@@ -10,6 +10,7 @@ use App\Http\Controllers\Front\MediaDownloadController;
 use App\Http\Controllers\Front\NewsController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Front\PodcastController;
+use App\Models\Media;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -59,7 +60,66 @@ Route::get('lang/{locale}', function ($locale) {
 
 
 
-Route::get('/board-of-directors', [PageController::class, 'boardOfDirectors'])->name('front.board-of-directors');
-Route::get('/{path}', [DynamicPageController::class, 'show'])->where('path', '.*')->name('front.dynamic');
+Route::get(
+    '/board-of-directors',
+    [PageController::class, 'boardOfDirectors']
+)->name('front.board-of-directors');
 
-Route::get('/media/{media}/download', [MediaDownloadController::class, 'download'])->name('media.download');
+
+Route::get(
+    '/media/{media}/download',
+    [MediaDownloadController::class, 'download']
+)->name('media.download');
+
+
+Route::get('/media/pdf/{id}', function ($id) {
+
+    $media = \App\Models\Media::findOrFail($id);
+
+    abort_unless(
+        $media->mime_type === 'application/pdf',
+        404
+    );
+
+    $disk = $media->disk ?: 'public';
+
+    abort_unless(
+        \Illuminate\Support\Facades\Storage::disk($disk)
+            ->exists($media->path),
+        404
+    );
+
+    $content = \Illuminate\Support\Facades\Storage::disk($disk)
+        ->get($media->path);
+
+    return response(
+        $content,
+        200,
+        [
+            'Content-Type' => 'application/pdf',
+            'Content-Length' => strlen($content),
+            'Content-Disposition' => 'inline',
+            'Accept-Ranges' => 'none',
+        ]
+    );
+
+})->name('media.pdf');
+
+
+Route::get('/route-test', function () {
+    return 'ROUTE OK';
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| این Route حتماً باید آخرین Route باشد
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/{path}',
+    [DynamicPageController::class, 'show']
+)
+    ->where('path', '.*')
+    ->name('front.dynamic');

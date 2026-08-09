@@ -50,6 +50,51 @@
     font-size: 13px;
 }
 
+
+.company-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.company-export-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 18px;
+
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+
+    background: #198754;
+    border: 1px solid #198754;
+    border-radius: 10px;
+
+    transition: all 0.2s ease;
+}
+
+.company-export-btn:hover {
+    color: #ffffff;
+    text-decoration: none;
+    background: #157347;
+    border-color: #146c43;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 767px) {
+    .company-header-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .company-header-actions a {
+        width: 100%;
+    }
+}
+
 .company-create-btn {
     display: inline-flex;
     align-items: center;

@@ -44,6 +44,11 @@ Route::middleware(['auth', 'role:admin'])
         |--------------------------------------------------------------------------
         */
 
+        Route::get(
+            '/companies/export',
+            [CompanyController::class, 'export']
+        )->name('companies.export');
+
 
         Route::post('company/import-excel', [CompanyController::class, 'importExcel'])
             ->name('company.import-excel');

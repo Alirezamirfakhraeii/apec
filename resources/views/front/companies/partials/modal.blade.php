@@ -463,6 +463,62 @@
             ],
         ],
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Visible ranks
+    |--------------------------------------------------------------------------
+    | فقط رشته‌هایی که واقعاً رتبه معتبر 1 تا 5 دارند نمایش داده می‌شوند.
+    |
+    */
+
+    $visibleRankGroups = collect($rankGroups)
+        ->map(function ($group) use ($getRankValue) {
+            $visibleItems = collect($group['items'])
+                ->map(function ($item) use ($getRankValue) {
+                    $rankValue = $getRankValue(
+                        $item['keys'],
+                        $item['title']
+                    );
+
+                    if (
+                        ! is_numeric($rankValue) ||
+                        (int) $rankValue < 1 ||
+                        (int) $rankValue > 5
+                    ) {
+                        return null;
+                    }
+
+                    $item['rank'] = (int) $rankValue;
+
+                    return $item;
+                })
+                ->filter()
+                ->values();
+
+            if ($visibleItems->isEmpty()) {
+                return null;
+            }
+
+            $group['items'] = $visibleItems;
+
+            return $group;
+        })
+        ->filter()
+        ->values();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Projects
+    |--------------------------------------------------------------------------
+    | برای جلوگیری از Query اضافی، پروژه‌ها فقط از Relation لودشده خوانده می‌شوند.
+    |
+    */
+
+    $companyProjects = $company->relationLoaded('projects')
+        ? $company->projects
+        : collect();
+
 @endphp
 
 <div class="modal fade company-modal"
@@ -561,6 +617,18 @@
                                 role="tab">
                             <i class="fa fa-sitemap"></i>
                             <span>حوزه‌های فعالیت</span>
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link"
+                                id="projects-tab-{{ $company->id }}"
+                                data-bs-toggle="pill"
+                                data-bs-target="#projects-panel-{{ $company->id }}"
+                                type="button"
+                                role="tab">
+                            <i class="fa fa-project-diagram"></i>
+                            <span>پروژه‌ها</span>
                         </button>
                     </li>
 
@@ -667,100 +735,83 @@
                          role="tabpanel"
                          aria-labelledby="ranks-tab-{{ $company->id }}">
 
-                        <div class="company-ranks-help">
-                            <i class="fa fa-info-circle"></i>
-                            <span>
-                                رتبه‌ها باید عددی بین ۱ تا ۵ باشند. مقدارهای خالی با عنوان
-                                «ثبت نشده» مشخص شده‌اند.
-                            </span>
-                        </div>
+                        @if($visibleRankGroups->isNotEmpty())
+                            <div class="company-ranks-help">
+                                <i class="fa fa-info-circle"></i>
+                                <span>
+                                    فقط رشته‌هایی نمایش داده می‌شوند که برای این شرکت رتبه معتبر ثبت شده باشد.
+                                </span>
+                            </div>
 
-                        <div class="accordion company-ranks-accordion"
-                             id="companyRanksAccordion{{ $company->id }}">
+                            <div class="accordion company-ranks-accordion"
+                                 id="companyRanksAccordion{{ $company->id }}">
 
-                            @foreach($rankGroups as $groupIndex => $rankGroup)
-                                <div class="accordion-item company-rank-group">
-                                    <h2 class="accordion-header"
-                                        id="rankHeading{{ $company->id }}{{ $groupIndex }}">
+                                @foreach($visibleRankGroups as $groupIndex => $rankGroup)
+                                    <div class="accordion-item company-rank-group">
+                                        <h2 class="accordion-header"
+                                            id="rankHeading{{ $company->id }}{{ $groupIndex }}">
 
-                                        <button class="accordion-button {{ $groupIndex !== 0 ? 'collapsed' : '' }}"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#rankCollapse{{ $company->id }}{{ $groupIndex }}"
-                                                aria-expanded="{{ $groupIndex === 0 ? 'true' : 'false' }}">
+                                            <button class="accordion-button {{ $groupIndex !== 0 ? 'collapsed' : '' }}"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#rankCollapse{{ $company->id }}{{ $groupIndex }}"
+                                                    aria-expanded="{{ $groupIndex === 0 ? 'true' : 'false' }}">
 
-                                            <span class="company-rank-group-icon">
-                                                <i class="fa {{ $rankGroup['icon'] }}"></i>
-                                            </span>
+                                                <span class="company-rank-group-icon">
+                                                    <i class="fa {{ $rankGroup['icon'] }}"></i>
+                                                </span>
 
-                                            <span class="company-rank-group-heading">
-                                                <strong>{{ $rankGroup['title'] }}</strong>
-                                                <small>{{ $rankGroup['description'] }}</small>
-                                            </span>
+                                                <span class="company-rank-group-heading">
+                                                    <strong>{{ $rankGroup['title'] }}</strong>
+                                                    <small>{{ $rankGroup['description'] }}</small>
+                                                </span>
 
-                                            <span class="company-rank-group-count">
-                                                {{ count($rankGroup['items']) }} رشته
-                                            </span>
-                                        </button>
-                                    </h2>
+                                                <span class="company-rank-group-count">
+                                                    {{ count($rankGroup['items']) }} رتبه
+                                                </span>
+                                            </button>
+                                        </h2>
 
-                                    <div id="rankCollapse{{ $company->id }}{{ $groupIndex }}"
-                                         class="accordion-collapse collapse {{ $groupIndex === 0 ? 'show' : '' }}"
-                                         data-bs-parent="#companyRanksAccordion{{ $company->id }}">
+                                        <div id="rankCollapse{{ $company->id }}{{ $groupIndex }}"
+                                             class="accordion-collapse collapse {{ $groupIndex === 0 ? 'show' : '' }}"
+                                             data-bs-parent="#companyRanksAccordion{{ $company->id }}">
 
-                                        <div class="accordion-body">
-                                            <div class="company-rank-list">
-                                                @foreach($rankGroup['items'] as $rankItem)
-                                                    @php
-                                                        $rankValue = $getRankValue(
-                                                            $rankItem['keys'],
-                                                            $rankItem['title']
-                                                        );
+                                            <div class="accordion-body">
+                                                <div class="company-rank-list">
+                                                    @foreach($rankGroup['items'] as $rankItem)
+                                                        <div class="company-rank-item has-rank">
+                                                            <div class="company-rank-content">
+                                                                <strong class="company-rank-title">
+                                                                    {{ $rankItem['title'] }}
+                                                                </strong>
 
-                                                        $numericRank = is_numeric($rankValue)
-                                                            ? max(1, min(5, (int) $rankValue))
-                                                            : null;
-                                                    @endphp
-
-                                                    <div class="company-rank-item {{ $numericRank ? 'has-rank' : 'is-empty' }}">
-                                                        <div class="company-rank-content">
-                                                            <strong class="company-rank-title">
-                                                                {{ $rankItem['title'] }}
-                                                            </strong>
-
-                                                            @if($rankItem['description'])
-                                                                <div class="company-rank-description">
-                                                                    {{ $rankItem['description'] }}
-                                                                </div>
-                                                            @endif
-                                                        </div>
-
-                                                        <div class="company-rank-result">
-                                                            <div class="company-rank-scale"
-                                                                 aria-label="رتبه {{ $numericRank ?: 'ثبت نشده' }}">
-                                                                @for($rankNumber = 1; $rankNumber <= 5; $rankNumber++)
-                                                                    <span class="company-rank-point {{ $numericRank && $rankNumber <= $numericRank ? 'active' : '' }}">
-                                                                        {{ $rankNumber }}
-                                                                    </span>
-                                                                @endfor
+                                                                @if($rankItem['description'])
+                                                                    <div class="company-rank-description">
+                                                                        {{ $rankItem['description'] }}
+                                                                    </div>
+                                                                @endif
                                                             </div>
 
-                                                            <span class="company-rank-badge {{ $numericRank ? 'has-value' : 'no-value' }}">
-                                                                @if($numericRank)
-                                                                    رتبه {{ $numericRank }}
-                                                                @else
-                                                                    ثبت نشده
-                                                                @endif
-                                                            </span>
+                                                            <div class="company-rank-result">
+                                                                <span class="company-rank-badge has-value">
+                                                                    <i class="fa fa-award"></i>
+                                                                    رتبه {{ $rankItem['rank'] }}
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                @endforeach
+                                                    @endforeach
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="company-section-empty company-ranks-empty">
+                                <i class="fa fa-award"></i>
+                                <span>رتبه یا صلاحیتی برای این شرکت ثبت نشده است.</span>
+                            </div>
+                        @endif
                     </div>
 
                     {{-- Activities tab --}}
@@ -829,6 +880,124 @@
                                 </section>
                             @endforeach
                         </div>
+                    </div>
+
+                    {{-- Projects tab --}}
+                    <div class="tab-pane fade"
+                         id="projects-panel-{{ $company->id }}"
+                         role="tabpanel"
+                         aria-labelledby="projects-tab-{{ $company->id }}">
+
+                        <section class="company-modal-section">
+                            <div class="company-modal-section-header">
+                                <div class="company-modal-section-icon">
+                                    <i class="fa fa-project-diagram"></i>
+                                </div>
+
+                                <div>
+                                    <h5>پروژه‌های شرکت</h5>
+                                    <p>پروژه‌ها و سوابق اجرایی ثبت‌شده برای این شرکت</p>
+                                </div>
+                            </div>
+
+                            @if($companyProjects->isNotEmpty())
+                                <div class="company-projects-grid">
+                                    @foreach($companyProjects as $project)
+                                        @php
+                                            $projectTitle = data_get($project, 'title')
+                                                ?? data_get($project, 'name');
+
+                                            $projectEmployer = data_get($project, 'employer')
+                                                ?? data_get($project, 'client')
+                                                ?? data_get($project, 'customer');
+
+                                            $projectLocation = data_get($project, 'location')
+                                                ?? data_get($project, 'project_location');
+
+                                            $projectStartDate = data_get($project, 'start_date')
+                                                ?? data_get($project, 'started_at');
+
+                                            $projectEndDate = data_get($project, 'end_date')
+                                                ?? data_get($project, 'finished_at');
+
+                                            $projectStatus = data_get($project, 'status');
+
+                                            $projectDescription = data_get($project, 'description')
+                                                ?? data_get($project, 'summary')
+                                                ?? data_get($project, 'details');
+                                        @endphp
+
+                                        <article class="company-project-card">
+                                            <div class="company-project-card-header">
+                                                <div class="company-project-card-icon">
+                                                    <i class="fa fa-briefcase"></i>
+                                                </div>
+
+                                                <div class="company-project-card-title-wrap">
+                                                    <h6>
+                                                        {{ $displayValue($projectTitle) }}
+                                                    </h6>
+
+                                                    @if(filled($projectStatus))
+                                                        <span class="company-project-status">
+                                                            {{ $projectStatus }}
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            @if(
+                                                filled($projectEmployer) ||
+                                                filled($projectLocation) ||
+                                                filled($projectStartDate) ||
+                                                filled($projectEndDate)
+                                            )
+                                                <div class="company-project-meta">
+                                                    @if(filled($projectEmployer))
+                                                        <div class="company-project-meta-item">
+                                                            <span>کارفرما</span>
+                                                            <strong>{{ $projectEmployer }}</strong>
+                                                        </div>
+                                                    @endif
+
+                                                    @if(filled($projectLocation))
+                                                        <div class="company-project-meta-item">
+                                                            <span>محل اجرا</span>
+                                                            <strong>{{ $projectLocation }}</strong>
+                                                        </div>
+                                                    @endif
+
+                                                    @if(filled($projectStartDate))
+                                                        <div class="company-project-meta-item">
+                                                            <span>تاریخ شروع</span>
+                                                            <strong>{{ $projectStartDate }}</strong>
+                                                        </div>
+                                                    @endif
+
+                                                    @if(filled($projectEndDate))
+                                                        <div class="company-project-meta-item">
+                                                            <span>تاریخ پایان</span>
+                                                            <strong>{{ $projectEndDate }}</strong>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
+
+                                            @if(filled($projectDescription))
+                                                <div class="company-project-description">
+                                                    {!! nl2br(e($projectDescription)) !!}
+                                                </div>
+                                            @endif
+                                        </article>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="company-section-empty company-projects-empty">
+                                    <i class="fa fa-project-diagram"></i>
+                                    <span>پروژه‌ای برای این شرکت ثبت نشده است.</span>
+                                </div>
+                            @endif
+                        </section>
                     </div>
 
                     {{-- Contact tab --}}
@@ -1160,7 +1329,7 @@
 
     .company-modal-tabs {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 8px;
         padding: 7px;
         background: #f1f5f9;
@@ -1468,33 +1637,6 @@
         flex-shrink: 0;
     }
 
-    .company-rank-scale {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        direction: ltr;
-    }
-
-    .company-rank-point {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 25px;
-        height: 25px;
-        color: #a1aab7;
-        background: #f1f5f9;
-        border: 1px solid #e2e8f0;
-        border-radius: 7px;
-        font-size: 9px;
-        font-weight: 900;
-    }
-
-    .company-rank-point.active {
-        color: #fff;
-        background: #d97706;
-        border-color: #d97706;
-    }
-
     .company-rank-badge {
         display: inline-flex;
         align-items: center;
@@ -1696,6 +1838,132 @@
         background: #eef2f7;
     }
 
+
+    /* Projects tab */
+
+    .company-projects-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .company-project-card {
+        min-width: 0;
+        padding: 15px;
+        background: #fff;
+        border: 1px solid #e4eaf1;
+        border-radius: 13px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .company-project-card:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+        transform: translateY(-1px);
+    }
+
+    .company-project-card-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #edf1f5;
+    }
+
+    .company-project-card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        background: #0f172a;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .company-project-card-title-wrap {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .company-project-card-title-wrap h6 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 12px;
+        font-weight: 900;
+        line-height: 1.9;
+        overflow-wrap: anywhere;
+    }
+
+    .company-project-status {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        margin-top: 4px;
+        padding: 3px 8px;
+        color: #166534;
+        background: #dcfce7;
+        border: 1px solid #bbf7d0;
+        border-radius: 7px;
+        font-size: 9px;
+        font-weight: 800;
+    }
+
+    .company-project-meta {
+        display: grid;
+        gap: 7px;
+    }
+
+    .company-project-meta-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-width: 0;
+        padding: 8px 10px;
+        background: #f8fafc;
+        border: 1px solid #edf1f5;
+        border-radius: 9px;
+    }
+
+    .company-project-meta-item span {
+        flex-shrink: 0;
+        color: #94a3b8;
+        font-size: 9px;
+        font-weight: 800;
+    }
+
+    .company-project-meta-item strong {
+        min-width: 0;
+        color: #334155;
+        font-size: 10px;
+        font-weight: 800;
+        line-height: 1.8;
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    .company-project-description {
+        margin-top: 12px;
+        padding-top: 12px;
+        color: #64748b;
+        border-top: 1px solid #edf1f5;
+        font-size: 10px;
+        line-height: 2;
+    }
+
+    .company-ranks-empty,
+    .company-projects-empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 90px;
+    }
+
     /* Footer */
 
     .company-modal-footer {
@@ -1823,7 +2091,8 @@
 
         .company-information-grid,
         .company-address-grid,
-        .company-activity-options-display {
+        .company-activity-options-display,
+        .company-projects-grid {
             grid-template-columns: 1fr;
         }
 

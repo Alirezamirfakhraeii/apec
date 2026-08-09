@@ -27,6 +27,7 @@ class PageController extends Controller
     public function show(string $slug)
     {
         $page = Page::query()
+            ->with('media')
             ->where('slug', $slug)
             ->where('status', 1)
             ->firstOrFail();
@@ -37,6 +38,7 @@ class PageController extends Controller
             ?? $templates['default'];
 
         $pageData = $page->template_data ?? [];
+
 
         return view($template['view'], [
             'page' => $page,

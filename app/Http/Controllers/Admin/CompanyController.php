@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CompaniesExport;
 use App\Features\Admin\Company\Actions\StoreCompanyAction;
 use App\Features\Admin\Company\Actions\UpdateCompanyAction;
 use App\Features\Admin\Company\DTOs\CompanyData;
@@ -865,6 +866,12 @@ class CompanyController extends Controller
                         .$exception->getMessage(),
                 ]);
         }
+    }
+
+
+    public function export()
+    {
+        return Excel::download(new CompaniesExport(), 'companies.xlsx');
     }
 
 }

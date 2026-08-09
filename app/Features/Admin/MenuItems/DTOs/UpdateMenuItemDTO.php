@@ -17,6 +17,7 @@ class UpdateMenuItemDTO
         public readonly int $status,
         public readonly ?string $icon,
         public readonly bool $openInNewTab,
+        public readonly bool $use3dBook,
     ) {
     }
 
@@ -66,6 +67,8 @@ class UpdateMenuItemDTO
             icon: $request->input('icon'),
 
             openInNewTab: $request->boolean('open_in_new_tab'),
+
+            use3dBook: $request->boolean('use_3d_book'),
         );
     }
 }

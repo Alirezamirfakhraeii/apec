@@ -115,11 +115,15 @@
 
                         <div class="form-group mb-3 menu-field d-none" id="target_page_wrapper">
                             <label for="target_page_id" class="font_12 fw-bold">انتخاب صفحه ثابت :</label>
-                            <select name="target_id" id="target_page_id" class="form-control target-select">
+
+                            <select name="target_id"
+                                    id="target_page_id"
+                                    class="form-control target-select">
                                 <option value="">-- یک صفحه انتخاب کنید --</option>
+
                                 @foreach($pages as $page)
-                                    <option
-                                        value="{{ $page->id }}" {{ old('type') == 'page' && old('target_id') == $page->id ? 'selected' : '' }}>
+                                    <option value="{{ $page->id }}"
+                                        {{ old('type') == 'page' && old('target_id') == $page->id ? 'selected' : '' }}>
                                         {{ $page->title }}
                                     </option>
                                 @endforeach
@@ -273,10 +277,16 @@
 
                         <div class="form-group mb-3 edit-menu-field d-none" id="edit_target_page_wrapper">
                             <label class="fw-bold font_12">انتخاب صفحه ثابت :</label>
-                            <select name="target_id" id="edit_target_page_id" class="form-control edit-target-select">
+
+                            <select name="target_id"
+                                    id="edit_target_page_id"
+                                    class="form-control edit-target-select">
                                 <option value="">-- یک صفحه انتخاب کنید --</option>
+
                                 @foreach($pages as $page)
-                                    <option value="{{ $page->id }}">{{ $page->title }}</option>
+                                    <option value="{{ $page->id }}">
+                                        {{ $page->title }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -471,6 +481,8 @@
                     toggleMenuFields(this.value, "edit");
                 });
             }
+
+
 
             function initSortable(el) {
                 Sortable.create(el, {

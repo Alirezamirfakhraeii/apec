@@ -30,4 +30,12 @@ class Page extends Model
         return $this->morphTo();
     }
 
+    public function media()
+    {
+        return $this->morphMany(
+            Media::class,
+            'mediable'
+        );
+    }
+
 }

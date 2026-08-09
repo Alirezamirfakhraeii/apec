@@ -29,10 +29,12 @@
 
         {{-- هدر صفحه --}}
         <div class="company-page-header">
+
             <div class="company-page-heading">
-                <span class="company-page-icon">
-                    <i class="fa fa-building"></i>
-                </span>
+
+        <span class="company-page-icon">
+            <i class="fa fa-building"></i>
+        </span>
 
                 <div>
                     <h1>مدیریت اعضا و شرکت‌ها</h1>
@@ -41,14 +43,28 @@
                         مشاهده، جستجو و مدیریت اطلاعات شرکت‌های عضو انجمن
                     </p>
                 </div>
+
             </div>
 
-            <a href="{{ route('admin.company.create') }}"
-               class="company-create-btn">
 
-                <i class="fa fa-plus ml-1"></i>
-                ثبت شرکت جدید
-            </a>
+            <div class="company-header-actions">
+
+                <a href="{{ route('admin.companies.export') }}"
+                   class="company-export-btn">
+
+                    <i class="fa fa-file-excel-o ml-1"></i>
+                    خروجی Excel
+                </a>
+
+                <a href="{{ route('admin.company.create') }}"
+                   class="company-create-btn">
+
+                    <i class="fa fa-plus ml-1"></i>
+                    ثبت شرکت جدید
+                </a>
+
+            </div>
+
         </div>
 
         {{-- پیام‌ها --}}
@@ -498,11 +514,23 @@
                                         فیلترها را تغییر دهید یا شرکت جدیدی ثبت کنید.
                                     </p>
 
-                                    <a href="{{ route('admin.company.create') }}"
-                                       class="company-create-btn">
+                                    <div class="company-header-actions">
 
-                                        ثبت شرکت جدید
-                                    </a>
+                                        <a href="{{ route('admin.companies.export') }}"
+                                           class="company-export-btn">
+
+                                            <i class="fa fa-file-excel-o ml-1"></i>
+                                            خروجی Excel
+                                        </a>
+
+                                        <a href="{{ route('admin.company.create') }}"
+                                           class="company-create-btn">
+
+                                            <i class="fa fa-plus ml-1"></i>
+                                            ثبت شرکت جدید
+                                        </a>
+
+                                    </div>
                                 </div>
                             </td>
                         </tr>

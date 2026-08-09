@@ -714,6 +714,44 @@
 
             </div>
 
+            <div
+                class="col-md-6 mb-3"
+                id="3d-book-media-wrapper"
+                style="{{ old('template', $page->template ?: 'default') === '3d-book' ? '' : 'display: none;' }}"
+            >
+                <label class="form-label" for="book-pdf-media">
+                    فایل PDF کتاب
+                </label>
+
+                <select
+                    id="book-pdf-media"
+                    name="template_data[book_pdf_media_id]"
+                    class="form-control"
+                >
+                    <option value="">
+                        -- انتخاب PDF از رسانه‌ها --
+                    </option>
+
+                    @foreach($pdfMedia as $media)
+                        <option
+                            value="{{ $media->id }}"
+                            @selected(
+                                old(
+                                    'template_data.book_pdf_media_id',
+                                    $page->template_data['book_pdf_media_id'] ?? null
+                                ) == $media->id
+                            )
+                        >
+                            {{ $media->caption ?: basename($media->path) }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <small class="field-help">
+                    فقط فایل‌های PDF موجود در بخش رسانه‌ها نمایش داده می‌شوند.
+                </small>
+            </div>
+
             <div class="col-md-6 mb-3">
 
                 <label class="form-label" for="page-status">
@@ -1291,5 +1329,31 @@
                     error
                 );
             });
+
+        const templateSelect =
+            document.getElementById('page-template');
+
+        const bookMediaWrapper =
+            document.getElementById('3d-book-media-wrapper');
+
+        function toggle3dBookMedia() {
+            if (!templateSelect || !bookMediaWrapper) {
+                return;
+            }
+
+            bookMediaWrapper.style.display =
+                templateSelect.value === '3d-book'
+                    ? ''
+                    : 'none';
+        }
+
+        if (templateSelect) {
+            templateSelect.addEventListener(
+                'change',
+                toggle3dBookMedia
+            );
+
+            toggle3dBookMedia();
+        }
     });
 </script>

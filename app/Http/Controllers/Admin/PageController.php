@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Media;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -51,12 +52,18 @@ class PageController extends Controller
 
         $templateFields = $templates[$selectedTemplate]['fields'] ?? [];
 
+        $pdfMedia = Media::query()
+            ->where('mime_type', 'application/pdf')
+            ->latest()
+            ->get();
+
         $page = new Page();
 
         return view('back.admin.pages.create', compact(
             'page',
             'templates',
-            'templateFields'
+            'templateFields',
+            'pdfMedia'
         ));
     }
 
@@ -97,10 +104,15 @@ class PageController extends Controller
     {
         $templates = config('page_templates');
 
+        $pdfMedia = Media::query()
+            ->where('mime_type', 'application/pdf')
+            ->latest()
+            ->get();
+
         $currentTemplate = $templates[$page->template] ?? $templates['default'];
         $templateFields = $currentTemplate['fields'] ?? [];
 
-        return view('back.admin.pages.edit', compact('page', 'templates', 'templateFields'));
+        return view('back.admin.pages.edit', compact('page', 'templates', 'templateFields' , 'pdfMedia'));
     }
 
     public function update(Request $request, Page $page)

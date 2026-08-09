@@ -384,6 +384,13 @@ return [
     ],
 
 
+    '3d-book' => [
+        'label' => '3d-book',
+        'view' => 'front.pages.templates.3d-book',
+        'fields' => [],
+    ],
+
+
 
 
 

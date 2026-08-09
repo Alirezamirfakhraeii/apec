@@ -91,6 +91,10 @@ class CompanyController extends Controller
                         ])
                         ->orderBy('activity_fields.sort_order');
                 },
+
+                'projects' => function ($query) {
+                    $query->orderByDesc('id');
+                },
             ]);
 
         /*
