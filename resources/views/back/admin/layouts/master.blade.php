@@ -11,6 +11,9 @@
     <!-- Title -->
     <title>@yield('title', 'پنل مدیریت')</title>
 
+
+
+
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('back/img/brand/favicon.png') }}" type="image/x-icon"/>
 
@@ -52,7 +55,13 @@
     <link href="{{ asset('back/switcher/demo.css') }}" rel="stylesheet">
 
 
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/css/persian-datepicker.min.css">
+
+    <link href="{{ asset('back/css/panel/style.css') }}" rel="stylesheet">
+
+
+
 
     <!-- محل قرارگیری استایل‌های اختصاصی صفحات فرعی -->
     @stack('styles')

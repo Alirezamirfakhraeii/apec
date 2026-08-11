@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('back.admin.board-members.partials.styles')
-
     <div class="board-member-wrapper">
 
         <div class="board-member-page-header d-flex align-items-center justify-content-between">

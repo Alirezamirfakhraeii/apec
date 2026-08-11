@@ -1,22 +1,38 @@
 @extends('back.admin.layouts.master')
 
-<head>
-    <link rel="stylesheet" href="{{ asset('back/css/pages/index.css') }}">
-</head>
-
 @section('content')
-    <div class="news-admin-wrapper" dir="rtl">
-        <div class="news-page-header">
+
+    <div class="admin-wrapper">
+
+        {{-- Page Header --}}
+        <div class="admin-page-header d-flex align-items-center justify-content-between">
+
             <div>
-                <h1>ساخت صفحه جدید</h1>
-                <p>در این بخش می‌توانید یک صفحه جدید با تمپلیت مشخص ایجاد کنید.</p>
+
+                <h4 class="admin-page-title">
+                    <i class="fa fa-file-text-o ml-2"></i>
+                    ساخت صفحه جدید
+                </h4>
+
+                <div class="admin-page-subtitle">
+                    در این بخش می‌توانید یک صفحه جدید با تمپلیت مشخص ایجاد کنید.
+                </div>
+
             </div>
 
-            <a href="{{ route('admin.pages.index') }}" class="news-create-btn">
+
+            <a
+                href="{{ route('admin.pages.index') }}"
+                class="btn admin-back-btn"
+            >
+                <i class="fa fa-arrow-right ml-1"></i>
                 بازگشت به لیست صفحات
             </a>
+
         </div>
 
+
+        {{-- Page Form --}}
         @include('back.admin.pages.partials.form', [
             'page' => $page,
             'templates' => $templates,
@@ -24,5 +40,7 @@
             'action' => route('admin.pages.store'),
             'method' => 'POST',
         ])
+
     </div>
+
 @endsection

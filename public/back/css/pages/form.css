@@ -1,0 +1,456 @@
+/* =========================================
+   Pages Form
+========================================= */
+
+.pages-form-wrapper {
+    position: relative;
+    direction: rtl;
+}
+
+
+/* =========================================
+   Sections
+========================================= */
+
+.page-form-section {
+    --section-color: #3155a6;
+    --section-background: #eef3ff;
+
+    position: relative;
+    overflow: visible;
+}
+
+.page-form-section::before {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    bottom: 8px;
+    width: 4px;
+    content: "";
+    background: var(--section-color);
+    border-radius: 5px 0 0 5px;
+}
+
+.page-form-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.page-form-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.page-form-section-icon {
+    display: flex;
+    flex: 0 0 42px;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    color: var(--section-color);
+    font-size: 17px;
+    background: var(--section-background);
+    border-radius: 11px;
+}
+
+.page-form-section-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 29px;
+    padding: 4px 12px;
+    color: var(--section-color);
+    font-size: 11px;
+    font-weight: 800;
+    background: var(--section-background);
+    border-radius: 30px;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   Section Colors
+========================================= */
+
+.section-general {
+    --section-color: #3155a6;
+    --section-background: #eef3ff;
+}
+
+.section-main {
+    --section-color: #0f766e;
+    --section-background: #ecfdf5;
+}
+
+.section-chairman {
+    --section-color: #7c3aed;
+    --section-background: #f5f3ff;
+}
+
+.section-secretary {
+    --section-color: #0369a1;
+    --section-background: #f0f9ff;
+}
+
+.section-deputies {
+    --section-color: #c2410c;
+    --section-background: #fff7ed;
+}
+
+.section-workgroups {
+    --section-color: #047857;
+    --section-background: #ecfdf5;
+}
+
+.section-seo {
+    --section-color: #a21caf;
+    --section-background: #fdf4ff;
+}
+
+
+/* =========================================
+   CKEditor
+========================================= */
+
+.pages-form-wrapper .ck-editor {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.pages-form-wrapper .ck-editor__top,
+.pages-form-wrapper .ck-editor__main {
+    position: relative;
+    z-index: 1;
+}
+
+.pages-form-wrapper .ck-toolbar {
+    direction: rtl;
+    background: #f8fafc;
+    border-color: #dbe1ea !important;
+    border-radius: 9px 9px 0 0 !important;
+}
+
+.pages-form-wrapper .ck-editor__editable {
+    position: relative !important;
+    min-height: 300px;
+    padding: 18px !important;
+    color: #334155;
+    line-height: 2;
+    direction: rtl;
+    text-align: right;
+    background: #ffffff;
+    border-color: #dbe1ea !important;
+    border-radius: 0 0 9px 9px !important;
+    box-shadow: none !important;
+    contain: none !important;
+    will-change: auto !important;
+}
+
+.pages-form-wrapper .ck-editor__editable.ck-focused {
+    border-color: #334155 !important;
+    box-shadow: 0 0 0 0.12rem rgba(51, 65, 85, 0.12) !important;
+}
+
+.pages-form-wrapper .ck-content {
+    direction: rtl;
+    text-align: right;
+}
+
+.pages-form-wrapper .ck-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* =========================================
+   CKEditor Scroll Fix
+========================================= */
+
+html {
+    scroll-behavior: auto !important;
+}
+
+.pages-form-wrapper,
+.page-form-section,
+.pages-form-wrapper .ck-editor,
+.pages-form-wrapper .ck-editor__top,
+.pages-form-wrapper .ck-editor__main,
+.pages-form-wrapper .ck-editor__editable {
+    overflow-anchor: none !important;
+}
+
+.pages-form-wrapper .ck-editor,
+.pages-form-wrapper .ck-editor__top,
+.pages-form-wrapper .ck-editor__main {
+    transform: none !important;
+    perspective: none !important;
+    filter: none !important;
+    backface-visibility: visible !important;
+}
+
+.pages-form-wrapper .ck-sticky-panel,
+.pages-form-wrapper .ck-sticky-panel__content,
+.pages-form-wrapper .ck-sticky-panel__content_sticky {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =========================================
+   Template Toggle
+========================================= */
+
+.template-toggle-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 78px;
+    padding: 16px 18px;
+    background: var(--section-background, #f8fafc);
+    border: 1px dashed var(--section-color, #94a3b8);
+    border-radius: 12px;
+}
+
+.template-toggle-card strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #334155;
+    font-size: 13px;
+}
+
+.template-toggle-card small {
+    display: block;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.template-toggle-card .form-check {
+    flex-shrink: 0;
+    margin: 0;
+    padding-left: 49px;
+}
+
+.template-toggle-card .form-check-input {
+    width: 48px;
+    height: 25px;
+    margin: 0;
+    cursor: pointer;
+}
+
+
+/* =========================================
+   Current Image
+========================================= */
+
+.template-current-image {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-top: 12px;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.template-current-image img {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+    border-radius: 11px;
+}
+
+.template-current-image strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #334155;
+    font-size: 12px;
+}
+
+.template-current-image span {
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   Template Heading
+========================================= */
+
+.template-fields-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 28px 0 20px;
+    padding: 18px 20px;
+    color: #ffffff;
+    background: #1e293b;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.template-fields-heading h3 {
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.template-fields-heading p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 12px;
+}
+
+.template-fields-heading span {
+    padding: 6px 12px;
+    color: #1e293b;
+    font-size: 11px;
+    font-weight: 800;
+    background: #ffffff;
+    border-radius: 25px;
+}
+
+
+/* =========================================
+   Workgroups
+========================================= */
+
+.workgroups-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.workgroup-card {
+    position: relative;
+    padding: 18px;
+    background: #f8fafc;
+    border: 1px solid #dbe1ea;
+    border-radius: 12px;
+}
+
+.workgroup-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.workgroup-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.workgroup-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: #ffffff;
+    font-size: 12px;
+    background: #1e293b;
+    border-radius: 8px;
+}
+
+.workgroup-card-badge {
+    padding: 4px 10px;
+    color: #334155;
+    font-size: 10px;
+    font-weight: 800;
+    background: #e2e8f0;
+    border-radius: 20px;
+}
+
+
+/* =========================================
+   Submit Bar
+========================================= */
+
+.form-submit-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 5px;
+    padding: 16px 18px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+}
+
+.form-submit-text strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.form-submit-text span {
+    color: #64748b;
+    font-size: 11px;
+}
+
+.page-save-button {
+    width: auto;
+    min-width: 170px;
+}
+
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 991px) {
+
+    .workgroups-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .page-form-section-header,
+    .template-fields-heading,
+    .form-submit-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-form-section-badge {
+        margin-right: 55px;
+    }
+
+    .page-save-button {
+        width: 100%;
+    }
+
+}

@@ -1,0 +1,359 @@
+/* =========================================
+   Admin Base
+========================================= */
+
+.admin-wrapper {
+    direction: rtl;
+}
+
+
+/* =========================================
+   Page Header
+========================================= */
+
+.admin-page-header {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+    margin-bottom: 22px;
+}
+
+.admin-page-title {
+    color: #111827;
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.admin-page-subtitle {
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   Page Buttons
+========================================= */
+
+.admin-back-btn,
+.admin-create-btn {
+    background: #f8fafc;
+    border: 1px solid #dbe1ea;
+    color: #334155;
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.admin-create-btn {
+    background: #1e293b;
+    border-color: #1e293b;
+    color: #ffffff;
+}
+
+.admin-create-btn:hover {
+    background: #0f172a;
+    border-color: #0f172a;
+    color: #ffffff;
+}
+
+.admin-back-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+
+/* =========================================
+   Cards
+========================================= */
+
+.admin-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.admin-card-header {
+    padding: 16px 18px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8fafc;
+}
+
+.admin-card-title {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 900;
+    margin: 0;
+}
+
+.admin-card-title i {
+    color: #334155;
+}
+
+.admin-card-body {
+    padding: 18px;
+}
+
+
+/* =========================================
+   Forms
+========================================= */
+
+.admin-label {
+    color: #334155;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.admin-label .required,
+.required {
+    color: #dc2626;
+}
+
+.admin-form-control {
+    border: 1px solid #dbe1ea;
+    border-radius: 9px;
+    min-height: 43px;
+    color: #334155;
+    font-size: 13px;
+    box-shadow: none;
+}
+
+.admin-form-control:focus {
+    border-color: #334155;
+    box-shadow: 0 0 0 0.12rem rgba(51, 65, 85, 0.12);
+}
+
+textarea.admin-form-control {
+    min-height: 105px;
+    resize: vertical;
+}
+
+
+/* =========================================
+   Form Helpers
+========================================= */
+
+.admin-help {
+    color: #94a3b8;
+    font-size: 11px;
+    margin-top: 5px;
+    line-height: 1.8;
+}
+
+.admin-section-note {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 12px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.admin-upload-box {
+    border: 1px dashed #cbd5e1;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.admin-status-box {
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+
+/* =========================================
+   Submit Button
+========================================= */
+
+.admin-submit-btn {
+    width: 100%;
+    min-height: 47px;
+    border-radius: 9px;
+    background: #1e293b;
+    border-color: #1e293b;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.admin-submit-btn:hover {
+    background: #0f172a;
+    border-color: #0f172a;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   Divider
+========================================= */
+
+.admin-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 18px 0;
+}
+
+
+/* =========================================
+   Images
+========================================= */
+
+.admin-thumb {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 13px;
+    border: 1px solid #e5e7eb;
+    background: #f8fafc;
+}
+
+.admin-empty-thumb {
+    width: 54px;
+    height: 54px;
+    border-radius: 13px;
+    border: 1px solid #e5e7eb;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+}
+
+
+/* =========================================
+   Form Image Preview
+========================================= */
+
+.admin-image-preview-wrapper {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.admin-image-preview {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid #e5e7eb;
+}
+
+
+/* =========================================
+   Status
+========================================= */
+
+.admin-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.admin-status.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.admin-status.inactive {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+
+/* =========================================
+   Action Buttons
+========================================= */
+
+.admin-action-btn {
+    border: 0;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-action-btn.edit {
+    background: #0ea5e9;
+}
+
+.admin-action-btn.delete {
+    background: #ef4444;
+}
+
+
+/* =========================================
+   Stats
+========================================= */
+
+.admin-stat-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.admin-stat-title {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.admin-stat-number {
+    color: #111827;
+    font-size: 24px;
+    font-weight: 900;
+    margin: 0;
+}
+
+
+/* =========================================
+   Validation
+========================================= */
+
+.invalid-feedback {
+    display: block;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 768px) {
+
+    .admin-page-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .admin-back-btn,
+    .admin-create-btn {
+        width: 100%;
+        margin-top: 12px;
+        text-align: center;
+    }
+
+}
