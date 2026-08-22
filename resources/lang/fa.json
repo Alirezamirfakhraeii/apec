@@ -14,5 +14,102 @@
     "auth.password": "رمز عبور",
     "auth.password_placeholder": "رمز عبور خود را وارد کنید",
     "validation.required": "وارد کردن :attribute الزامی است.",
-    "validation.email": "فرمت :attribute معتبر نیست."
+    "validation.email": "فرمت :attribute معتبر نیست.",
+    "featured_news": "خبر ویژه",
+    "previous_slide": "خبر قبلی",
+    "next_slide": "خبر بعدی",
+    "no_featured_news_title": "هنوز خبر ویژه‌ای ثبت نشده است",
+    "no_featured_news_description": "بعد از ثبت خبرهای ویژه، اسلایدر این بخش فعال می‌شود.",
+    "most_visited": "پربازدیدترین‌ها",
+    "most_commented": "پربحث‌ترین‌ها",
+    "no_news": "خبری برای نمایش وجود ندارد.",
+    "special_file": "پرونده ویژه",
+    "subject_of_day": "سوژه روز",
+    "today": "امروز",
+    "no_subject": "سوژه روز انتخاب نشده است.",
+    "advertisement": "تبلیغات",
+    "home_services.view_all": "مشاهده همه",
+    "home_services.no_posts": "هیچ مطلبی در این دسته یافت نشد.",
+    "home_services.sample_category": "دسته‌بندی نمونه :number",
+    "home_services.sample_posts_message": "مطالب نمونه بعد از ثبت خبرها نمایش داده می‌شود.",
+
+    "contact.kicker": "ارتباط با ما",
+    "contact.title": "صدای شما را می‌شنویم",
+    "contact.description": "برای ارسال پیشنهاد، انتقاد، درخواست همکاری یا ارتباط مستقیم با رادیو نفت و توسعه، از اطلاعات تماس یا فرم زیر استفاده کنید.",
+    "contact.quick_call": "تماس سریع",
+
+    "contact.communication_methods": "راه‌های ارتباطی",
+    "contact.contact_information": "اطلاعات تماس",
+    "contact.contact_information_description": "برای ارتباط مستقیم با انجمن، می‌توانید از شماره تماس، واتساپ یا فرم پیام استفاده کنید. پیام‌های شما توسط تیم مربوطه بررسی خواهد شد.",
+
+    "contact.direct_phone": "شماره تماس مستقیم",
+    "contact.whatsapp": "واتساپ انجمن",
+    "contact.fax": "فکس",
+    "contact.working_hours": "ساعات کاری",
+    "contact.working_hours_value": "روزهای کاری ۸:۳۰ الی ۱۶:۳۰",
+    "contact.head_office": "دفتر مرکزی",
+    "contact.address": "تهران، هفت تیر، خیابان کریمخان، خیابان خردمند شمالی، کوچه هجدهم، پلاک ۱۳",
+
+    "contact.follow_us": "ما را دنبال کنید",
+    "contact.twitter": "توییتر",
+    "contact.instagram": "اینستاگرام",
+    "contact.linkedin": "لینکدین",
+
+    "contact.direct_contact_form": "فرم ارتباط مستقیم",
+    "contact.send_message_title": "پیام خود را برای ما ارسال کنید",
+    "contact.form_description": "فرم زیر را تکمیل کنید؛ همکاران ما پیام شما را بررسی کرده و در سریع‌ترین زمان ممکن پاسخ خواهند داد.",
+
+    "contact.full_name": "نام و نام خانوادگی",
+    "contact.full_name_placeholder": "مثال: علی علوی",
+
+    "contact.mobile_or_email": "شماره موبایل یا ایمیل",
+    "contact.mobile_or_email_placeholder": "09123456789 یا email@domain.com",
+
+    "contact.message_subject": "موضوع پیام",
+    "contact.subject_placeholder": "موضوع درخواست یا پیشنهاد شما",
+
+    "contact.message": "متن پیام",
+    "contact.message_placeholder": "پیام خود را در این قسمت بنویسید...",
+
+    "contact.privacy_message": "اطلاعات شما نزد ما محفوظ است.",
+    "contact.send_message": "ارسال پیام",
+    "magazine.specialized_archive": "آرشیو تخصصی",
+    "magazine.title": "نشریه نفت و توسعه",
+    "magazine.archive": "آرشیو نشریه",
+    "magazine.latest_issue": "آخرین شماره منتشر شده",
+    "magazine.default_summary": "تازه‌ترین شماره نشریه نفت و توسعه را مطالعه کنید؛ شامل تحلیل‌ها، گزارش‌ها و روایت‌های تخصصی حوزه انرژی و توسعه.",
+    "magazine.publication_name": "نشریه نفت و توسعه",
+    "magazine.read_latest_issue": "مطالعه شماره جدید",
+    "magazine.view_all_issues": "مشاهده همه شماره‌ها",
+    "magazine.new": "جدید",
+    "magazine.previous_issues": "شماره‌های قبلی",
+    "magazine.previous_issues_description": "منتخب آخرین مطالب منتشر شده در نشریه",
+    "magazine.read": "مطالعه",
+    "magazine.empty_title": "هنوز شماره‌ای از نشریه ثبت نشده است",
+    "magazine.empty_description": "بعد از ثبت مطالب نشریه نفت و توسعه، این بخش به‌صورت خودکار نمایش داده می‌شود.",
+    "podcast.title": "پادکست‌ها",
+    "podcast.subtitle": "تازه‌ترین گفت‌وگوها، روایت‌ها و فایل‌های صوتی",
+    "podcast.archive": "آرشیو پادکست‌ها",
+
+    "podcast.ready_to_play": "آماده پخش",
+    "podcast.playing": "در حال پخش",
+    "podcast.now_playing": "در حال پخش",
+
+    "podcast.no_category": "بدون دسته‌بندی",
+    "podcast.default_title": "پادکست",
+
+    "podcast.backward_15": "۱۵ ثانیه عقب",
+    "podcast.forward_15": "۱۵ ثانیه جلو",
+    "podcast.play": "پخش پادکست",
+
+    "podcast.list_title": "لیست پادکست‌ها",
+    "podcast.episodes_count": ":count قسمت",
+
+    "podcast.all_topics": "همه موضوعات",
+
+    "podcast.no_podcast_in_category": "پادکستی در این دسته‌بندی یافت نشد.",
+    "podcast.empty": "هنوز هیچ پادکستی در سیستم ثبت نشده است."
+
+
+
 }

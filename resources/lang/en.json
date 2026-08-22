@@ -14,5 +14,104 @@
     "auth.password": "Password",
     "auth.password_placeholder": "Enter your password",
     "validation.required": "The :attribute field is required.",
-    "validation.email": "The :attribute must be a valid email address."
+    "validation.email": "The :attribute must be a valid email address.",
+    "featured_news": "Featured News",
+    "previous_slide": "Previous News",
+    "next_slide": "Next News",
+    "no_featured_news_title": "No featured news has been published yet",
+    "no_featured_news_description": "The slider will become active once featured news is published.",
+    "most_visited": "Most Viewed",
+    "most_commented": "Most Discussed",
+    "no_news": "No news is available to display.",
+    "special_file": "Special Coverage",
+    "subject_of_day": "Topic of the Day",
+    "today": "Today",
+    "no_subject": "No topic of the day has been selected.",
+    "advertisement": "Advertisement",
+    "home_services.view_all": "View All",
+    "home_services.no_posts": "No posts were found in this category.",
+    "home_services.sample_category": "Sample Category :number",
+    "home_services.sample_posts_message": "Sample posts will appear after news items are published.",
+
+
+    "contact.kicker": "Contact Us",
+    "contact.title": "We Listen to Your Voice",
+    "contact.description": "Use the contact information or the form below to send suggestions, feedback, collaboration requests, or to contact Oil & Development Radio directly.",
+    "contact.quick_call": "Quick Call",
+
+    "contact.communication_methods": "Contact Channels",
+    "contact.contact_information": "Contact Information",
+    "contact.contact_information_description": "You can contact the association directly by phone, WhatsApp, or through the message form. Your message will be reviewed by the relevant team.",
+
+    "contact.direct_phone": "Direct Phone",
+    "contact.whatsapp": "Association WhatsApp",
+    "contact.fax": "Fax",
+    "contact.working_hours": "Working Hours",
+    "contact.working_hours_value": "Working days, 8:30 AM to 4:30 PM",
+    "contact.head_office": "Head Office",
+    "contact.address": "No. 13, 18th Alley, North Kheradmand St., Karim Khan St., Haft Tir, Tehran",
+
+    "contact.follow_us": "Follow Us",
+    "contact.twitter": "Twitter",
+    "contact.instagram": "Instagram",
+    "contact.linkedin": "LinkedIn",
+
+    "contact.direct_contact_form": "Direct Contact Form",
+    "contact.send_message_title": "Send Us Your Message",
+    "contact.form_description": "Complete the form below and our team will review your message and respond as soon as possible.",
+
+    "contact.full_name": "Full Name",
+    "contact.full_name_placeholder": "Example: Ali Alavi",
+
+    "contact.mobile_or_email": "Mobile Number or Email",
+    "contact.mobile_or_email_placeholder": "09123456789 or email@domain.com",
+
+    "contact.message_subject": "Message Subject",
+    "contact.subject_placeholder": "Subject of your request or suggestion",
+
+    "contact.message": "Message",
+    "contact.message_placeholder": "Write your message here...",
+
+    "contact.privacy_message": "Your information will remain confidential.",
+    "contact.send_message": "Send Message",
+
+
+    "magazine.specialized_archive": "Specialized Archive",
+    "magazine.title": "Oil & Development Magazine",
+    "magazine.archive": "Magazine Archive",
+    "magazine.latest_issue": "Latest Published Issue",
+    "magazine.default_summary": "Explore the latest issue of Oil & Development Magazine, featuring analysis, reports, and professional insights into energy and development.",
+    "magazine.publication_name": "Oil & Development Magazine",
+    "magazine.read_latest_issue": "Read Latest Issue",
+    "magazine.view_all_issues": "View All Issues",
+    "magazine.new": "New",
+    "magazine.previous_issues": "Previous Issues",
+    "magazine.previous_issues_description": "A selection of the latest published magazine content",
+    "magazine.read": "Read",
+    "magazine.empty_title": "No magazine issues have been published yet",
+    "magazine.empty_description": "Once Oil & Development Magazine content is published, it will automatically appear in this section.",
+    "podcast.title": "Podcasts",
+    "podcast.subtitle": "Latest conversations, stories and audio content",
+    "podcast.archive": "Podcast Archive",
+
+    "podcast.ready_to_play": "Ready to Play",
+    "podcast.playing": "Playing",
+    "podcast.now_playing": "Now Playing",
+
+    "podcast.no_category": "Uncategorized",
+    "podcast.default_title": "Podcast",
+
+    "podcast.backward_15": "Go back 15 seconds",
+    "podcast.forward_15": "Skip forward 15 seconds",
+    "podcast.play": "Play Podcast",
+
+    "podcast.list_title": "Podcast List",
+    "podcast.episodes_count": ":count Episodes",
+
+    "podcast.all_topics": "All Topics",
+
+    "podcast.no_podcast_in_category": "No podcasts were found in this category.",
+    "podcast.empty": "No podcasts have been published yet."
+
+
 }
