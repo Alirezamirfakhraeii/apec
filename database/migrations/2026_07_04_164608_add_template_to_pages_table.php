@@ -1,24 +1,20 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * The template column already exists in the original pages migration.
+     * This migration is intentionally kept as a no-op to preserve migration history.
      */
     public function up(): void
     {
-        Schema::table('pages', function (Blueprint $table) {
-        });
+        // No-op.
     }
 
     public function down(): void
     {
-        Schema::table('pages', function (Blueprint $table) {
-            $table->dropColumn('template');
-        });
+        // No-op. The template column belongs to create_pages_table.
     }
 };

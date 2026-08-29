@@ -12,11 +12,10 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('user_id')
-                ->constrained()
+                ->constrained('user')
                 ->cascadeOnDelete();
 
-            $table->string('state')
-                ->default('draft');
+            $table->string('state')->default('draft');
 
             $table->foreignId('current_stage_id')
                 ->nullable()
@@ -28,14 +27,9 @@ return new class extends Migration
                 ->constrained('workflow_stages')
                 ->nullOnDelete();
 
-            $table->timestamp('submitted_at')
-                ->nullable();
-
-            $table->timestamp('approved_at')
-                ->nullable();
-
-            $table->timestamp('rejected_at')
-                ->nullable();
+            $table->timestamp('submitted_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('rejected_at')->nullable();
 
             $table->timestamps();
 

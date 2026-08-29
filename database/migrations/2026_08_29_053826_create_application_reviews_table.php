@@ -16,24 +16,23 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->foreignId('reviewer_id')
-                ->constrained('users')
-                ->cascadeOnDelete();
+                ->nullable()
+                ->constrained('user')
+                ->nullOnDelete();
 
             $table->foreignId('stage_id')
                 ->constrained('workflow_stages')
                 ->restrictOnDelete();
 
             $table->string('decision');
-
-            $table->text('comment')
-                ->nullable();
+            $table->text('comment')->nullable();
 
             $table->timestamps();
 
-            $table->index([
-                'membership_application_id',
-                'stage_id',
-            ]);
+            $table->index(
+                ['membership_application_id', 'stage_id'],
+                'application_reviews_application_stage_idx'
+            );
         });
     }
 

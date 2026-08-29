@@ -6,37 +6,38 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ادمین/نویسنده مقاله
-            $table->foreignId('blog_category_id')->nullable()->constrained()->onDelete('set null'); // دسته‌بندی
-            $table->string('type'); // عنوان مقاله
-            $table->string('title'); // عنوان مقاله
-            $table->string('slug')->unique(); // اسلاگ سئو شده
-            $table->string('image')->nullable(); // آدرس تصویر شاخص اصلی
-            $table->longText('body'); // متن اصلی مقاله که از CKEditor میاد
-            $table->string('summary', 500)->nullable(); // خلاصه‌ای کوتاه برای بخش کارت‌های بلاگ
 
-            // بخش سئو (SEO Meta)
+            $table->foreignId('user_id')
+                ->constrained('user')
+                ->cascadeOnDelete();
+
+            $table->foreignId('blog_category_id')
+                ->nullable()
+                ->constrained('blog_categories')
+                ->nullOnDelete();
+
+            $table->string('type');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('image')->nullable();
+            $table->longText('body');
+            $table->string('summary', 500)->nullable();
+
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
 
-            // وضعیت‌ها
-            $table->enum('status', ['draft', 'published'])->default('draft'); // پیش‌نویس یا منتشر شده
-            $table->unsignedInteger('view_count')->default(0); // تعداد بازدیدها
+            $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->unsignedInteger('view_count')->default(0);
+            $table->timestamp('published_at')->nullable();
 
-            $table->timestamp('published_at')->nullable(); // زمان انتشار (برای زمان‌بندی پست‌ها)
             $table->timestamps();
         });
     }
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('posts');

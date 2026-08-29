@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             // اطلاعات پایه شرکت
+            $table->string('logo', 256)->nullable();
             $table->string('company_short_name')->nullable();
             $table->string('registered_name')->nullable();
             $table->string('membership_card')->nullable();
@@ -82,7 +83,7 @@ return new class extends Migration
             $table->boolean('activity_manufacturing')->nullable();
 
             // نوع فعالیت
-            $table->string('activity_type')->nullable();
+            $table->longText('activity_type')->nullable();
 
             $table->timestamps();
         });
