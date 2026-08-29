@@ -47961,7 +47961,7 @@ function nest() {
     return {
         /**
          * specified the key to groupby the arrays.
-         * users can specified one more keys.
+         * user can specified one more keys.
          * @param {Function} d
          */
         key: function (d) {
@@ -63160,7 +63160,7 @@ function fixExtentByAxis(axisProxy, dataExtent) {
     // For value axis, if min/max/scale are not set, we just use the extent obtained
     // by series data, which may be a little different from the extent calculated by
     // `axisHelper.getScaleExtent`. But the different just affects the experience a
-    // little when zooming. So it will not be fixed until some users require it strongly.
+    // little when zooming. So it will not be fixed until some user require it strongly.
 
     return dataExtent;
 }
@@ -67005,7 +67005,7 @@ var ContinuousView = VisualMapView.extend({
         // focus on when dragging. (see test/heatmap-large.html)
         // When realtime is set as true, highlight will not show when hover
         // handle, because the label on handle, which displays a exact value
-        // but not range, might mislead users.
+        // but not range, might mislead user.
         var oldBatch = this._hoverLinkDataIndices;
         var newBatch = [];
         if (hoverOnBar || useHoverLinkOnHandle(visualMapModel)) {

@@ -28,7 +28,7 @@ class UpdateUserAction
             }
 
             $data['avatar'] = $dto->avatar->store(
-                'users/' . $user->id . '/avatar',
+                'user/' . $user->id . '/avatar',
                 'public'
             );
         }

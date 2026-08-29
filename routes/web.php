@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\BlogCategoryController;
 use App\Http\Controllers\Front\CategoryController;
 use App\Http\Controllers\Front\CompanyController;
@@ -10,25 +11,23 @@ use App\Http\Controllers\Front\MediaDownloadController;
 use App\Http\Controllers\Front\NewsController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Front\PodcastController;
-use App\Models\Media;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
-require __DIR__.'/auth.php';
-require __DIR__.'/admin.php';
-//require __DIR__.'/user.php';
-
-
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
+require __DIR__ . '/user.php';
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
 
 
 Route::get('/page/{slug}', [PageController::class, 'show'])->name('front.pages.show');
 Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('front.posts.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('front.categories.show');
 Route::get('/blog/category/{slug}', [BlogCategoryController::class, 'show'])->name('front.blog-categories.show');
-
 
 
 Route::get('/news', [NewsController::class, 'index'])
@@ -47,7 +46,6 @@ Route::get('/association/members', [CompanyController::class, 'index'])
     ->name('companies.index');
 
 
-
 Route::get('/contact', [ContactController::class, 'show'])->name('front.contact');
 
 
@@ -57,7 +55,6 @@ Route::get('lang/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('lang.switch');
-
 
 
 Route::get(

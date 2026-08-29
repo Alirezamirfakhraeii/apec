@@ -99,7 +99,7 @@
                                     </a>
                                 @else
                                     <a class="dropdown-item font_12"
-                                       href="#">
+                                       href="{{ route('user.dashboard') }}">
 
                                         <i class="fa fa-user-circle ml-1"></i>
                                         پروفایل

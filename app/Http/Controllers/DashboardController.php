@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\View\View;
+
 
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function __invoke(): View
     {
         return view('front.user.dashboard.index');
+
     }
 }

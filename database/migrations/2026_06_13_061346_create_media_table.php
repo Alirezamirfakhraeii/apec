@@ -34,7 +34,7 @@ return new class extends Migration
 
             $table->foreignId('uploaded_by')
                 ->nullable()
-                ->constrained('users')
+                ->constrained('user')
                 ->nullOnDelete();
 
             $table->timestamps();

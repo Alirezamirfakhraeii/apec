@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     public function showRegistrationForm()
     {
-        return view('auth.user.register');
+        return view('front.auth.register');
     }
 
     public function register(RegisterRequest $request, RegisterUserAction $action)
@@ -19,7 +19,7 @@ class RegisterController extends Controller
         $data = RegisterData::fromRequest($request);
         $user = $action->execute($data);
         auth()->login($user);
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     }
 
 

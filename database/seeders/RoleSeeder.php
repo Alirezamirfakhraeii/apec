@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
         $permissions = [
             'manage posts',
             'delete posts',
-            'manage users',
+            'manage user',
         ];
 
         foreach ($permissions as $permission) {

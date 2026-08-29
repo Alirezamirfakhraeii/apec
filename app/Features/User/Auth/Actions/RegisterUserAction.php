@@ -11,10 +11,10 @@ class RegisterUserAction {
     public function execute(RegisterData $data): User {
         return DB::transaction(function () use ($data) {
             $user = User::create([
-                'name' => $data->name,
                 'email' => $data->email,
                 'password' => Hash::make($data->password),
                 'mobile' => $data->mobile,
+                'name' => $data->name,
             ]);
             $user->assignRole('user');
             return $user;

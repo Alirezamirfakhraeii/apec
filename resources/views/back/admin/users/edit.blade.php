@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
-            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary btn-sm">
+            <a href="{{ route('admin.user.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fa fa-arrow-right ml-1"></i> بازگشت به لیست
             </a>
         </div>
@@ -29,7 +29,7 @@
                     <p class="text-muted font_12 mb-0">اطلاعات هویتی و سطح دسترسی کاربر را از این بخش تغییر دهید.</p>
                 </div>
                 <div class="card-body pt-3">
-                    <form action="{{ route('admin.users.update', $user->id) }}" method="POST"
+                    <form action="{{ route('admin.user.update', $user->id) }}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -104,7 +104,7 @@
 
                         <div class="mt-4 border-top pt-3 text-left">
                             <button type="submit" class="btn btn-success pl-4 pr-4">ذخیره و اعمال تغییرات</button>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary mr-2">انصراف</a>
+                            <a href="{{ route('admin.user.index') }}" class="btn btn-secondary mr-2">انصراف</a>
                         </div>
                     </form>
                 </div>

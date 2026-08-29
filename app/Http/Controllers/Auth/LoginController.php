@@ -17,11 +17,12 @@ class LoginController extends Controller
         return view('front.auth.login');
     }
 
-    public function login(LoginRequest $request, LoginUserAction $action): RedirectResponse
+    public function login(LoginRequest    $request, LoginUserAction $action): RedirectResponse
     {
         $dto = LoginDTO::fromRequest($request);
-        $user = $action->execute($dto);
-        return redirect()->intended(route($user->dashboardRoute()));
+        $action->execute($dto);
+        $request->session()->regenerate();
+        return redirect()->route('home');
     }
 
     public function logout(): RedirectResponse

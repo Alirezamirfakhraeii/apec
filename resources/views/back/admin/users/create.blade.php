@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
-            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary btn-sm">
+            <a href="{{ route('admin.user.index') }}" class="btn btn-secondary btn-sm">
                 <i class="fa fa-arrow-right ml-1"></i> بازگشت به لیست
             </a>
         </div>
@@ -26,7 +26,7 @@
                         کنید.</p>
                 </div>
                 <div class="card-body pt-3">
-                    <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.user.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">
@@ -86,7 +86,7 @@
                             <button type="submit" class="btn btn-primary pl-4 pr-4">
                                 <i class="fa fa-check ml-1"></i>ثبت و ذخیره کاربر
                             </button>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary mr-2">انصراف</a>
+                            <a href="{{ route('admin.user.index') }}" class="btn btn-secondary mr-2">انصراف</a>
                         </div>
                     </form>
                 </div>

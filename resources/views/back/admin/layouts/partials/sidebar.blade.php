@@ -137,7 +137,7 @@
                             >
                         @else
                             <img
-                                src="{{ asset('back/assets/img/default-user.png') }}"
+                                src="{{ asset('back/img/default-user.png') }}"
                                 alt="بدون تصویر"
                                 class="user-avatar-img"
                             >
@@ -179,7 +179,7 @@
             @role('admin')
             <li class="side-item side-item-category">مدیریت دسترسی‌ها</li>
 
-            <li class="slide {{ request()->routeIs('admin.users.*', 'admin.roles.*') ? 'is-expanded' : '' }}">
+            <li class="slide {{ request()->routeIs('admin.user.*', 'admin.roles.*') ? 'is-expanded' : '' }}">
                 <a class="side-menu__item" data-bs-toggle="slide" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -191,10 +191,10 @@
                     <i class="angle fe fe-chevron-down"></i>
                 </a>
 
-                <ul class="slide-menu {{ request()->routeIs('admin.users.*', 'admin.roles.*') ? 'open' : '' }}">
+                <ul class="slide-menu {{ request()->routeIs('admin.user.*', 'admin.roles.*') ? 'open' : '' }}">
                     <li>
-                        <a class="slide-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
-                           href="{{ route('admin.users.index') }}">
+                        <a class="slide-item {{ request()->routeIs('admin.user.*') ? 'active' : '' }}"
+                           href="{{ route('admin.user.index') }}">
                             لیست کاربران
                         </a>
                     </li>

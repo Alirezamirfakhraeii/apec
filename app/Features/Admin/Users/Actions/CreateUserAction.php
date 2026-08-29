@@ -23,7 +23,7 @@ class CreateUserAction
 
             if ($dto->avatar) {
                 $avatarPath = $dto->avatar->store(
-                    'users/' . $user->id . '/avatar',
+                    'user/' . $user->id . '/avatar',
                     'public'
                 );
 

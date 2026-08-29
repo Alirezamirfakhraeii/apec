@@ -158,6 +158,21 @@
                     <i class="fa fa-arrow-left"></i>
                 </button>
 
+                <div class="register-link">
+                    حساب کاربری ندارید؟
+                    <a href="{{ route('register') }}">
+                        ثبت‌نام کنید
+                    </a>
+                </div>
+
+                <div class="register-link">
+                    بازگشت به
+                    <a href="{{ route('home') }}">
+                        صفحه اصلی سایت
+                    </a>
+                </div>
+
+
 
             </form>
 
@@ -179,6 +194,17 @@
             padding: 20px;
             direction: rtl;
             box-sizing: border-box;
+        }
+
+        .register-link {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            font-weight: 600;
+            text-decoration: none;
         }
 
 

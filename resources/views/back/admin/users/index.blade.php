@@ -40,7 +40,7 @@
 
 
             <a
-                href="{{ route('admin.users.create') }}"
+                href="{{ route('admin.user.create') }}"
                 class="btn admin-create-btn"
             >
                 <i class="fa fa-user-plus ml-1"></i>
@@ -263,7 +263,7 @@
                     @if($activeFilters > 0)
 
                         <a
-                            href="{{ route('admin.users.index') }}"
+                            href="{{ route('admin.user.index') }}"
                             class="btn admin-back-btn"
                         >
                             <i class="fa fa-times ml-1"></i>
@@ -280,7 +280,7 @@
             <div class="admin-card-body">
 
                 <form
-                    action="{{ route('admin.users.index') }}"
+                    action="{{ route('admin.user.index') }}"
                     method="GET"
                 >
 
@@ -508,7 +508,7 @@
                                 <td class="text-right align-middle">
 
                                     <a
-                                        href="{{ route('admin.users.edit', $u->id) }}"
+                                        href="{{ route('admin.user.edit', $u->id) }}"
                                         class="d-block text-dark font-weight-bold"
                                     >
                                         {{ $u->name }}
@@ -580,7 +580,7 @@
                                 <td class="align-middle">
 
                                     <a
-                                        href="{{ route('admin.users.edit', $u->id) }}"
+                                        href="{{ route('admin.user.edit', $u->id) }}"
                                         class="admin-action-btn edit"
                                         title="ویرایش"
                                     >
@@ -589,7 +589,7 @@
 
 
                                     <form
-                                        action="{{ route('admin.users.destroy', $u->id) }}"
+                                        action="{{ route('admin.user.destroy', $u->id) }}"
                                         method="POST"
                                         class="d-inline-block"
                                         onsubmit="return confirm('آیا از حذف این کاربر مطمئن هستید؟')"
@@ -640,7 +640,7 @@
                                     @if($activeFilters > 0)
 
                                         <a
-                                            href="{{ route('admin.users.index') }}"
+                                            href="{{ route('admin.user.index') }}"
                                             class="btn admin-back-btn mt-3"
                                         >
                                             حذف همه فیلترها

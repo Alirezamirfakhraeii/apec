@@ -237,7 +237,7 @@
 
                                 <td>
                                     @if($podcast->image)
-                                        <img src="{{ asset($podcast->image) }}"
+                                        <img src="{{ asset('storage/' . $podcast->image) }}"
                                              alt="{{ $podcast->title }}"
                                              class="editorial-thumb">
                                     @else

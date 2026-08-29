@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         $dto = CreateUserDTO::fromArray($request->validated());
         $user = $action->execute($dto);
-        return redirect()->route('admin.users.index')->with('success', "کاربر «{$user->name}» با موفقیت ایجاد شد.");
+        return redirect()->route('admin.user.index')->with('success', "کاربر «{$user->name}» با موفقیت ایجاد شد.");
     }
 
     public function edit(User $user)
@@ -53,7 +53,7 @@ class UserController extends Controller
         $user = $action->execute($user, $dto);
 
         return redirect()
-            ->route('admin.users.index')
+            ->route('admin.user.index')
             ->with('success', "اطلاعات کاربر «{$user->name}» با موفقیت ویرایش شد.");
     }
 
@@ -63,7 +63,7 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'شما نمی‌توانید حساب کاربری خودتان را حذف کنید!');
         }
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'کاربر مورد نظر با موفقیت حذف شد.');
+        return redirect()->route('admin.user.index')->with('success', 'کاربر مورد نظر با موفقیت حذف شد.');
     }
 
 

@@ -370,7 +370,7 @@ return [
             'deputies' => [
                 'label' => 'قائم‌مقام‌ها',
                 'description' => 'امکان ثبت یک یا دو قائم‌مقام',
-                'icon' => 'fa fa-users',
+                'icon' => 'fa fa-user',
             ],
 
             'workgroups' => [

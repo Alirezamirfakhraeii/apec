@@ -7,7 +7,7 @@
         if (Str::contains($title, ['خبر', 'اخبار', 'مقاله'])) {
             $icon = 'fa-newspaper-o';
         } elseif (Str::contains($title, ['انجمن', 'کاربران', 'اعضا'])) {
-            $icon = 'fa-users';
+            $icon = 'fa-user';
         } elseif (Str::contains($title, ['پادکست', 'صوت'])) {
             $icon = 'fa-microphone';
         } elseif (Str::contains($title, ['تماس', 'ارتباط'])) {

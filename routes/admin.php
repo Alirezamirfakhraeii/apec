@@ -33,7 +33,7 @@ Route::middleware(['auth', 'role:admin'])
         |--------------------------------------------------------------------------
         */
 
-        Route::resource('users', UserController::class);
+        Route::resource('user', UserController::class);
 
         Route::resource('roles', RoleController::class)
             ->except(['create', 'show', 'edit']);

@@ -18,7 +18,17 @@ class UpdatePodcastRequest extends FormRequest
             'title'        => 'required|string|max:255',
             'summary'      => 'nullable|string',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'audio_url'    => 'nullable|mimes:mp3,wav,ogg|max:50000',
+            'audio_url' => [
+                'nullable',
+                'url',
+                'max:2048',
+            ],
+            'audio_file' => [
+                'nullable',
+                'file',
+                'mimes:mp3,wav,ogg',
+                'max:50000',
+            ],
             'duration'     => 'nullable|string',
             'embed_code'   => 'nullable|string',
             'castbox_url'  => 'nullable|url',
