@@ -17,6 +17,7 @@ jobs:
     env:
       APP_ENV: testing
 
+      DB_URL: ""
       DB_CONNECTION: mysql
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
@@ -74,6 +75,25 @@ jobs:
 
       - name: Clear Laravel configuration
         run: php artisan config:clear
+
+      - name: Debug database environment
+        run: |
+          echo "Shell DB_CONNECTION=$DB_CONNECTION"
+          echo "Shell DB_HOST=$DB_HOST"
+          echo "Shell DB_PORT=$DB_PORT"
+          echo "Shell DB_DATABASE=$DB_DATABASE"
+          echo "Shell DB_USERNAME=$DB_USERNAME"
+
+          if [ -n "$DB_PASSWORD" ]; then
+            echo "Shell DB_PASSWORD=SET"
+          else
+            echo "Shell DB_PASSWORD=EMPTY"
+          fi
+
+          php -r 'echo "PHP DB_CONNECTION=" . getenv("DB_CONNECTION") . PHP_EOL;'
+          php -r 'echo "PHP DB_HOST=" . getenv("DB_HOST") . PHP_EOL;'
+          php -r 'echo "PHP DB_DATABASE=" . getenv("DB_DATABASE") . PHP_EOL;'
+          php -r 'echo "PHP DB_USERNAME=" . getenv("DB_USERNAME") . PHP_EOL;'
 
       - name: Run migrations
         run: php artisan migrate --force
