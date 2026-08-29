@@ -14,27 +14,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      APP_ENV: testing
-
-      DB_URL: ""
-      DB_CONNECTION: mysql
-      DB_HOST: 127.0.0.1
-      DB_PORT: 3306
-      DB_DATABASE: apec_test
-      DB_USERNAME: root
-      DB_PASSWORD: root
-
-      CACHE_STORE: array
-      SESSION_DRIVER: array
-      QUEUE_CONNECTION: sync
-
     services:
       mysql:
         image: mysql:8.0
 
         env:
-          MYSQL_DATABASE: apec_test
+          MYSQL_DATABASE: _apec
           MYSQL_ROOT_PASSWORD: root
 
         ports:
@@ -52,48 +37,47 @@ jobs:
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
-
         with:
           php-version: '8.2'
-
-          extensions: >
-            mbstring,
-            pdo_mysql,
-            bcmath,
-            intl
-
+          extensions: mbstring, pdo_mysql, bcmath, intl
           coverage: none
-
-      - name: Copy environment file
-        run: cp .env.example .env
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Create CI environment
+        run: |
+          cp .env.example .env
+
+          echo "APP_ENV=testing" >> .env
+
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=_apec" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+
+          echo "CACHE_STORE=array" >> .env
+          echo "SESSION_DRIVER=array" >> .env
+          echo "QUEUE_CONNECTION=sync" >> .env
 
       - name: Generate application key
         run: php artisan key:generate
 
       - name: Clear Laravel configuration
-        run: php artisan config:clear
-
-      - name: Debug database environment
         run: |
-          echo "Shell DB_CONNECTION=$DB_CONNECTION"
-          echo "Shell DB_HOST=$DB_HOST"
-          echo "Shell DB_PORT=$DB_PORT"
-          echo "Shell DB_DATABASE=$DB_DATABASE"
-          echo "Shell DB_USERNAME=$DB_USERNAME"
+          php artisan config:clear
+          php artisan cache:clear
 
-          if [ -n "$DB_PASSWORD" ]; then
-            echo "Shell DB_PASSWORD=SET"
-          else
-            echo "Shell DB_PASSWORD=EMPTY"
-          fi
-
-          php -r 'echo "PHP DB_CONNECTION=" . getenv("DB_CONNECTION") . PHP_EOL;'
-          php -r 'echo "PHP DB_HOST=" . getenv("DB_HOST") . PHP_EOL;'
-          php -r 'echo "PHP DB_DATABASE=" . getenv("DB_DATABASE") . PHP_EOL;'
-          php -r 'echo "PHP DB_USERNAME=" . getenv("DB_USERNAME") . PHP_EOL;'
+      - name: Check database configuration
+        run: |
+          php artisan tinker --execute="
+          dump(config('database.default'));
+          dump(config('database.connections.mysql.host'));
+          dump(config('database.connections.mysql.database'));
+          dump(config('database.connections.mysql.username'));
+          "
 
       - name: Run migrations
         run: php artisan migrate --force
