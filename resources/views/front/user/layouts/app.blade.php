@@ -56,7 +56,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/css/persian-datepicker.min.css">
 
     <link href="{{ asset('back/css/panel/style.css') }}" rel="stylesheet">
-
+    @yield('styles')
     @stack('styles')
 </head>
 <body>
@@ -84,6 +84,8 @@
 
 
 <script src="{{ asset('front/js/user/dashboard.js') }}"></script>
+
+
 
 @stack('scripts')
 

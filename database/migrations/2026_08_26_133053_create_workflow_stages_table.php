@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('workflow_stages', function (Blueprint $table) {
@@ -28,14 +25,18 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->index('position');
-            $table->index('is_active');
+            $table->index(
+                'position',
+                'workflow_stages_position_idx'
+            );
+
+            $table->index(
+                'is_active',
+                'workflow_stages_active_idx'
+            );
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('workflow_stages');

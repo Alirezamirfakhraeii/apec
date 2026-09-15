@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\CompanyReportController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\MembershipApplicationController;
 use App\Http\Controllers\Admin\MenuItemController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PodcastController;
@@ -19,7 +20,10 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'role:admin'])
+Route::middleware([
+    'auth',
+    'role:admin|it_specialist|association_secretary|membership_chair|board_chairman',
+])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -57,6 +61,59 @@ Route::middleware(['auth', 'role:admin'])
             ->name('company.reports');
 
         Route::resource('company', CompanyController::class);
+
+        Route::get(
+            '/membership-applications',
+            [MembershipApplicationController::class, 'index']
+        )->name('membership-applications.index');
+
+        Route::get(
+            '/membership-applications/{application}',
+            [MembershipApplicationController::class, 'show']
+        )->name('membership-applications.show');
+
+        Route::post(
+            '/membership-applications/{application}/route',
+            [
+                MembershipApplicationController::class,
+                'routeToStage',
+            ]
+        )->name('membership-applications.route');
+
+        Route::patch(
+            '/membership-applications/{application}/status',
+            [
+                MembershipApplicationController::class,
+                'updateStatus',
+            ]
+        )->name('membership-applications.status.update');
+
+
+        Route::get(
+            '/membership-applications/{application}/edit',
+            [
+                MembershipApplicationController::class,
+                'edit',
+            ]
+        )->name('membership-applications.edit');
+
+
+        Route::put(
+            '/membership-applications/{application}',
+            [
+                MembershipApplicationController::class,
+                'update',
+            ]
+        )->name('membership-applications.update');
+
+        Route::post(
+            '/membership-applications/{application}/review',
+            [
+                MembershipApplicationController::class,
+                'review',
+            ]
+        )->name('membership-applications.review');
+
 
         /*
         |--------------------------------------------------------------------------

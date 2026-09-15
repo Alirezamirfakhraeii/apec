@@ -17,12 +17,22 @@ class LoginController extends Controller
         return view('front.auth.login');
     }
 
-    public function login(LoginRequest    $request, LoginUserAction $action): RedirectResponse
-    {
+    public function login(LoginRequest $request, LoginUserAction $action): RedirectResponse {
         $dto = LoginDTO::fromRequest($request);
-        $action->execute($dto);
-        $request->session()->regenerate();
-        return redirect()->route('home');
+        $user = $action->execute($dto);
+        if (
+            $user->hasAnyRole([
+                'admin',
+                'it_specialist',
+                'association_secretary',
+                'membership_chair',
+                'board_chairman',
+            ])
+        )
+        {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('user.dashboard');
     }
 
     public function logout(): RedirectResponse

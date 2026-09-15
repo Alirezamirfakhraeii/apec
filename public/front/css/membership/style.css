@@ -1,0 +1,446 @@
+/* =========================================================
+   Membership Form
+   ========================================================= */
+
+.membership-form-page {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 8px 0 32px;
+    direction: rtl;
+}
+
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.membership-form-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.membership-form-header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.membership-form-header p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #6b7280;
+}
+
+.membership-form-status {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #f9fafb;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   Card
+   ========================================================= */
+
+.membership-form-card {
+    width: 100%;
+    padding: 28px;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.02),
+        0 8px 30px rgba(0, 0, 0, 0.03);
+}
+
+.membership-form-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding-bottom: 22px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #f0f1f3;
+}
+
+.membership-form-card__header h2 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.membership-form-card__header p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #6b7280;
+}
+
+.membership-step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 9px;
+    background: #111827;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   Grid
+   ========================================================= */
+
+.membership-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 24px;
+}
+
+
+/* =========================================================
+   Form Group
+   ========================================================= */
+
+.membership-form-page .membership-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.membership-form-page .membership-form-group label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.membership-form-page .membership-form-group label span {
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   Inputs / Selects / Textareas
+   ========================================================= */
+
+.membership-form-page .membership-form-group input[type="text"],
+.membership-form-page .membership-form-group input[type="tel"],
+.membership-form-page .membership-form-group input[type="email"],
+.membership-form-page .membership-form-group input[type="number"],
+.membership-form-page .membership-form-group input[type="url"],
+.membership-form-page .membership-form-group input[type="password"],
+.membership-form-page .membership-form-group select,
+.membership-form-page .membership-form-group textarea {
+    width: 100%;
+    min-height: 46px;
+    margin: 0;
+    padding: 0 13px;
+    border: 1px solid #d9dde4;
+    border-radius: 11px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    outline: none;
+    box-sizing: border-box;
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.membership-form-page .membership-form-group textarea {
+    min-height: 110px;
+    padding-top: 12px;
+    resize: vertical;
+}
+
+
+/* Placeholder */
+
+.membership-form-page .membership-form-group input::placeholder,
+.membership-form-page .membership-form-group textarea::placeholder {
+    color: #a6adb8;
+    opacity: 1;
+}
+
+
+/* Hover */
+
+.membership-form-page .membership-form-group input:hover,
+.membership-form-page .membership-form-group select:hover,
+.membership-form-page .membership-form-group textarea:hover {
+    border-color: #bfc5cf;
+}
+
+
+/* Focus */
+
+.membership-form-page .membership-form-group input:focus,
+.membership-form-page .membership-form-group select:focus,
+.membership-form-page .membership-form-group textarea:focus {
+    border-color: #111827;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.06);
+}
+
+
+/* Disabled */
+
+.membership-form-page .membership-form-group input:disabled,
+.membership-form-page .membership-form-group select:disabled,
+.membership-form-page .membership-form-group textarea:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   Select
+   ========================================================= */
+
+.membership-form-page .membership-form-group select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, #6b7280 50%),
+        linear-gradient(135deg, #6b7280 50%, transparent 50%);
+
+    background-position:
+        16px 19px,
+        11px 19px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat: no-repeat;
+
+    padding-left: 38px;
+}
+
+
+/* =========================================================
+   File Input
+   ========================================================= */
+
+.membership-form-page .membership-form-group input[type="file"] {
+    width: 100%;
+    min-height: 48px;
+    padding: 5px;
+    border: 1px dashed #cfd5de;
+    border-radius: 11px;
+    background: #fafafa;
+    color: #6b7280;
+    font-size: 12px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.membership-form-page
+.membership-form-group
+input[type="file"]::file-selector-button {
+    height: 36px;
+    margin-left: 10px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #111827;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.membership-form-page
+.membership-form-group
+input[type="file"]::file-selector-button:hover {
+    opacity: 0.86;
+}
+
+
+/* =========================================================
+   Error
+   ========================================================= */
+
+.membership-field-error {
+    display: block;
+    min-height: 15px;
+    margin-top: 1px;
+    color: #dc2626;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   Alerts
+   ========================================================= */
+
+.membership-alert {
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.membership-alert--success {
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.membership-alert--error {
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+
+/* =========================================================
+   Actions
+   ========================================================= */
+
+.membership-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #f0f1f3;
+}
+
+.membership-primary-button,
+.membership-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+    min-height: 43px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.membership-primary-button {
+    border: 1px solid #111827;
+    background: #111827;
+    color: #ffffff;
+}
+
+.membership-primary-button:hover {
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.membership-primary-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.membership-secondary-button {
+    border: 1px solid #d8dde5;
+    background: #ffffff;
+    color: #374151;
+}
+
+.membership-secondary-button:hover {
+    border-color: #bfc5cf;
+    background: #f9fafb;
+    color: #111827;
+}
+
+
+/* =========================================================
+   Persian Datepicker Compatibility
+   ========================================================= */
+
+.membership-form-page .persian-datepicker {
+    cursor: pointer;
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 992px) {
+    .membership-form-page {
+        max-width: 100%;
+    }
+
+    .membership-form-grid {
+        gap: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .membership-form-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .membership-form-status {
+        align-self: flex-start;
+    }
+
+    .membership-form-card {
+        padding: 20px;
+        border-radius: 14px;
+    }
+
+    .membership-form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .membership-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .membership-primary-button,
+    .membership-secondary-button {
+        width: 100%;
+    }
+}

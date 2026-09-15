@@ -11,27 +11,76 @@ return new class extends Migration
         Schema::create('application_reviews', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('membership_application_id')
-                ->constrained('membership_applications')
-                ->cascadeOnDelete();
+            $table->unsignedBigInteger(
+                'membership_application_id'
+            );
 
-            $table->foreignId('reviewer_id')
-                ->nullable()
-                ->constrained('user')
-                ->nullOnDelete();
+            $table->unsignedBigInteger(
+                'reviewer_id'
+            )->nullable();
 
-            $table->foreignId('stage_id')
-                ->constrained('workflow_stages')
-                ->restrictOnDelete();
+            $table->unsignedBigInteger(
+                'stage_id'
+            );
 
             $table->string('decision');
-            $table->text('comment')->nullable();
+
+            $table->text('comment')
+                ->nullable();
 
             $table->timestamps();
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | Foreign Keys
+            |--------------------------------------------------------------------------
+            */
+
+            $table->foreign(
+                'membership_application_id',
+                'application_review_application_fk'
+            )
+                ->references('id')
+                ->on('membership_applications')
+                ->cascadeOnDelete();
+
+
+            $table->foreign(
+                'reviewer_id',
+                'application_review_reviewer_fk'
+            )
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete();
+
+
+            $table->foreign(
+                'stage_id',
+                'application_review_stage_fk'
+            )
+                ->references('id')
+                ->on('workflow_stages')
+                ->restrictOnDelete();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Indexes
+            |--------------------------------------------------------------------------
+            */
+
             $table->index(
-                ['membership_application_id', 'stage_id'],
-                'application_reviews_application_stage_idx'
+                [
+                    'membership_application_id',
+                    'stage_id',
+                ],
+                'application_review_app_stage_idx'
+            );
+
+            $table->index(
+                'reviewer_id',
+                'application_review_reviewer_idx'
             );
         });
     }

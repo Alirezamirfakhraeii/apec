@@ -11,47 +11,37 @@ return new class extends Migration
         Schema::create('membership_company_profiles', function (Blueprint $table) {
             $table->id();
 
-            /*
-            |--------------------------------------------------------------------------
-            | Membership Application
-            |--------------------------------------------------------------------------
-            */
-
-            $table->foreignId('membership_application_id');
-
-            $table->unique(
-                'membership_application_id',
-                'membership_company_application_unique'
+            $table->unsignedBigInteger(
+                'membership_application_id'
             );
 
-            $table->foreign(
-                'membership_application_id',
-                'membership_company_application_fk'
-            )
-                ->references('id')
-                ->on('membership_applications')
-                ->cascadeOnDelete();
-
 
             /*
             |--------------------------------------------------------------------------
-            | Basic Company Information
+            | Basic Information
             |--------------------------------------------------------------------------
             */
 
-            $table->string('logo_path')->nullable();
+            $table->string('logo_path')
+                ->nullable();
 
-            $table->string('company_short_name')->nullable();
+            $table->string('company_short_name')
+                ->nullable();
 
-            $table->string('registered_name')->nullable();
+            $table->string('registered_name')
+                ->nullable();
 
-            $table->string('company_name_en')->nullable();
+            $table->string('company_name_en')
+                ->nullable();
 
-            $table->string('nationality')->nullable();
+            $table->string('nationality')
+                ->nullable();
 
-            $table->string('parent_company_name')->nullable();
+            $table->string('parent_company_name')
+                ->nullable();
 
-            $table->string('company_type')->nullable();
+            $table->string('company_type')
+                ->nullable();
 
 
             /*
@@ -60,13 +50,17 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->date('registration_date')->nullable();
+            $table->date('registration_date')
+                ->nullable();
 
-            $table->string('registration_number')->nullable();
+            $table->string('registration_number')
+                ->nullable();
 
-            $table->string('registration_place')->nullable();
+            $table->string('registration_place')
+                ->nullable();
 
-            $table->string('national_id')->nullable();
+            $table->string('national_id')
+                ->nullable();
 
             $table->decimal(
                 'registered_capital_irr',
@@ -74,7 +68,8 @@ return new class extends Migration
                 0
             )->nullable();
 
-            $table->date('reference_gazette_date')->nullable();
+            $table->date('reference_gazette_date')
+                ->nullable();
 
 
             /*
@@ -83,15 +78,20 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('phone')->nullable();
+            $table->string('phone')
+                ->nullable();
 
-            $table->string('fax')->nullable();
+            $table->string('fax')
+                ->nullable();
 
-            $table->string('email')->nullable();
+            $table->string('email')
+                ->nullable();
 
-            $table->string('website')->nullable();
+            $table->string('website')
+                ->nullable();
 
-            $table->text('address')->nullable();
+            $table->text('address')
+                ->nullable();
 
 
             /*
@@ -100,11 +100,14 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('ceo_name')->nullable();
+            $table->string('ceo_name')
+                ->nullable();
 
-            $table->string('ceo_mobile')->nullable();
+            $table->string('ceo_mobile', 20)
+                ->nullable();
 
-            $table->string('ceo_email')->nullable();
+            $table->string('ceo_email')
+                ->nullable();
 
 
             /*
@@ -113,11 +116,14 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('chairman_name')->nullable();
+            $table->string('chairman_name')
+                ->nullable();
 
-            $table->string('chairman_mobile')->nullable();
+            $table->string('chairman_mobile', 20)
+                ->nullable();
 
-            $table->string('chairman_email')->nullable();
+            $table->string('chairman_email')
+                ->nullable();
 
 
             /*
@@ -126,13 +132,17 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('association_contact_name')->nullable();
+            $table->string('association_contact_name')
+                ->nullable();
 
-            $table->string('association_contact_position')->nullable();
+            $table->string('association_contact_position')
+                ->nullable();
 
-            $table->string('association_contact_mobile')->nullable();
+            $table->string('association_contact_mobile', 20)
+                ->nullable();
 
-            $table->string('association_contact_email')->nullable();
+            $table->string('association_contact_email')
+                ->nullable();
 
 
             /*
@@ -141,14 +151,16 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->boolean('has_valid_commercial_card')->nullable();
+            $table->boolean('has_valid_commercial_card')
+                ->nullable();
 
-            $table->date('commercial_card_valid_until')->nullable();
+            $table->date('commercial_card_valid_until')
+                ->nullable();
 
 
             /*
             |--------------------------------------------------------------------------
-            | Chamber Membership
+            | Chamber Of Commerce
             |--------------------------------------------------------------------------
             */
 
@@ -160,7 +172,26 @@ return new class extends Migration
                 'chamber_membership_valid_until'
             )->nullable();
 
-            $table->string('chamber_province')->nullable();
+            $table->string('chamber_province')
+                ->nullable();
+
+            $table->boolean('is_chamber_member')
+                ->nullable();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Experience & Specialty
+            |--------------------------------------------------------------------------
+            */
+
+            $table->unsignedSmallInteger(
+                'activity_experience_years'
+            )->nullable();
+
+            $table->text(
+                'oil_gas_petchem_specialty'
+            )->nullable();
 
 
             /*
@@ -169,11 +200,13 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->boolean('activity_design_consulting')
-                ->default(false);
+            $table->boolean(
+                'activity_design_consulting'
+            )->default(false);
 
-            $table->boolean('activity_construction_installation')
-                ->default(false);
+            $table->boolean(
+                'activity_construction_installation'
+            )->default(false);
 
             $table->boolean('activity_epc')
                 ->default(false);
@@ -181,57 +214,62 @@ return new class extends Migration
             $table->boolean('activity_mc')
                 ->default(false);
 
-            $table->boolean('activity_manufacturing')
-                ->default(false);
+            $table->boolean(
+                'activity_manufacturing'
+            )->default(false);
 
-            $table->longText('activity_type')->nullable();
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Membership Request
-            |--------------------------------------------------------------------------
-            */
-
-            $table->string('membership_type')->nullable();
-
-            $table->text('association_committees')->nullable();
+            $table->longText('activity_type')
+                ->nullable();
 
 
             /*
             |--------------------------------------------------------------------------
-            | Timestamps
+            | Membership Information
             |--------------------------------------------------------------------------
             */
+
+            $table->string('membership_type')
+                ->nullable();
+
+            $table->text('association_committees')
+                ->nullable();
+
 
             $table->timestamps();
 
 
             /*
             |--------------------------------------------------------------------------
-            | Indexes
+            | Foreign Key
             |--------------------------------------------------------------------------
             */
 
-            $table->index(
-                'national_id',
-                'membership_company_national_id_idx'
-            );
+            $table->foreign(
+                'membership_application_id',
+                'membership_profile_application_fk'
+            )
+                ->references('id')
+                ->on('membership_applications')
+                ->cascadeOnDelete();
 
-            $table->index(
-                'registration_number',
-                'membership_company_registration_idx'
-            );
 
-            $table->index(
-                'email',
-                'membership_company_email_idx'
+            /*
+            |--------------------------------------------------------------------------
+            | One profile per application
+            |--------------------------------------------------------------------------
+            */
+
+            $table->unique(
+                'membership_application_id',
+                'membership_profile_application_unique'
             );
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('membership_company_profiles');
+        Schema::dropIfExists(
+            'membership_company_profiles'
+        );
     }
 };

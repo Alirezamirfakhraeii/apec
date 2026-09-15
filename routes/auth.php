@@ -25,4 +25,6 @@ Route::middleware('guest')->prefix('admin')->name('admin.')->group(function () {
 
 Route::post('admin/logout', [AdminLoginController::class, 'logout'])
     ->name('admin.logout')
-    ->middleware(['auth', 'role:admin']);
+    ->middleware(['auth',
+        'role:admin|it_specialist|association_secretary|membership_chair|board_chairman',
+    ]);

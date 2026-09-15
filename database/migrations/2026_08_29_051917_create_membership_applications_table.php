@@ -11,29 +11,148 @@ return new class extends Migration
         Schema::create('membership_applications', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
-                ->constrained('user')
-                ->cascadeOnDelete();
+            /*
+            |--------------------------------------------------------------------------
+            | Owner
+            |--------------------------------------------------------------------------
+            */
 
-            $table->string('state')->default('draft');
+            $table->unsignedBigInteger('user_id');
 
-            $table->foreignId('current_stage_id')
-                ->nullable()
-                ->constrained('workflow_stages')
-                ->nullOnDelete();
 
-            $table->foreignId('return_stage_id')
-                ->nullable()
-                ->constrained('workflow_stages')
-                ->nullOnDelete();
+            /*
+            |--------------------------------------------------------------------------
+            | Official Company
+            |--------------------------------------------------------------------------
+            |
+            | تا قبل از تایید نهایی null می‌ماند.
+            |
+            */
 
-            $table->timestamp('submitted_at')->nullable();
-            $table->timestamp('approved_at')->nullable();
-            $table->timestamp('rejected_at')->nullable();
+            $table->unsignedBigInteger('company_id')
+                ->nullable();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Intake
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('intake_company_name')
+                ->nullable();
+
+            $table->string('representative_name')
+                ->nullable();
+
+            $table->string('representative_mobile', 20)
+                ->nullable();
+
+            $table->timestamp('intake_confirmed_at')
+                ->nullable();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Workflow
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('state')
+                ->default('draft');
+
+            $table->unsignedBigInteger('current_stage_id')
+                ->nullable();
+
+            $table->unsignedBigInteger('return_stage_id')
+                ->nullable();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Workflow Dates
+            |--------------------------------------------------------------------------
+            */
+
+            $table->timestamp('submitted_at')
+                ->nullable();
+
+            $table->timestamp('approved_at')
+                ->nullable();
+
+            $table->timestamp('rejected_at')
+                ->nullable();
 
             $table->timestamps();
 
-            $table->index('state');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Foreign Keys
+            |--------------------------------------------------------------------------
+            */
+
+            $table->foreign(
+                'user_id',
+                'membership_application_user_fk'
+            )
+                ->references('id')
+                ->on('users')
+                ->cascadeOnDelete();
+
+
+            $table->foreign(
+                'company_id',
+                'membership_application_company_fk'
+            )
+                ->references('id')
+                ->on('companies')
+                ->nullOnDelete();
+
+
+            $table->foreign(
+                'current_stage_id',
+                'membership_application_current_stage_fk'
+            )
+                ->references('id')
+                ->on('workflow_stages')
+                ->nullOnDelete();
+
+
+            $table->foreign(
+                'return_stage_id',
+                'membership_application_return_stage_fk'
+            )
+                ->references('id')
+                ->on('workflow_stages')
+                ->nullOnDelete();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Indexes
+            |--------------------------------------------------------------------------
+            */
+
+            $table->index(
+                'user_id',
+                'membership_application_user_idx'
+            );
+
+            $table->index(
+                'state',
+                'membership_application_state_idx'
+            );
+
+            $table->index(
+                'current_stage_id',
+                'membership_application_stage_idx'
+            );
+
+            $table->index(
+                'representative_mobile',
+                'membership_application_mobile_idx'
+            );
         });
     }
 
