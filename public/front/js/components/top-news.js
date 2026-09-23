@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    const premiumIndicators = document.querySelectorAll(
+    const premiumIndicators = premiumCarousel.querySelectorAll(
         '.premium-indicators .hero-news-list-item'
     );
 
@@ -19,21 +19,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+    const carouselInstance =
+        bootstrap.Carousel.getOrCreateInstance(
+            premiumCarousel
+        );
+
+
     /**
      * Set active carousel list item.
      */
     function setActiveIndicator(nextIndex) {
 
-        premiumIndicators.forEach(function (button, index) {
+        premiumIndicators.forEach(function (item, index) {
 
-            const isActive = index === nextIndex;
+            const itemIndex = parseInt(
+                item.dataset.slideIndex ?? index,
+                10
+            );
+
+            const isActive =
+                itemIndex === nextIndex;
 
 
             if (isActive) {
 
-                button.classList.add('active');
+                item.classList.add('active');
 
-                button.setAttribute(
+                item.setAttribute(
                     'aria-current',
                     'true'
                 );
@@ -42,17 +54,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 /*
                  * Restart progress animation.
                  */
-                const progressBar = button.querySelector(
-                    '.hero-list-progress'
-                );
+                const progressBar =
+                    item.querySelector(
+                        '.hero-list-progress'
+                    );
 
                 if (progressBar) {
 
-                    progressBar.style.animation = 'none';
+                    progressBar.style.animation =
+                        'none';
 
                     void progressBar.offsetWidth;
 
-                    progressBar.style.animation = '';
+                    progressBar.style.animation =
+                        '';
 
                 }
 
@@ -60,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 /*
                  * Keep active item visible.
                  */
-                const list = button.parentElement;
+                const list =
+                    item.parentElement;
 
                 if (list) {
 
@@ -68,10 +84,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         list.clientHeight;
 
                     const itemTop =
-                        button.offsetTop;
+                        item.offsetTop;
 
                     const itemHeight =
-                        button.clientHeight;
+                        item.clientHeight;
 
 
                     list.scrollTo({
@@ -87,9 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             } else {
 
-                button.classList.remove('active');
+                item.classList.remove(
+                    'active'
+                );
 
-                button.removeAttribute(
+                item.removeAttribute(
                     'aria-current'
                 );
 
@@ -101,13 +119,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /**
+     * Select news from list.
+     */
+    premiumIndicators.forEach(function (item, index) {
+
+        const selectButton =
+            item.querySelector(
+                '.hero-news-list-select'
+            );
+
+
+        if (!selectButton) {
+            return;
+        }
+
+
+        selectButton.addEventListener(
+            'click',
+            function () {
+
+                const slideIndex =
+                    parseInt(
+                        item.dataset.slideIndex ??
+                        index,
+                        10
+                    );
+
+
+                setActiveIndicator(
+                    slideIndex
+                );
+
+
+                carouselInstance.to(
+                    slideIndex
+                );
+
+            }
+        );
+
+    });
+
+
+    /**
      * Bootstrap carousel event.
      */
     premiumCarousel.addEventListener(
         'slide.bs.carousel',
         function (event) {
 
-            setActiveIndicator(event.to);
+            setActiveIndicator(
+                event.to
+            );
 
         }
     );

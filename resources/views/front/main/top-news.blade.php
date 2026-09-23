@@ -81,14 +81,12 @@
 
                                                 </div>
 
-
                                                 <a
                                                     href="{{ route('front.posts.show', $post->slug) }}"
                                                     class="hero-news-title"
                                                 >
                                                     {{ $post->title }}
                                                 </a>
-
 
                                                 @if(!empty($post->summary))
                                                     <p class="hero-news-summary">
@@ -108,7 +106,6 @@
 
                         </div>
 
-
                         {{-- Previous --}}
                         <button
                             class="carousel-control-prev hero-carousel-control hero-carousel-prev"
@@ -122,7 +119,6 @@
                                 aria-hidden="true"
                             ></i>
                         </button>
-
 
                         {{-- Next --}}
                         <button
@@ -140,7 +136,6 @@
 
                     </div>
 
-
                     {{-- =================================================
                          CAROUSEL LIST
                     ================================================== --}}
@@ -148,54 +143,74 @@
 
                         @foreach($featuredPosts as $index => $post)
 
-                            <button
-                                type="button"
-                                data-bs-target="#premiumNewsCarousel"
-                                data-bs-slide-to="{{ $index }}"
+                            <div
                                 class="hero-news-list-item {{ $index === 0 ? 'active' : '' }}"
+                                data-slide-index="{{ $index }}"
                                 aria-current="{{ $index === 0 ? 'true' : 'false' }}"
-                                aria-label="{{ $post->title }}"
                             >
 
-                                <span class="hero-list-number">
-                                    {{ $index + 1 }}
-                                </span>
+                                {{-- Main clickable area --}}
+                                <button
+                                    type="button"
+                                    class="hero-news-list-select"
+                                    aria-label="{{ $post->title }}"
+                                >
 
+                                    <span class="hero-list-number">
+                                        {{ $index + 1 }}
+                                    </span>
 
-                                <span class="hero-list-thumb">
-                                    <img
-                                        src="{{ $post->main_image_url }}"
-                                        alt=""
-                                        loading="lazy"
-                                    >
-                                </span>
+                                    <span class="hero-list-thumb">
 
+                                        <img
+                                            src="{{ $post->main_image_url }}"
+                                            alt="{{ $post->title }}"
+                                            loading="lazy"
+                                        >
 
-                                <span class="hero-list-content">
+                                    </span>
 
-                                    <strong>
-                                        {{ $post->title }}
-                                    </strong>
+                                    <span class="hero-list-content">
 
-                                    <small>
-                                        <i
-                                            class="fa fa-clock"
-                                            aria-hidden="true"
-                                        ></i>
+                                        <strong>
+                                            {{ $post->title }}
+                                        </strong>
 
-                                        {{
-                                            $post->created_at
-                                                ->locale(app()->getLocale())
-                                                ->diffForHumans()
-                                        }}
-                                    </small>
+                                        <small>
 
-                                </span>
+                                            <i
+                                                class="fa fa-clock"
+                                                aria-hidden="true"
+                                            ></i>
 
+                                            {{
+                                                $post->created_at
+                                                    ->locale(app()->getLocale())
+                                                    ->diffForHumans()
+                                            }}
+
+                                        </small>
+
+                                    </span>
+
+                                </button>
+
+                                {{-- Open news --}}
+                                <a
+                                    href="{{ route('front.posts.show', $post->slug) }}"
+                                    class="hero-news-open"
+                                    aria-label="{{ __('read_more') }}: {{ $post->title }}"
+                                    title="{{ __('read_more') }}"
+                                >
+                                    <i
+                                        class="fa {{ $isRtl ? 'fa-arrow-left' : 'fa-arrow-right' }}"
+                                        aria-hidden="true"
+                                    ></i>
+                                </a>
 
                                 <span class="hero-list-progress"></span>
 
-                            </button>
+                            </div>
 
                         @endforeach
 
@@ -226,15 +241,12 @@
 
         </div>
 
-
-
         {{-- =====================================================
              SIDE WIDGETS
         ====================================================== --}}
         <div class="col-lg-6 col-12 px-2">
 
             <div class="row mx-0 home-featured-side-row">
-
 
                 {{-- =================================================
                      TRENDING
@@ -277,7 +289,6 @@
 
                                 </li>
 
-
                                 <li
                                     class="nav-item flex-fill text-center"
                                     role="presentation"
@@ -307,9 +318,7 @@
 
                         </div>
 
-
                         <div class="tab-content news-tabs-content">
-
 
                             {{-- MOST VISITED --}}
                             <div
@@ -352,8 +361,6 @@
                                 @endforelse
 
                             </div>
-
-
 
                             {{-- MOST COMMENTED --}}
                             <div
@@ -403,8 +410,6 @@
 
                 </div>
 
-
-
                 {{-- =================================================
                      SUBJECT OF THE DAY + ADS
                 ================================================== --}}
@@ -413,7 +418,6 @@
                     <div
                         class="sticky-top col_z_index subject-stack-equal home-sticky-widget"
                     >
-
 
                         {{-- SUBJECT --}}
                         <div class="subject-day-card">
@@ -432,14 +436,12 @@
 
                                 </div>
 
-
                                 <i
                                     class="fa fa-fire subject-day-fire-icon"
                                     aria-hidden="true"
                                 ></i>
 
                             </div>
-
 
                             @if($subjectOfTheDay)
 
@@ -456,18 +458,15 @@
                                             loading="lazy"
                                         >
 
-
                                         <span class="subject-day-badge">
                                             {{ __('today') }}
                                         </span>
-
 
                                         <div class="subject-day-overlay">
 
                                             <h4 class="subject-day-title">
                                                 {{ $subjectOfTheDay->title }}
                                             </h4>
-
 
                                             <div class="subject-day-stats">
 
@@ -479,7 +478,6 @@
 
                                                     {{ $subjectOfTheDay->views_count ?? 0 }}
                                                 </span>
-
 
                                                 <span>
                                                     <i
@@ -517,13 +515,10 @@
 
                         </div>
 
-
-
                         {{-- =================================================
                              ADS
                         ================================================== --}}
                         <div class="home-ads-stack">
-
 
                             <div class="adv-card-v2">
 
@@ -547,8 +542,6 @@
                                 </a>
 
                             </div>
-
-
 
                             <div class="adv-card-v2">
 
@@ -585,5 +578,4 @@
 
     </div>
 </section>
-
 <script src="{{asset('front/js/components/top-news.js')}}"></script>
