@@ -1,0 +1,784 @@
+/* =========================================================
+   Fonts
+========================================================= */
+
+@font-face {
+    font-family: "IRANSansWeb";
+    src:
+        url("../../../fonts/iransans/IRANSansWeb.woff") format("woff"),
+        url("../../../fonts/iransans/IRANSansWeb.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IRANSansWeb_FaNum";
+    src:
+        url("../../../fonts/iransans/IRANSansWeb_FaNum.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* =========================================================
+   Global User Panel Typography
+========================================================= */
+
+body.user-panel-body {
+    font-family:
+        "IRANSansWeb_FaNum",
+        Tahoma,
+        Arial,
+        sans-serif;
+
+    direction: rtl;
+}
+
+
+/* Form controls do not always inherit body font */
+body.user-panel-body input,
+body.user-panel-body textarea,
+body.user-panel-body select,
+body.user-panel-body button {
+    font-family: inherit;
+}
+
+
+/* English / Email / URL */
+.user-font-en {
+    font-family:
+        "IRANSansWeb",
+        Arial,
+        sans-serif !important;
+
+    direction: ltr;
+}
+
+
+
+:root {
+    --user-primary: #173a70;
+    --user-primary-dark: #12274a;
+    --user-primary-soft: #eef4ff;
+    --user-bg: #f5f7fa;
+    --user-surface: #ffffff;
+    --user-text: #1f2937;
+    --user-muted: #98a2b3;
+    --user-border: #e7ebf0;
+    --user-success: #15803d;
+    --user-success-bg: #f0fdf4;
+    --user-danger: #991b1b;
+    --user-danger-bg: #fef2f2;
+    --user-sidebar-width: 260px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body.user-panel-body {
+    direction: rtl;
+    overflow-x: hidden;
+
+    background: var(--user-bg);
+    color: var(--user-text);
+
+    font-family:
+        "IRANSansWeb_FaNum",
+        Tahoma,
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+.user-panel button,
+.user-panel input,
+.user-panel textarea,
+.user-panel select {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.user-panel {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    background: var(--user-bg);
+}
+
+.user-panel__sidebar {
+    position: fixed;
+    z-index: 1050;
+    top: 0;
+    right: 0;
+    width: var(--user-sidebar-width);
+    min-width: var(--user-sidebar-width);
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-left: 1px solid rgba(255, 255, 255, .06);
+    background: linear-gradient(180deg, var(--user-primary-dark) 0%, var(--user-primary) 100%);
+}
+
+.user-panel__main {
+    width: calc(100% - var(--user-sidebar-width));
+    min-width: 0;
+    min-height: 100vh;
+    margin-right: var(--user-sidebar-width);
+    display: flex;
+    flex-direction: column;
+}
+
+.user-panel__topbar {
+    position: sticky;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+    min-height: 70px;
+    border-bottom: 1px solid var(--user-border);
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(12px);
+}
+
+.user-panel__content {
+    width: 100%;
+    flex: 1;
+    padding: 28px;
+}
+
+.user-page-content {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.user-panel__footer {
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-top: 1px solid var(--user-border);
+    background: var(--user-surface);
+    color: var(--user-muted);
+    font-size: 10px;
+}
+
+.user-alert {
+    max-width: 1400px;
+    margin: 0 auto 18px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid;
+    border-radius: 11px;
+    font-size: 11px;
+}
+
+.user-alert__icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+}
+
+.user-alert--success {
+    border-color: #bbf7d0;
+    background: var(--user-success-bg);
+    color: var(--user-success);
+}
+
+.user-alert--success .user-alert__icon {
+    background: #dcfce7;
+}
+
+.user-alert--danger {
+    border-color: #fecaca;
+    background: var(--user-danger-bg);
+    color: var(--user-danger);
+}
+
+.user-alert--danger .user-alert__icon {
+    background: #fee2e2;
+}
+
+.user-sidebar {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+}
+
+.user-sidebar__brand {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.user-sidebar__brand-link {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #ffffff !important;
+}
+
+.user-sidebar__brand-mark {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .08);
+}
+
+.user-sidebar__brand-mark svg {
+    width: 23px;
+    height: 23px;
+    display: block;
+}
+
+.user-sidebar__brand-content {
+    min-width: 0;
+}
+
+.user-sidebar__brand-content strong,
+.user-sidebar__brand-content small {
+    display: block;
+}
+
+.user-sidebar__brand-content strong {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.user-sidebar__brand-content small {
+    margin-top: 2px;
+    color: rgba(255, 255, 255, .48);
+    font-size: 8px;
+    direction: ltr;
+}
+
+.user-sidebar__mobile-close {
+    width: 34px;
+    height: 34px;
+    display: none;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .08);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.user-sidebar__profile {
+    margin-top: 22px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .055);
+}
+
+.user-sidebar__avatar {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #ffffff;
+    color: var(--user-primary);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.user-sidebar__profile-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.user-sidebar__profile-info strong,
+.user-sidebar__profile-info span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-sidebar__profile-info strong {
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.user-sidebar__profile-info span {
+    margin-top: 4px;
+    color: rgba(255, 255, 255, .45);
+    font-size: 8px;
+}
+
+.user-sidebar__navigation {
+    margin-top: 25px;
+}
+
+.user-sidebar__section-title {
+    display: block;
+    margin: 0 10px 8px;
+    color: rgba(255, 255, 255, .35);
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.user-sidebar__nav {
+    display: grid;
+    gap: 5px;
+}
+
+.user-sidebar__link {
+    min-height: 44px;
+    padding: 9px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, .65) !important;
+    transition: .18s ease;
+}
+
+.user-sidebar__link:hover {
+    background: rgba(255, 255, 255, .06);
+    color: #ffffff !important;
+}
+
+.user-sidebar__link.is-active {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .1);
+    color: #ffffff !important;
+}
+
+.user-sidebar__link-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .045);
+}
+
+.user-sidebar__link.is-active .user-sidebar__link-icon {
+    background: rgba(255, 255, 255, .1);
+}
+
+.user-sidebar__link-icon svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+}
+
+.user-sidebar__link-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.user-sidebar__divider {
+    height: 1px;
+    margin: 18px 5px;
+    background: rgba(255, 255, 255, .07);
+}
+
+.user-sidebar__footer {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.user-sidebar__logout-form {
+    margin: 0;
+}
+
+.user-sidebar__logout {
+    width: 100%;
+    min-height: 43px;
+    padding: 9px 11px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, .07);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .035);
+    color: rgba(255, 255, 255, .6);
+    font-size: 10px;
+    cursor: pointer;
+    transition: .18s ease;
+}
+
+.user-sidebar__logout:hover {
+    border-color: rgba(248, 113, 113, .14);
+    background: rgba(248, 113, 113, .07);
+    color: #fecaca;
+}
+
+.user-sidebar__logout-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: grid;
+    place-items: center;
+}
+
+.user-sidebar__logout-icon svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+}
+
+.user-topbar {
+    width: 100%;
+    min-height: 70px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.user-topbar__start {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.user-topbar__menu-button {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: none;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--user-border);
+    border-radius: 10px;
+    background: #ffffff;
+    color: #344054;
+    cursor: pointer;
+}
+
+.user-topbar__menu-button:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+    color: var(--user-primary);
+}
+
+.user-topbar__menu-button svg {
+    width: 19px;
+    height: 19px;
+    display: block;
+}
+
+.user-topbar__title {
+    min-width: 0;
+}
+
+.user-topbar__title h1 {
+    margin: 0;
+    color: #1d2939;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1.5;
+}
+
+.user-topbar__title p {
+    margin: 4px 0 0;
+    color: var(--user-muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.user-topbar__actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-topbar__icon-button {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--user-border);
+    border-radius: 10px;
+    background: #ffffff;
+    color: #667085;
+    cursor: pointer;
+}
+
+.user-topbar__icon-button:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+    color: var(--user-primary);
+}
+
+.user-topbar__icon-button svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.user-topbar__user {
+    min-width: 0;
+    padding-right: 4px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.user-topbar__user-info {
+    min-width: 0;
+    text-align: right;
+}
+
+.user-topbar__user-info strong,
+.user-topbar__user-info span {
+    display: block;
+}
+
+.user-topbar__user-info strong {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #344054;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.user-topbar__user-info span {
+    margin-top: 2px;
+    color: var(--user-muted);
+    font-size: 7px;
+}
+
+.user-topbar__avatar {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--user-primary-soft);
+    color: var(--user-primary);
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.user-panel__overlay {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .user-panel__sidebar {
+        transform: translateX(100%);
+        transition: transform .25s ease;
+    }
+
+    .user-panel__sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    .user-panel__main {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .user-panel__overlay {
+        position: fixed;
+        z-index: 1040;
+        inset: 0;
+        display: block;
+        padding: 0;
+        border: 0;
+        background: rgba(15, 23, 42, .45);
+        opacity: 0;
+        visibility: hidden;
+        transition: .2s ease;
+    }
+
+    .user-panel__overlay.is-open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .user-sidebar__mobile-close,
+    .user-topbar__menu-button {
+        display: grid;
+    }
+
+    .user-panel__content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 650px) {
+    .user-topbar {
+        min-height: 64px;
+        padding: 0 14px;
+    }
+
+    .user-topbar__title h1 {
+        font-size: 13px;
+    }
+
+    .user-topbar__title p,
+    .user-topbar__user-info {
+        display: none;
+    }
+
+    .user-panel__content {
+        padding: 14px;
+    }
+}
+
+@media (max-width: 420px) {
+    .user-topbar__icon-button {
+        display: none;
+    }
+
+    .user-panel__footer {
+        padding: 14px;
+        flex-direction: column;
+    }
+}
+/* =========================================================
+   User Panel Typography Scale
+========================================================= */
+
+body.user-panel-body {
+    font-size: 14px;
+}
+
+
+/* Sidebar brand */
+
+.user-sidebar__brand-content strong {
+    font-size: 15px;
+}
+
+.user-sidebar__brand-content small {
+    font-size: 10px;
+}
+
+
+/* Sidebar user */
+
+.user-sidebar__avatar {
+    font-size: 15px;
+}
+
+.user-sidebar__profile-info strong {
+    font-size: 12px;
+}
+
+.user-sidebar__profile-info span {
+    font-size: 10px;
+}
+
+
+/* Sidebar navigation */
+
+.user-sidebar__section-title {
+    font-size: 10px;
+}
+
+.user-sidebar__link-text {
+    font-size: 12px;
+}
+
+.user-sidebar__logout {
+    font-size: 12px;
+}
+
+
+/* Topbar */
+
+.user-topbar__title h1 {
+    font-size: 18px;
+}
+
+.user-topbar__title p {
+    font-size: 11px;
+}
+
+.user-topbar__user-info strong {
+    font-size: 11px;
+}
+
+.user-topbar__user-info span {
+    font-size: 9px;
+}
+
+.user-topbar__avatar {
+    font-size: 12px;
+}
+
+
+/* Alerts */
+
+.user-alert {
+    font-size: 12px;
+}
+
+
+/* Footer */
+
+.user-panel__footer {
+    font-size: 11px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+    .user-topbar__title h1 {
+        font-size: 30px;
+    }
+}

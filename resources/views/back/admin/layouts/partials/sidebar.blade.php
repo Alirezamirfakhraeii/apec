@@ -114,7 +114,9 @@
 
 @php
     use App\Enums\MembershipApplicationState;
+    use App\Enums\TicketStatus;
     use App\Models\MembershipApplication;
+    use App\Models\Ticket;
     use App\Models\WorkflowStage;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Route;
@@ -168,6 +170,16 @@
 
     $hasMembershipApplicationsRoute =
         Route::has('admin.membership-applications.index');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Support Tickets
+    |--------------------------------------------------------------------------
+    */
+
+    $hasTicketsRoute =
+        Route::has('admin.tickets.index');
 
 
     /*
@@ -229,6 +241,23 @@
             )
             ->count()
         : 0;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Waiting Support Tickets Count
+    |--------------------------------------------------------------------------
+    */
+
+    $waitingTicketsCount = $hasTicketsRoute
+        && Auth::user()?->hasRole('admin')
+            ? Ticket::query()
+                ->where(
+                    'status',
+                    TicketStatus::WaitingForSupport->value
+                )
+                ->count()
+            : 0;
 
 
     /*
@@ -1265,6 +1294,88 @@
                 </ul>
 
             </li>
+
+
+
+
+            {{-- =====================================================
+                Support Tickets
+            ====================================================== --}}
+
+            @role('admin')
+
+            <li class="slide">
+
+                <a
+                    class="side-menu__item
+                    {{ request()->routeIs('admin.tickets.*')
+                        ? 'active'
+                        : ''
+                    }}
+
+                    {{ ! $hasTicketsRoute
+                        ? 'disabled'
+                        : ''
+                    }}"
+                    href="{{
+                        $hasTicketsRoute
+                            ? route('admin.tickets.index')
+                            : '#'
+                    }}"
+                    @unless($hasTicketsRoute)
+                        onclick="return false;"
+                    @endunless
+                >
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="side-menu__icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"
+                        ></path>
+
+                        <path d="M8 9h8"></path>
+
+                        <path d="M8 13h5"></path>
+                    </svg>
+
+
+                    <span class="side-menu__label">
+                        تیکت‌های پشتیبانی
+                    </span>
+
+
+                    @if($waitingTicketsCount > 0)
+
+                        <span
+                            class="menu-count-badge"
+                            title="{{
+                                $waitingTicketsCount
+                            }} تیکت در انتظار پاسخ"
+                        >
+
+                            {{
+                                $waitingTicketsCount > 99
+                                    ? '99+'
+                                    : $waitingTicketsCount
+                            }}
+
+                        </span>
+
+                    @endif
+
+                </a>
+
+            </li>
+
+            @endrole
 
 
             {{-- Static Pages --}}

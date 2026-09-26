@@ -1,0 +1,813 @@
+/* =========================================================
+   Admin Ticket
+========================================================= */
+
+.admin-ticket-page {
+    display: grid;
+    gap: 20px;
+}
+
+
+/* =========================================================
+   Header
+========================================================= */
+
+.admin-ticket-header {
+    padding: 22px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    border: 1px solid #e7ebf0;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 22px rgba(15, 23, 42, .045);
+}
+
+.admin-ticket-header__main {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.admin-ticket-back {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #667085;
+
+    font-size: 17px;
+
+    transition: .2s ease;
+}
+
+.admin-ticket-back:hover {
+    border-color: #cbd5e1;
+
+    background: #f8fafc;
+
+    color: #173a70;
+}
+
+.admin-ticket-number {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #173a70;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.admin-ticket-header h1 {
+    margin: 0;
+
+    color: #1d2939;
+
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.admin-ticket-header p {
+    margin: 5px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 11px;
+}
+
+.admin-ticket-header__badges {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* =========================================================
+   Badges
+========================================================= */
+
+.admin-ticket-badge {
+    padding: 7px 10px;
+
+    border-radius: 999px;
+
+    background: #f2f4f7;
+
+    color: #667085;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.admin-ticket-badge--waiting_for_support {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.admin-ticket-badge--answered {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.admin-ticket-badge--closed {
+    background: #f2f4f7;
+    color: #667085;
+}
+
+.admin-ticket-badge--priority-high {
+    background: #fef3f2;
+    color: #b42318;
+}
+
+.admin-ticket-badge--priority-normal {
+    background: #f8fafc;
+    color: #475467;
+}
+
+.admin-ticket-badge--priority-low {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+
+/* =========================================================
+   Stats
+========================================================= */
+
+.admin-ticket-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.admin-ticket-stat {
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    border: 1px solid #e7ebf0;
+    border-radius: 13px;
+
+    background: #ffffff;
+}
+
+.admin-ticket-stat__icon {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background: #eef4ff;
+
+    color: #173a70;
+
+    font-size: 16px;
+}
+
+.admin-ticket-stat small,
+.admin-ticket-stat strong {
+    display: block;
+}
+
+.admin-ticket-stat small {
+    margin-bottom: 3px;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+}
+
+.admin-ticket-stat strong {
+    color: #344054;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   Layout
+========================================================= */
+
+.admin-ticket-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        310px;
+
+    gap: 20px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   Card
+========================================================= */
+
+.admin-ticket-card {
+    overflow: hidden;
+
+    border: 1px solid #e7ebf0;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 22px rgba(15, 23, 42, .04);
+}
+
+.admin-ticket-card__header {
+    padding: 17px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    border-bottom: 1px solid #edf1f5;
+}
+
+.admin-ticket-card__header h2 {
+    margin: 0;
+
+    color: #1d2939;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.admin-ticket-card__header p {
+    margin: 4px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+}
+
+.admin-ticket-message-count {
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    background: #eef4ff;
+
+    color: #173a70;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   Conversation
+========================================================= */
+
+.admin-ticket-messages {
+    min-height: 300px;
+
+    padding: 22px;
+
+    display: grid;
+    gap: 17px;
+
+    background: #f8fafc;
+}
+
+
+/* Message */
+
+.admin-ticket-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.admin-ticket-message--staff {
+    flex-direction: row-reverse;
+}
+
+
+/* Avatar */
+
+.admin-ticket-message__avatar {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background: #eef4ff;
+
+    color: #173a70;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.admin-ticket-message--staff
+.admin-ticket-message__avatar {
+    background: #ecfdf3;
+
+    color: #027a48;
+}
+
+
+/* Bubble */
+
+.admin-ticket-message__body {
+    width: min(720px, calc(100% - 50px));
+
+    padding: 13px 15px;
+
+    border: 1px solid #e7ebf0;
+    border-radius: 13px;
+
+    background: #ffffff;
+}
+
+.admin-ticket-message--staff
+.admin-ticket-message__body {
+    border-color: #ccebd7;
+
+    background: #f8fffa;
+}
+
+
+/* Message head */
+
+.admin-ticket-message__head {
+    margin-bottom: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.admin-ticket-message__head > div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.admin-ticket-message__head strong {
+    color: #344054;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.admin-ticket-message__head time {
+    color: #98a2b3;
+
+    font-size: 9px;
+}
+
+.admin-ticket-message__role {
+    padding: 3px 6px;
+
+    border-radius: 999px;
+
+    background: #f2f4f7;
+
+    color: #667085;
+
+    font-size: 8px;
+    font-weight: 700;
+}
+
+
+/* Text */
+
+.admin-ticket-message__text {
+    color: #475467;
+
+    font-size: 11px;
+
+    line-height: 2.1;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   Reply
+========================================================= */
+
+.admin-ticket-reply {
+    padding: 20px;
+
+    border-top: 1px solid #edf1f5;
+
+    background: #ffffff;
+}
+
+.admin-ticket-reply__header {
+    margin-bottom: 12px;
+}
+
+.admin-ticket-reply__header h3 {
+    margin: 0;
+
+    color: #1d2939;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.admin-ticket-reply__header p {
+    margin: 4px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+}
+
+.admin-ticket-reply textarea {
+    width: 100%;
+
+    min-height: 130px;
+
+    padding: 13px;
+
+    border: 1px solid #dfe5ec;
+    border-radius: 11px;
+
+    outline: none;
+
+    resize: vertical;
+
+    background: #ffffff;
+
+    color: #344054;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    line-height: 2;
+}
+
+.admin-ticket-reply textarea:focus {
+    border-color: #9db8e8;
+
+    box-shadow:
+        0 0 0 3px rgba(23, 58, 112, .07);
+}
+
+.admin-ticket-reply__footer {
+    margin-top: 12px;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* =========================================================
+   Buttons
+========================================================= */
+
+.admin-ticket-btn {
+    min-height: 40px;
+    padding: 0 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .18s ease;
+}
+
+.admin-ticket-btn--primary {
+    border-color: #173a70;
+
+    background: #173a70;
+
+    color: #ffffff;
+}
+
+.admin-ticket-btn--primary:hover {
+    background: #12274a;
+}
+
+.admin-ticket-btn--danger {
+    width: 100%;
+
+    border-color: #fecaca;
+
+    background: #ffffff;
+
+    color: #b42318;
+}
+
+.admin-ticket-btn--danger:hover {
+    border-color: #ef4444;
+
+    background: #fef2f2;
+}
+
+
+/* =========================================================
+   Sidebar
+========================================================= */
+
+.admin-ticket-sidebar {
+    display: grid;
+    gap: 16px;
+}
+
+
+/* User */
+
+.admin-ticket-user {
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border-bottom: 1px solid #edf1f5;
+}
+
+.admin-ticket-user__avatar {
+    width: 50px;
+    height: 50px;
+
+    flex: 0 0 50px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: #eef4ff;
+
+    color: #173a70;
+
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.admin-ticket-user__identity {
+    min-width: 0;
+}
+
+.admin-ticket-user__identity strong,
+.admin-ticket-user__identity span {
+    display: block;
+}
+
+.admin-ticket-user__identity strong {
+    color: #344054;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.admin-ticket-user__identity span {
+    margin-top: 4px;
+
+    overflow: hidden;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+
+    text-overflow: ellipsis;
+}
+
+
+/* User info */
+
+.admin-ticket-user__info,
+.admin-ticket-details {
+    padding: 16px 20px;
+
+    display: grid;
+}
+
+.admin-ticket-user__info > div,
+.admin-ticket-details > div {
+    padding: 10px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.admin-ticket-user__info > div:last-child,
+.admin-ticket-details > div:last-child {
+    border-bottom: 0;
+}
+
+.admin-ticket-user__info span,
+.admin-ticket-details span {
+    color: #98a2b3;
+
+    font-size: 10px;
+}
+
+.admin-ticket-user__info strong,
+.admin-ticket-details strong {
+    color: #344054;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-align: left;
+}
+
+
+/* Actions */
+
+.admin-ticket-actions {
+    padding: 16px;
+}
+
+.admin-ticket-actions form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   Closed
+========================================================= */
+
+.admin-ticket-closed {
+    margin: 20px;
+
+    padding: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 11px;
+
+    background: #f8fafc;
+
+    color: #667085;
+}
+
+.admin-ticket-closed i {
+    font-size: 18px;
+}
+
+.admin-ticket-closed strong,
+.admin-ticket-closed span {
+    display: block;
+}
+
+.admin-ticket-closed strong {
+    font-size: 11px;
+}
+
+.admin-ticket-closed span {
+    margin-top: 3px;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   Error / Empty
+========================================================= */
+
+.admin-ticket-error {
+    margin-top: 7px;
+
+    color: #b42318;
+
+    font-size: 10px;
+}
+
+.admin-ticket-empty {
+    padding: 50px 20px;
+
+    display: grid;
+    place-items: center;
+    gap: 10px;
+
+    color: #98a2b3;
+
+    text-align: center;
+}
+
+.admin-ticket-empty i {
+    font-size: 28px;
+}
+
+.admin-ticket-empty strong {
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   Responsive
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .admin-ticket-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-ticket-layout {
+        grid-template-columns:
+            minmax(0, 1fr)
+            270px;
+    }
+
+}
+
+
+@media (max-width: 991px) {
+
+    .admin-ticket-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-ticket-sidebar {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .admin-ticket-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-ticket-header__badges {
+        flex-wrap: wrap;
+    }
+
+    .admin-ticket-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-ticket-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-ticket-messages {
+        padding: 15px;
+    }
+
+    .admin-ticket-message__body {
+        width: calc(100% - 48px);
+    }
+
+}

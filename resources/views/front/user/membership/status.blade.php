@@ -1,3 +1,5 @@
+@extends('front.user.layouts.app')
+
 @php
     use App\Enums\MembershipApplicationState;
     use App\Enums\ApplicationReviewDecision;
@@ -21,32 +23,49 @@
         });
 @endphp
 
-@extends('front.user.layouts.app')
 
 @section('title', 'پیگیری درخواست عضویت')
 
-@section('styles')
+@section('page_title', 'پیگیری درخواست عضویت')
+
+@section(
+    'page_description',
+    'وضعیت بررسی درخواست عضویت شرکت را از این بخش مشاهده کنید.'
+)
+
+
+@push('styles')
+
     <link
         rel="stylesheet"
         href="{{ asset('front/css/membership-wizard/style.css') }}"
     >
-@endsection
+
+@endpush
+
 
 @section('content')
 
     <div class="membership-wizard-page">
 
+
+        {{-- =========================================================
+            Page Header
+        ========================================================== --}}
+
         <div class="membership-page-heading">
 
             <div>
 
-            <span class="membership-eyebrow">
-                پرونده عضویت
-            </span>
+                <span class="membership-eyebrow">
+                    پرونده عضویت
+                </span>
+
 
                 <h1>
                     پیگیری درخواست عضویت
                 </h1>
+
 
                 <p>
                     وضعیت بررسی درخواست عضویت شرکت را از این بخش مشاهده کنید.
@@ -54,9 +73,12 @@
 
             </div>
 
+
             <span class="membership-form-state">
-            {{ $state->label() }}
-        </span>
+
+                {{ $state->label() }}
+
+            </span>
 
         </div>
 
@@ -70,57 +92,86 @@
             <div class="membership-section-heading">
 
                 <div>
+
                     <h2>
                         وضعیت فعلی درخواست
                     </h2>
+
                 </div>
 
             </div>
 
 
+            {{-- In Review --}}
             @if($state === MembershipApplicationState::InReview)
 
                 <div class="membership-status-box">
 
-                <span>
-                    درخواست شما در حال بررسی است.
-                </span>
+                    <span>
+                        درخواست شما در حال بررسی است.
+                    </span>
+
 
                     <strong>
+
                         مرحله فعلی:
+
                         {{ $displayStage?->name ?: 'در حال تعیین مرحله بررسی' }}
+
                     </strong>
 
+
                     <p>
-                        پس از بررسی این مرحله، وضعیت درخواست شما در همین صفحه به‌روزرسانی خواهد شد.
+                        پس از بررسی این مرحله، وضعیت درخواست شما
+                        در همین صفحه به‌روزرسانی خواهد شد.
                     </p>
 
                 </div>
 
 
-            @elseif($state === MembershipApplicationState::NeedsCorrection)
+                {{-- Needs Correction --}}
+            @elseif(
+                $state ===
+                MembershipApplicationState::NeedsCorrection
+            )
 
-                <div class="membership-alert membership-alert--error">
+                <div
+                    class="
+                        membership-alert
+                        membership-alert--error
+                    "
+                >
 
                     <strong>
                         درخواست شما نیاز به اصلاح دارد.
                     </strong>
 
+
                     @if($displayStage)
+
                         <p>
+
                             مرحله بررسی:
-                            {{ $displayStage->name }}
+
+                            <strong>
+                                {{ $displayStage->name }}
+                            </strong>
+
                         </p>
+
                     @endif
+
 
                     @if($latestCorrection?->comment)
 
                         <p>
+
                             <strong>
                                 توضیح کارشناس:
                             </strong>
 
                             {{ $latestCorrection->comment }}
+
                         </p>
 
                     @endif
@@ -131,11 +182,16 @@
                 <div class="membership-final-actions">
 
                     <a
-                        href="{{ route(
-                        'user.membership.basic',
-                        $application
-                    ) }}"
-                        class="membership-btn membership-btn--primary"
+                        href="{{
+                            route(
+                                'user.membership.basic',
+                                $application
+                            )
+                        }}"
+                        class="
+                            membership-btn
+                            membership-btn--primary
+                        "
                     >
                         اصلاح درخواست
                     </a>
@@ -143,22 +199,34 @@
                 </div>
 
 
-            @elseif($state === MembershipApplicationState::Rejected)
+                {{-- Rejected --}}
+            @elseif(
+                $state ===
+                MembershipApplicationState::Rejected
+            )
 
-                <div class="membership-alert membership-alert--error">
+                <div
+                    class="
+                        membership-alert
+                        membership-alert--error
+                    "
+                >
 
                     <strong>
                         درخواست عضویت رد شده است.
                     </strong>
 
+
                     @if($latestRejection?->comment)
 
                         <p>
+
                             <strong>
                                 دلیل رد:
                             </strong>
 
                             {{ $latestRejection->comment }}
+
                         </p>
 
                     @endif
@@ -166,13 +234,23 @@
                 </div>
 
 
-            @elseif($state === MembershipApplicationState::Approved)
+                {{-- Approved --}}
+            @elseif(
+                $state ===
+                MembershipApplicationState::Approved
+            )
 
-                <div class="membership-alert membership-alert--success">
+                <div
+                    class="
+                        membership-alert
+                        membership-alert--success
+                    "
+                >
 
                     <strong>
                         درخواست عضویت شما تأیید شده است.
                     </strong>
+
 
                     <p>
                         فرآیند بررسی درخواست با موفقیت تکمیل شده است.
@@ -181,13 +259,18 @@
                 </div>
 
 
-            @elseif($state === MembershipApplicationState::Submitted)
+                {{-- Submitted --}}
+            @elseif(
+                $state ===
+                MembershipApplicationState::Submitted
+            )
 
                 <div class="membership-status-box">
 
                     <strong>
                         درخواست شما ثبت شده است.
                     </strong>
+
 
                     <p>
                         درخواست در انتظار شروع فرآیند بررسی قرار دارد.
@@ -209,9 +292,11 @@
             <div class="membership-section-heading">
 
                 <div>
+
                     <h2>
                         اطلاعات درخواست
                     </h2>
+
                 </div>
 
             </div>
@@ -219,37 +304,51 @@
 
             <div class="membership-review-grid">
 
+
+                {{-- Company Name --}}
                 <div>
 
-                <span>
-                    نام شرکت
-                </span>
+                    <span>
+                        نام شرکت
+                    </span>
 
                     <strong>
-                        {{ $application->intake_company_name ?: '—' }}
+
+                        {{
+                            $application->intake_company_name
+                            ?: '—'
+                        }}
+
                     </strong>
 
                 </div>
 
 
+                {{-- Representative --}}
                 <div>
 
-                <span>
-                    نماینده شرکت
-                </span>
+                    <span>
+                        نماینده شرکت
+                    </span>
 
                     <strong>
-                        {{ $application->representative_name ?: '—' }}
+
+                        {{
+                            $application->representative_name
+                            ?: '—'
+                        }}
+
                     </strong>
 
                 </div>
 
 
+                {{-- Application ID --}}
                 <div>
 
-                <span>
-                    شماره درخواست
-                </span>
+                    <span>
+                        شماره درخواست
+                    </span>
 
                     <strong>
                         #{{ $application->id }}
@@ -258,11 +357,12 @@
                 </div>
 
 
+                {{-- State --}}
                 <div>
 
-                <span>
-                    وضعیت
-                </span>
+                    <span>
+                        وضعیت
+                    </span>
 
                     <strong>
                         {{ $state->label() }}
@@ -271,13 +371,14 @@
                 </div>
 
 
+                {{-- Submitted At --}}
                 @if($application->submitted_at)
 
                     <div>
 
-                    <span>
-                        زمان ارسال
-                    </span>
+                        <span>
+                            زمان ارسال
+                        </span>
 
                         <strong>
                             {{ $application->submitted_at }}
@@ -288,13 +389,14 @@
                 @endif
 
 
+                {{-- Current Stage --}}
                 @if($displayStage)
 
                     <div>
 
-                    <span>
-                        مرحله فعلی
-                    </span>
+                        <span>
+                            مرحله فعلی
+                        </span>
 
                         <strong>
                             {{ $displayStage->name }}
@@ -307,65 +409,6 @@
             </div>
 
         </div>
-
-
-        {{-- =========================================================
-            Review Timeline
-        ========================================================== --}}
-
-        @if($application->reviews->isNotEmpty())
-
-            <div class="membership-card">
-
-                <div class="membership-section-heading">
-
-                    <div>
-
-                        <h2>
-                            تاریخچه بررسی
-                        </h2>
-
-                        <p>
-                            تصمیم‌های ثبت‌شده روی درخواست
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                @foreach($application->reviews as $review)
-
-                    <div class="membership-review-row">
-
-                        <div>
-
-                            <strong>
-                                {{ $review->stage?->name ?: 'مرحله بررسی' }}
-                            </strong>
-
-                            @if($review->comment)
-
-                                <p>
-                                    {{ $review->comment }}
-                                </p>
-
-                            @endif
-
-                        </div>
-
-
-                        <strong>
-                            {{ $review->decision->label() }}
-                        </strong>
-
-                    </div>
-
-                @endforeach
-
-            </div>
-
-        @endif
 
     </div>
 

@@ -2,148 +2,221 @@
     $user = auth()->user();
 
     $displayName = $user?->name ?: 'کاربر عزیز';
-    $email = $user?->email ?: 'user@example.com';
+    $email = $user?->email ?: 'ایمیل ثبت نشده';
 
     $initials = collect(preg_split('/\s+/', trim($displayName)))
         ->filter()
         ->take(2)
         ->map(fn ($part) => mb_substr($part, 0, 1))
         ->implode('');
+
+    $dashboardUrl = Route::has('user.dashboard')
+        ? route('user.dashboard')
+        : url('/');
+
+    $profileUrl = Route::has('user.profile.edit')
+        ? route('user.profile.edit')
+        : null;
+
+    $membershipCreateUrl = Route::has('user.membership.create')
+        ? route('user.membership.create')
+        : null;
 @endphp
 
-<aside
-    class="user-sidebar"
-    data-user-sidebar
->
+<div class="user-sidebar">
 
     <div class="user-sidebar__brand">
+        <a href="{{ $dashboardUrl }}" class="user-sidebar__brand-link">
+            <span class="user-sidebar__brand-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z"/>
+                    <path d="m4 7 8 4 8-4"/>
+                    <path d="M12 11v10"/>
+                </svg>
+            </span>
 
-        <div class="user-sidebar__brand-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z"/>
-                <path d="m4 7 8 4 8-4"/>
-                <path d="M12 11v10"/>
-            </svg>
-        </div>
+            <span class="user-sidebar__brand-content">
+                <strong>پنل کاربری</strong>
+                <small>APEC Member Panel</small>
+            </span>
+        </a>
 
-        <div>
-            <strong>پنل کاربری</strong>
-            <span>User Dashboard</span>
-        </div>
+        <button type="button" class="user-sidebar__mobile-close" data-user-sidebar-close aria-label="بستن منو">
+            <i class="fa fa-times"></i>
+        </button>
     </div>
 
-
     <div class="user-sidebar__profile">
-
-        <div class="user-sidebar__avatar">
-            {{ $initials ?: 'U' }}
-        </div>
+        <div class="user-sidebar__avatar">{{ $initials ?: 'U' }}</div>
 
         <div class="user-sidebar__profile-info">
             <strong>{{ $displayName }}</strong>
-            <span>{{ $email }}</span>
+            <span dir="ltr">{{ $email }}</span>
         </div>
+    </div>
 
+    <div class="user-sidebar__navigation">
+        <span class="user-sidebar__section-title">منوی اصلی</span>
+
+        <nav class="user-sidebar__nav">
+            <a href="{{ $dashboardUrl }}" class="user-sidebar__link {{ request()->routeIs('user.dashboard') ? 'is-active' : '' }}">
+                <span class="user-sidebar__link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path d="M3 11 12 3l9 8"/>
+                        <path d="M5 10v10h14V10"/>
+                        <path d="M9 20v-6h6v6"/>
+                    </svg>
+                </span>
+                <span class="user-sidebar__link-text">داشبورد</span>
+            </a>
+
+
+            @if(Route::has('user.tickets.index'))
+
+                <a
+                    href="{{ route('user.tickets.index') }}"
+                    class="
+            user-sidebar__link
+            {{ request()->routeIs('user.tickets.*') ? 'is-active' : '' }}
+        "
+                >
+
+        <span class="user-sidebar__link-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+            >
+                <path
+                    d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"
+                />
+
+                <path d="M8 9h8"/>
+
+                <path d="M8 13h5"/>
+            </svg>
+
+        </span>
+
+
+                    <span class="user-sidebar__link-text">
+            تیکت‌های پشتیبانی
+        </span>
+
+                </a>
+
+            @endif
+
+
+
+        @if($profileUrl)
+                <a href="{{ $profileUrl }}" class="user-sidebar__link {{ request()->routeIs('user.profile.*') ? 'is-active' : '' }}">
+                    <span class="user-sidebar__link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 21a8 8 0 0 1 16 0"/>
+                        </svg>
+                    </span>
+                    <span class="user-sidebar__link-text">اطلاعات حساب</span>
+                </a>
+            @endif
+
+            @if($membershipCreateUrl)
+                <a href="{{ $membershipCreateUrl }}" class="user-sidebar__link {{ request()->routeIs('user.membership.*') ? 'is-active' : '' }}">
+                    <span class="user-sidebar__link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
+                            <path d="M14 2v6h6"/>
+                            <path d="M9 13h6"/>
+                            <path d="M12 10v6"/>
+                        </svg>
+                    </span>
+                    <span class="user-sidebar__link-text">درخواست عضویت</span>
+                </a>
+            @endif
+        </nav>
+
+
+        @if(Route::has('user.membership.tracking'))
+
+            <a
+                href="{{ route('user.membership.tracking') }}"
+                class="
+            user-sidebar__link
+            {{ request()->routeIs('user.membership.tracking') ? 'is-active' : '' }}
+        "
+            >
+
+        <span class="user-sidebar__link-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+            >
+                <circle cx="12" cy="12" r="9"/>
+
+                <path d="M12 7v5l3 2"/>
+
+                <path d="M8 3.5l1.5 2"/>
+
+                <path d="M16 3.5l-1.5 2"/>
+            </svg>
+
+        </span>
+
+                <span class="user-sidebar__link-text">
+            پیگیری عضویت
+        </span>
+
+            </a>
+
+        @endif
+
+        <div class="user-sidebar__divider"></div>
+
+        <span class="user-sidebar__section-title">دسترسی‌ها</span>
+
+        <nav class="user-sidebar__nav">
+            <a href="{{ url('/') }}" class="user-sidebar__link">
+                <span class="user-sidebar__link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"/>
+                        <path d="M3 12h18"/>
+                        <path d="M12 3a15 15 0 0 1 0 18"/>
+                        <path d="M12 3a15 15 0 0 0 0 18"/>
+                    </svg>
+                </span>
+                <span class="user-sidebar__link-text">بازگشت به وب‌سایت</span>
+            </a>
+        </nav>
     </div>
 
 
-    <div class="user-sidebar__section-title">
-        منوی کاربری
+
+
+    <div class="user-sidebar__footer">
+        @if(Route::has('logout'))
+            <form action="{{ route('logout') }}" method="POST" class="user-sidebar__logout-form">
+                @csrf
+
+                <button type="submit" class="user-sidebar__logout">
+                    <span class="user-sidebar__logout-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path d="M10 17l5-5-5-5"/>
+                            <path d="M15 12H3"/>
+                            <path d="M14 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/>
+                        </svg>
+                    </span>
+                    <span>خروج از حساب</span>
+                </button>
+            </form>
+        @endif
     </div>
 
-
-    <nav class="user-sidebar__nav">
-
-        <a
-            href="#"
-            class="user-sidebar__link {{ request()->routeIs('user.dashboard') ? 'is-active' : '' }}"
-        >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <circle cx="12" cy="8" r="4"/>
-                <path d="M4 21a8 8 0 0 1 16 0"/>
-            </svg>
-
-            <span>پروفایل</span>
-        </a>
-
-
-        <a
-            href="{{ route('user.membership.create') }}"
-            class="user-sidebar__link {{ request()->routeIs('user.membership.*') ? 'is-active' : '' }}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
-                <path d="M14 2v6h6"/>
-                <path d="M9 13h6"/>
-                <path d="M12 10v6"/>
-            </svg>
-
-            <span>درخواست عضویت</span>
-        </a>
-
-
-        <a href="#" class="user-sidebar__link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 20h9"/>
-                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
-            </svg>
-
-            <span>تغییر اطلاعات</span>
-        </a>
-
-
-        <a href="#" class="user-sidebar__link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <path d="m17 8-5-5-5 5"/>
-                <path d="M12 3v12"/>
-            </svg>
-
-            <span>بارگذاری مدارک</span>
-        </a>
-
-    </nav>
-
-
-    <div class="user-sidebar__spacer"></div>
-
-
-    <form action="{{ route('logout') }}" method="POST" class="user-sidebar__logout-form">
-        @csrf
-
-        <button type="submit" class="user-sidebar__logout-simple">
-            خروج از حساب
-        </button>
-    </form>
-
-</aside>
-<style>
-    .user-sidebar__logout-form {
-        margin: 0;
-    }
-
-    .user-sidebar__logout-simple {
-        width: 100%;
-        padding: 12px 14px;
-
-        border: 0;
-        border-radius: 10px;
-
-        background: transparent;
-
-        color: rgba(255, 255, 255, 0.7);
-
-        font-size: 12px;
-        font-weight: 500;
-
-        text-align: right;
-
-        cursor: pointer;
-
-        transition: .2s ease;
-    }
-
-    .user-sidebar__logout-simple:hover {
-        background: rgba(255, 255, 255, 0.06);
-        color: #ffffff;
-    }
-</style>
+</div>

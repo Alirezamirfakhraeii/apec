@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PodcastController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -202,6 +203,23 @@ Route::middleware([
 
 
         Route::resource('company-projects', CompanyProjectController::class);
+
+
+
+
+
+
+        Route::get('/tickets', [TicketController::class, 'index'])
+            ->name('tickets.index');
+
+        Route::get('/tickets/{ticket}', [TicketController::class, 'show'])
+            ->name('tickets.show');
+
+
+        Route::post(
+            '/tickets/{ticket}/reply',
+            [TicketController::class, 'reply']
+        )->name('tickets.reply');
 
 
 

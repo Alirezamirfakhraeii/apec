@@ -1,0 +1,922 @@
+/* =========================================================
+   Membership Tracking
+========================================================= */
+
+.membership-tracking {
+    display: grid;
+    gap: 20px;
+}
+
+
+/* =========================================================
+   Overview
+========================================================= */
+
+.membership-tracking__overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border: 1px solid #e7ebf0;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 28px rgba(15, 23, 42, 0.045);
+}
+
+.membership-tracking__overview-main {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.membership-tracking__application-icon {
+    width: 52px;
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #eef4ff;
+
+    color: #173a70;
+
+    font-size: 18px;
+}
+
+.membership-tracking__application-number {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.membership-tracking__overview h2 {
+    margin: 0;
+
+    color: #1d2939;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    line-height: 1.7;
+}
+
+.membership-tracking__overview p {
+    margin: 5px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   Application State
+========================================================= */
+
+.membership-tracking__state {
+    flex-shrink: 0;
+
+    padding: 8px 11px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    border-radius: 999px;
+
+    background: #f2f4f7;
+
+    color: #667085;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.membership-tracking__state-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+/* Draft */
+
+.membership-tracking__state--draft {
+    background: #f2f4f7;
+    color: #667085;
+}
+
+
+/* Submitted */
+
+.membership-tracking__state--submitted {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+
+/* In Review */
+
+.membership-tracking__state--in_review {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+
+/* Correction */
+
+.membership-tracking__state--needs_correction {
+    background: #fffaeb;
+    color: #b54708;
+}
+
+
+/* Rejected */
+
+.membership-tracking__state--rejected {
+    background: #fef3f2;
+    color: #b42318;
+}
+
+
+/* Approved */
+
+.membership-tracking__state--approved {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+
+/* =========================================================
+   Empty State
+========================================================= */
+
+.membership-tracking__empty {
+    padding: 60px 24px;
+
+    border: 1px solid #e7ebf0;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 28px rgba(15, 23, 42, 0.045);
+}
+
+.membership-tracking__empty-icon {
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: #eef4ff;
+
+    color: #173a70;
+
+    font-size: 22px;
+}
+
+.membership-tracking__empty h2 {
+    margin: 0;
+
+    color: #1d2939;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.membership-tracking__empty p {
+    max-width: 540px;
+
+    margin: 10px auto 20px;
+
+    color: #98a2b3;
+
+    font-size: 11px;
+    line-height: 2;
+}
+
+
+/* =========================================================
+   Primary Button
+========================================================= */
+
+.membership-tracking__primary-btn {
+    min-height: 42px;
+    padding: 0 17px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border: 1px solid #173a70;
+    border-radius: 10px;
+
+    background: #173a70;
+
+    color: #ffffff !important;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-decoration: none !important;
+
+    box-shadow:
+        0 7px 18px rgba(23, 58, 112, 0.16);
+
+    transition: all 0.18s ease;
+}
+
+.membership-tracking__primary-btn:hover {
+    border-color: #122e59;
+
+    background: #122e59;
+
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   Alerts
+========================================================= */
+
+.membership-tracking__alert {
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    border: 1px solid;
+    border-radius: 16px;
+}
+
+.membership-tracking__alert-icon {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+}
+
+.membership-tracking__alert-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.membership-tracking__alert h3 {
+    margin: 0;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.membership-tracking__alert p {
+    margin: 6px 0 0;
+
+    font-size: 10px;
+    line-height: 2;
+}
+
+
+/* Warning */
+
+.membership-tracking__alert--warning {
+    border-color: #fedf89;
+
+    background: #fffaeb;
+
+    color: #93370d;
+}
+
+.membership-tracking__alert--warning
+.membership-tracking__alert-icon {
+    background: #fef0c7;
+
+    color: #b54708;
+}
+
+
+/* Danger */
+
+.membership-tracking__alert--danger {
+    border-color: #fecdca;
+
+    background: #fef3f2;
+
+    color: #912018;
+}
+
+.membership-tracking__alert--danger
+.membership-tracking__alert-icon {
+    background: #fee4e2;
+
+    color: #b42318;
+}
+
+
+/* Success */
+
+.membership-tracking__alert--success {
+    border-color: #abefc6;
+
+    background: #ecfdf3;
+
+    color: #05603a;
+}
+
+.membership-tracking__alert--success
+.membership-tracking__alert-icon {
+    background: #d1fadf;
+
+    color: #027a48;
+}
+
+
+/* =========================================================
+   Review Message
+========================================================= */
+
+.membership-tracking__review-message {
+    margin-top: 12px;
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.65);
+
+    font-size: 10px;
+    line-height: 2;
+}
+
+.membership-tracking__review-message strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-weight: 900;
+}
+
+.membership-tracking__review-message span {
+    display: block;
+}
+
+
+/* =========================================================
+   Warning Button
+========================================================= */
+
+.membership-tracking__warning-btn {
+    min-height: 38px;
+    padding: 0 13px;
+
+    margin-top: 12px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #f79009;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #b54708 !important;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    text-decoration: none !important;
+
+    transition: all 0.18s ease;
+}
+
+.membership-tracking__warning-btn:hover {
+    background: #fff7ed;
+}
+
+
+/* =========================================================
+   Current Stage
+========================================================= */
+
+.membership-tracking__current {
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border: 1px solid #dbe6f6;
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #ffffff
+        );
+}
+
+.membership-tracking__current-icon {
+    width: 44px;
+    height: 44px;
+
+    flex: 0 0 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #173a70;
+
+    color: #ffffff;
+
+    font-size: 15px;
+}
+
+.membership-tracking__current span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #98a2b3;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.membership-tracking__current h3 {
+    margin: 0;
+
+    color: #1d2939;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   Cards
+========================================================= */
+
+.membership-tracking__card {
+    overflow: hidden;
+
+    border: 1px solid #e7ebf0;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 28px rgba(15, 23, 42, 0.045);
+}
+
+.membership-tracking__card-header {
+    padding: 20px 22px;
+
+    border-bottom: 1px solid #edf1f5;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #fbfcfe
+        );
+}
+
+.membership-tracking__card-header h2 {
+    margin: 0;
+
+    color: #1d2939;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.membership-tracking__card-header p {
+    margin: 5px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   Timeline
+========================================================= */
+
+.membership-tracking__timeline {
+    padding: 24px;
+}
+
+.membership-tracking__step {
+    min-height: 86px;
+
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 13px;
+}
+
+.membership-tracking__step-line {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.membership-tracking__step-circle {
+    position: relative;
+    z-index: 2;
+
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #e4e7ec;
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    transition: all 0.2s ease;
+}
+
+.membership-tracking__connector {
+    width: 2px;
+    height: 100%;
+
+    margin-top: 4px;
+
+    background: #eaecf0;
+}
+
+.membership-tracking__step-content {
+    padding-bottom: 22px;
+}
+
+.membership-tracking__step-top {
+    min-height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.membership-tracking__step-top h3 {
+    margin: 0;
+
+    color: #344054;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.membership-tracking__step-content p {
+    margin: 5px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   Timeline Completed
+========================================================= */
+
+.membership-tracking__step--completed
+.membership-tracking__step-circle {
+    border-color: #12b76a;
+
+    background: #ecfdf3;
+
+    color: #027a48;
+}
+
+.membership-tracking__step--completed
+.membership-tracking__connector {
+    background: #6ce9a6;
+}
+
+
+/* =========================================================
+   Timeline Current
+========================================================= */
+
+.membership-tracking__step--current
+.membership-tracking__step-circle {
+    border-color: #173a70;
+
+    background: #173a70;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 0 0 5px rgba(23, 58, 112, 0.08);
+}
+
+.membership-tracking__step--current
+.membership-tracking__step-top h3 {
+    color: #173a70;
+}
+
+
+/* =========================================================
+   Timeline Correction
+========================================================= */
+
+.membership-tracking__step--correction
+.membership-tracking__step-circle {
+    border-color: #f79009;
+
+    background: #fff7ed;
+
+    color: #c2410c;
+
+    box-shadow:
+        0 0 0 5px rgba(247, 144, 9, 0.08);
+}
+
+
+/* =========================================================
+   Timeline Rejected
+========================================================= */
+
+.membership-tracking__step--rejected
+.membership-tracking__step-circle {
+    border-color: #f04438;
+
+    background: #fef3f2;
+
+    color: #b42318;
+
+    box-shadow:
+        0 0 0 5px rgba(240, 68, 56, 0.07);
+}
+
+
+/* =========================================================
+   Step Badges
+========================================================= */
+
+.membership-tracking__step-badge {
+    flex-shrink: 0;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    background: #f2f4f7;
+
+    color: #667085;
+
+    font-size: 8px;
+    font-weight: 800;
+}
+
+.membership-tracking__step-badge--completed {
+    background: #ecfdf3;
+
+    color: #027a48;
+}
+
+.membership-tracking__step-badge--current {
+    background: #eef4ff;
+
+    color: #173a70;
+}
+
+.membership-tracking__step-badge--correction {
+    background: #fff7ed;
+
+    color: #c2410c;
+}
+
+.membership-tracking__step-badge--rejected {
+    background: #fef3f2;
+
+    color: #b42318;
+}
+
+
+/* =========================================================
+   Information Grid
+========================================================= */
+
+.membership-tracking__info-grid {
+    padding: 20px 22px;
+
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.membership-tracking__info {
+    padding: 15px 16px;
+
+    border: 1px solid #edf1f5;
+    border-radius: 12px;
+
+    background: #fbfcfe;
+}
+
+.membership-tracking__info span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #98a2b3;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.membership-tracking__info strong {
+    display: block;
+
+    color: #344054;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   Tablet
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .membership-tracking__overview {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .membership-tracking__state {
+        align-self: flex-start;
+    }
+
+}
+
+
+/* =========================================================
+   Mobile
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .membership-tracking {
+        gap: 14px;
+    }
+
+    .membership-tracking__overview,
+    .membership-tracking__card,
+    .membership-tracking__empty {
+        border-radius: 14px;
+    }
+
+    .membership-tracking__overview {
+        padding: 18px;
+    }
+
+    .membership-tracking__application-icon {
+        width: 44px;
+        height: 44px;
+
+        flex-basis: 44px;
+
+        border-radius: 12px;
+
+        font-size: 15px;
+    }
+
+    .membership-tracking__overview h2 {
+        font-size: 14px;
+    }
+
+    .membership-tracking__alert {
+        padding: 15px;
+
+        border-radius: 13px;
+    }
+
+    .membership-tracking__current {
+        padding: 15px;
+
+        border-radius: 13px;
+    }
+
+    .membership-tracking__timeline {
+        padding: 18px;
+    }
+
+    .membership-tracking__step {
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .membership-tracking__step-circle {
+        width: 32px;
+        height: 32px;
+
+        flex-basis: 32px;
+    }
+
+    .membership-tracking__step-top {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .membership-tracking__info-grid {
+        grid-template-columns: 1fr;
+
+        padding: 16px;
+    }
+
+}
+
+
+/* =========================================================
+   Very Small Mobile
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .membership-tracking__overview-main {
+        align-items: flex-start;
+    }
+
+    .membership-tracking__alert {
+        align-items: flex-start;
+    }
+
+    .membership-tracking__alert-icon {
+        width: 36px;
+        height: 36px;
+
+        flex-basis: 36px;
+    }
+
+}

@@ -1,0 +1,547 @@
+.ticket-page {
+    display: grid;
+    gap: 18px
+}
+
+.ticket-page--form {
+    max-width: 900px
+}
+
+.ticket-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px
+}
+
+.ticket-toolbar h2, .ticket-card__header h2, .ticket-thread__header h2 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 900
+}
+
+.ticket-thread__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 20px;
+    border-top: 1px solid #edf0f4;
+    background: #fff;
+}
+
+.ticket-thread__actions form {
+    margin: 0;
+}
+
+.ticket-btn--danger {
+    min-height: 40px;
+    padding: 0 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+
+    background: #fff;
+    color: #b42318 !important;
+
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 800;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ticket-btn--danger:hover {
+    border-color: #ef4444;
+    background: #fef2f2;
+    color: #991b1b !important;
+}
+
+.ticket-btn--danger:active {
+    transform: translateY(1px);
+}
+
+.ticket-btn--danger i {
+    font-size: 12px;
+}
+
+.ticket-toolbar p, .ticket-card__header p {
+    margin: 5px 0 0;
+    color: #98a2b3;
+    font-size: 9px
+}
+
+.ticket-card {
+    overflow: hidden;
+    border: 1px solid #e7ebf0;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 7px 24px rgba(16, 24, 40, .045)
+}
+
+.ticket-btn {
+    min-height: 40px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 800;
+    text-decoration: none !important;
+    cursor: pointer
+}
+
+.ticket-btn--primary {
+    background: #173a70;
+    border-color: #173a70;
+    color: #fff !important
+}
+
+.ticket-btn--secondary {
+    background: #fff;
+    border-color: #e7ebf0;
+    color: #475467 !important
+}
+
+.ticket-row {
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #edf0f4;
+    color: #344054 !important;
+    text-decoration: none !important
+}
+
+.ticket-row:last-child {
+    border-bottom: 0
+}
+
+.ticket-row:hover {
+    background: #fafcff
+}
+
+.ticket-row__icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #eef4ff;
+    color: #173a70
+}
+
+.ticket-row__content {
+    min-width: 0;
+    flex: 1
+}
+
+.ticket-row__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px
+}
+
+.ticket-row__title strong {
+    overflow: hidden;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.ticket-row__meta {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #98a2b3;
+    font-size: 8px
+}
+
+.ticket-status {
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 7px;
+    font-weight: 900;
+    white-space: nowrap
+}
+
+.ticket-status--waiting_for_support {
+    background: #fff7ed;
+    color: #c2410c
+}
+
+.ticket-status--answered {
+    background: #eff6ff;
+    color: #2563eb
+}
+
+.ticket-status--closed {
+    background: #f2f4f7;
+    color: #667085
+}
+
+.ticket-empty {
+    padding: 48px 20px;
+    text-align: center
+}
+
+.ticket-empty > i {
+    font-size: 28px;
+    color: #173a70
+}
+
+.ticket-empty h3 {
+    margin: 10px 0 0;
+    font-size: 12px
+}
+
+.ticket-empty p {
+    margin: 7px 0 15px;
+    color: #98a2b3;
+    font-size: 9px
+}
+
+.ticket-pagination {
+    padding: 14px 18px;
+    border-top: 1px solid #edf0f4
+}
+
+.ticket-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #667085 !important;
+    font-size: 9px;
+    font-weight: 700
+}
+
+.ticket-card__header, .ticket-thread__header {
+    padding: 18px 20px;
+    border-bottom: 1px solid #edf0f4
+}
+
+.ticket-thread__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px
+}
+
+.ticket-thread__header small {
+    display: block;
+    margin-bottom: 5px;
+    color: #173a70;
+    font-size: 8px
+}
+
+.ticket-form, .ticket-reply {
+    padding: 20px
+}
+
+.ticket-field {
+    margin-bottom: 15px
+}
+
+.ticket-field label, .ticket-reply label {
+    display: block;
+    margin-bottom: 7px;
+    color: #475467;
+    font-size: 9px;
+    font-weight: 800
+}
+
+.ticket-field input, .ticket-field select, .ticket-field textarea, .ticket-reply textarea {
+    width: 100%;
+    border: 1px solid #dfe5ec;
+    border-radius: 10px;
+    outline: 0;
+    background: #fff;
+    color: #344054;
+    font-family: inherit;
+    font-size: 10px
+}
+
+.ticket-field input, .ticket-field select {
+    height: 44px;
+    padding: 0 12px
+}
+
+.ticket-field textarea, .ticket-reply textarea {
+    padding: 12px;
+    resize: vertical;
+    line-height: 2
+}
+
+.ticket-field input:focus, .ticket-field select:focus, .ticket-field textarea:focus, .ticket-reply textarea:focus {
+    border-color: #9db8e8;
+    box-shadow: 0 0 0 3px rgba(23, 58, 112, .07)
+}
+
+.ticket-error {
+    display: block;
+    margin-top: 6px;
+    color: #b42318;
+    font-size: 8px
+}
+
+.ticket-form__footer {
+    margin-top: 14px;
+    padding-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    border-top: 1px solid #edf0f4
+}
+
+.ticket-messages {
+    padding: 20px;
+    display: grid;
+    gap: 14px;
+    background: #f8fafc
+}
+
+.ticket-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px
+}
+
+.ticket-message--staff {
+    flex-direction: row-reverse
+}
+
+.ticket-message__avatar {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: #eef4ff;
+    color: #173a70;
+    font-size: 10px;
+    font-weight: 900
+}
+
+.ticket-message__bubble {
+    width: min(680px, calc(100% - 46px));
+    padding: 12px 14px;
+    border: 1px solid #e7ebf0;
+    border-radius: 12px;
+    background: #fff
+}
+
+.ticket-message--staff .ticket-message__bubble {
+    border-color: #ccebd7;
+    background: #f8fffa
+}
+
+.ticket-message__head {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px
+}
+
+.ticket-message__head strong {
+    font-size: 9px
+}
+
+.ticket-message__head span {
+    color: #98a2b3;
+    font-size: 7px
+}
+
+.ticket-message__text {
+    color: #475467;
+    font-size: 9px;
+    line-height: 2
+}
+
+.ticket-closed {
+    margin: 18px 20px;
+    padding: 12px;
+    border: 1px solid #e7ebf0;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #667085;
+    font-size: 9px
+}
+
+@media (max-width: 700px) {
+    .ticket-toolbar, .ticket-thread__header {
+        align-items: stretch;
+        flex-direction: column
+    }
+
+    .ticket-row__title {
+        align-items: flex-start;
+        flex-direction: column
+    }
+}
+
+
+
+/* =========================================================
+   Ticket Typography Scale
+   Font family comes from app.css
+========================================================= */
+
+/* Page titles */
+.ticket-toolbar h2,
+.ticket-card__header h2,
+.ticket-thread__header h2 {
+    font-size: 16px;
+}
+
+.ticket-toolbar p,
+.ticket-card__header p {
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+
+/* Buttons */
+.ticket-btn,
+.ticket-btn--danger {
+    font-size: 11px;
+}
+
+.ticket-btn--danger i {
+    font-size: 13px;
+}
+
+
+/* Ticket list */
+.ticket-row__title strong {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.ticket-row__meta {
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+
+/* Status badge */
+.ticket-status {
+    padding: 6px 10px;
+    font-size: 9px;
+}
+
+
+/* Empty state */
+.ticket-empty h3 {
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.ticket-empty p {
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+
+/* Back button */
+.ticket-back {
+    font-size: 11px;
+}
+
+
+/* Ticket number */
+.ticket-thread__header small {
+    font-size: 10px;
+}
+
+
+/* Form labels */
+.ticket-field label,
+.ticket-reply label {
+    font-size: 11px;
+}
+
+
+/* Inputs */
+.ticket-field input,
+.ticket-field select,
+.ticket-field textarea,
+.ticket-reply textarea {
+    font-family: inherit;
+    font-size: 12px;
+}
+
+
+/* Validation */
+.ticket-error {
+    font-size: 10px;
+}
+
+
+/* Message avatar */
+.ticket-message__avatar {
+    font-size: 12px;
+}
+
+
+/* Message author */
+.ticket-message__head strong {
+    font-size: 11px;
+}
+
+
+/* Message date */
+.ticket-message__head span {
+    font-size: 9px;
+}
+
+
+/* Message body */
+.ticket-message__text {
+    font-size: 11px;
+    line-height: 2;
+}
+
+
+/* Closed message */
+.ticket-closed {
+    font-size: 11px;
+}
+
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .ticket-toolbar h2,
+    .ticket-card__header h2,
+    .ticket-thread__header h2 {
+        font-size: 15px;
+    }
+
+    .ticket-row__title strong {
+        font-size: 12px;
+    }
+
+    .ticket-message__text {
+        font-size: 11px;
+    }
+
+    .ticket-field input,
+    .ticket-field select,
+    .ticket-field textarea,
+    .ticket-reply textarea {
+        font-size: 12px;
+    }
+}
