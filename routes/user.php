@@ -8,7 +8,7 @@ use App\Http\Controllers\Front\User\MembershipApplicationController;
 use App\Http\Controllers\Front\User\MembershipIntakeController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth','role:user'])->prefix('user')->name('user.')->group(function(){
+Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard',DashboardController::class)->name('dashboard');
     Route::get('/membership-request',[MembershipIntakeController::class,'show'])->name('membership.create');
     Route::post('/membership-request/intake',[MembershipIntakeController::class,'store'])->name('membership.intake.store');

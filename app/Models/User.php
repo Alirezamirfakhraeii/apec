@@ -68,4 +68,10 @@ class User extends Authenticatable
         return $this->hasMany(MembershipApplication::class);
     }
 
+    // Returns the companies accessible by this user.
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class);
+    }
+
 }

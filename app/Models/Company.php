@@ -54,5 +54,11 @@ class Company extends Model
         return $this->hasMany(Project::class);
     }
 
+    // Returns the users associated with this company.
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
 
 }
