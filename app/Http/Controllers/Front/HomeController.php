@@ -69,6 +69,22 @@ class HomeController extends Controller
             ->unique('id')
             ->values();
 
+
+        $tenderCategory = BlogCategory::where('slug', 'mnaksat')->first();
+
+        $tenders = collect();
+
+        if ($tenderCategory) {
+            $tenders = Post::with('mainImage')
+                ->where('status', 'published')
+                ->where('type', '!=', 'page')
+                ->where('blog_category_id', $tenderCategory->id)
+                ->latest('published_at')
+                ->take(4)
+                ->get();
+        }
+
+
         $magazineCategory = BlogCategory::where('slug', 'oil-and-development-journal')->first();
 
         $magazinePosts = collect();
@@ -131,6 +147,8 @@ class HomeController extends Controller
             'editorsChoice',
             'latestPosts',
             'subjectOfTheDay',
+            'tenders',
+            'tenderCategory',
             'homeCategories',
             'announcementPosts',
             'magazinePosts',
@@ -141,16 +159,27 @@ class HomeController extends Controller
         ));
     }
 
+
     public function show($slug)
     {
-        $post = Post::where('slug', $slug)
+        // دریافت خبر، مناقصه، اطلاعیه یا صفحه
+        $post = Post::with([
+            'user',
+            'tags',
+            'mainImage',
+        ])
+            ->where('slug', $slug)
             ->where('status', 'published')
-            ->with(['user', 'tags', 'mainImage'])
             ->firstOrFail();
 
+        // ثبت بازدید
         $post->increment('views');
 
-
+        /*
+        |--------------------------------------------------------------------------
+        | آخرین مطالب
+        |--------------------------------------------------------------------------
+        */
         $latestPosts = Post::with('mainImage')
             ->where('status', 'published')
             ->where('id', '!=', $post->id)
@@ -162,9 +191,14 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
+        /*
+        |--------------------------------------------------------------------------
+        | مطالب منتخب
+        |--------------------------------------------------------------------------
+        */
         $featuredPosts = Post::with('mainImage')
             ->where('status', 'published')
-            ->where('blog_category_id', '!=',6)
+            ->where('blog_category_id', '!=', 6)
             ->where('id', '!=', $post->id)
             ->where(function ($query) {
                 $query->whereNull('type')
@@ -174,29 +208,33 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-
+        /*
+        |--------------------------------------------------------------------------
+        | صفحات داخلی
+        |--------------------------------------------------------------------------
+        */
         if ($post->type === 'page') {
+
             return view('front.templates.internal-page', [
+
                 'mode' => 'page',
 
-                // برای قالب internal-page
                 'page' => $post,
-
-                // اگر جایی داخل قالب از post استفاده کردی
                 'post' => $post,
 
-                // برای سایدبار / آخرین مطالب
                 'latestPosts' => $latestPosts,
                 'featuredPosts' => $featuredPosts,
 
-                // برای جلوگیری از خطای undefined در قالب‌های داینامیک
                 'menuItem' => null,
                 'currentMenuItem' => null,
                 'rootMenuItem' => null,
+
                 'sideMenuItems' => collect(),
                 'sidebarItems' => collect(),
+
                 'sidebarTitle' => null,
                 'children' => collect(),
+
                 'path' => $post->slug,
                 'segments' => [$post->slug],
             ]);
@@ -204,15 +242,15 @@ class HomeController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | اگر خبر / گزارش / اطلاعیه / رویداد بود
+        | اخبار، مناقصات، اطلاعیه‌ها و گزارش‌ها
         |--------------------------------------------------------------------------
         */
-
         return view('front.posts.show', compact(
             'post',
             'latestPosts',
             'featuredPosts'
         ));
     }
+
 
 }
