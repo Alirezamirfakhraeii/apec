@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - refactor/admin-ui-standardization
 
   pull_request:
     branches:
@@ -79,15 +78,20 @@ jobs:
           php artisan config:clear
           php artisan cache:clear
 
-      - name: Check database configuration
+      - name: Check database connection
         run: |
           php artisan tinker --execute="
           dump(config('database.default'));
           dump(config('database.connections.mysql.host'));
           dump(config('database.connections.mysql.database'));
           dump(config('database.connections.mysql.username'));
-          dump(config('database.connections.mysql.password'));
           "
 
       - name: Run migrations
         run: php artisan migrate --force
+
+      - name: Show migration status
+        run: php artisan migrate:status
+
+      - name: Run tests
+        run: php artisan test
