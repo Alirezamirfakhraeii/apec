@@ -5,6 +5,7 @@ use App\Features\Membership\Data\MembershipIntakeData;
 use App\Models\MembershipApplication;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+
 final class StartMembershipApplicationAction
 {
     public function execute(User $user,MembershipIntakeData $data): MembershipApplication

@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Front\User;
 
+use App\Features\User\Company\Actions\UpdateCompanyAction;
+use App\Features\User\Company\DTOs\UpdateCompanyData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\Company\UpdateCompanyRequest;
 use App\Models\ActivityField;
 use App\Models\Company;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -217,5 +220,99 @@ class CompanyController extends Controller
             'viewMode',
             'activityFields'
         ));
+    }
+
+    public function edit(Request $request): View
+    {
+        $company = $request->user()
+            ->companies()
+            ->with([
+                'projects',
+                'activityFields',
+                'shareholders',
+                'documents',
+            ])
+            ->firstOrFail();
+
+
+        $activityFields = ActivityField::query()
+            ->where('is_active', true)
+            ->orderByRaw("
+            CASE section
+                WHEN 'discipline' THEN 1
+                WHEN 'work_field' THEN 2
+                WHEN 'industry' THEN 3
+                ELSE 4
+            END
+        ")
+            ->orderBy('sort_order')
+            ->get();
+
+
+        $selectedActivityFieldIds = $company
+            ->activityFields
+            ->pluck('id')
+            ->map(fn ($id) => (string) $id)
+            ->all();
+
+
+        $projects = $company
+            ->projects
+            ->sortByDesc('id')
+            ->values();
+
+
+        $shareholders = $company
+            ->shareholders
+            ->values();
+
+
+        $documents = $company->documents;
+
+
+        $documentsByType = $documents
+            ->keyBy('type');
+
+
+        return view(
+            'front.user.company.edit',
+            compact(
+                'company',
+                'activityFields',
+                'selectedActivityFieldIds',
+                'projects',
+                'shareholders',
+                'documents',
+                'documentsByType'
+            )
+        );
+    }
+    public function update(
+        UpdateCompanyRequest $request,
+        UpdateCompanyAction $action
+    ): RedirectResponse {
+        $company = $request
+            ->user()
+            ->companies()
+            ->firstOrFail();
+
+
+        $data = UpdateCompanyData::fromRequest(
+            $request
+        );
+
+
+        $action->execute(
+            $company,
+            $data
+        );
+
+
+        return redirect()
+            ->route('user.company.edit')
+            ->with(
+                'success',
+                'اطلاعات شرکت با موفقیت به‌روزرسانی شد.'
+            );
     }
 }

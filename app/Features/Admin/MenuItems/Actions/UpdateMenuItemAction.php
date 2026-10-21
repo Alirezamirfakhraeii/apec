@@ -3,10 +3,8 @@
 namespace App\Features\Admin\MenuItems\Actions;
 
 use App\Features\Admin\MenuItems\DTOs\UpdateMenuItemDTO;
-use App\Models\Category;
 use App\Models\MenuItem;
 use App\Models\Page;
-use App\Models\Post;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 

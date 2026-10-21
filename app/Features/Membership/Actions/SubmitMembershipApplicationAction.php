@@ -6,6 +6,7 @@ use App\Models\MembershipApplication;
 use App\Models\WorkflowStage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+
 final class SubmitMembershipApplicationAction
 {
     public function execute(MembershipApplication $application): MembershipApplication

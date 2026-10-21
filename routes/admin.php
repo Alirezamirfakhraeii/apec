@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserUploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
@@ -205,6 +206,16 @@ Route::middleware([
         Route::resource('company-projects', CompanyProjectController::class);
 
 
+
+        Route::get(
+            '/user-uploads',
+            [UserUploadController::class, 'index']
+        )->name('user-uploads.index');
+
+        Route::get(
+            '/user-uploads/{userUpload}/download',
+            [UserUploadController::class, 'download']
+        )->name('user-uploads.download');
 
 
 

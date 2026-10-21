@@ -1,3 +1,8 @@
+
+@if(now('Asia/Tehran')->lt(\Carbon\Carbon::parse('2026-11-05 00:00:00', 'Asia/Tehran')))
+    @include('front.layouts.partials.header.counter-day')
+@endif
+
 {{-- =========================================================
      MAIN HEADER
 ========================================================= --}}

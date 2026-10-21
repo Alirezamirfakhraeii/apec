@@ -7,7 +7,6 @@ use App\Features\User\Tickets\Action\ReplyToTicketAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Ticket\ReplyTicketRequest;
 use App\Http\Requests\User\Ticket\StoreTicketRequest;
-
 use App\Models\Ticket;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;

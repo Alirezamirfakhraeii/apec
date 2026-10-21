@@ -12,7 +12,6 @@ use App\Models\BlogCategory;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Str;
 
 class PostController extends Controller

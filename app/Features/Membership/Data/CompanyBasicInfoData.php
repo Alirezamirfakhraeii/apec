@@ -2,6 +2,7 @@
 namespace App\Features\Membership\Data;
 use App\Http\Requests\User\Membership\UpdateCompanyBasicInfoRequest;
 use Illuminate\Http\UploadedFile;
+
 final readonly class CompanyBasicInfoData
 {
     public function __construct(public ?UploadedFile $logo,public ?string $companyShortName,public string $registeredName,public ?string $companyNameEn,public ?string $nationality,public string $companyType,public ?string $parentCompanyName){}

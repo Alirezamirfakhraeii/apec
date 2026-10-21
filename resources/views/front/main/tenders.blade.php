@@ -9,7 +9,7 @@
      | آدرس‌ها و فیلد تصویر را با ساختار پروژه تنظیم کن.
      | این قسمت بر اساس مدل متداول Post نوشته شده است.
      */
-    $tendersUrl = url('/category/mnaksat');
+    $tendersUrl = url('/news/mnaksat');
 
     $tenderUrl = fn ($post) => url('/news/' . $post->slug);
 

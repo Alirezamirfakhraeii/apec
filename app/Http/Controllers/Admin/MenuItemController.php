@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Features\Admin\MenuItems\Actions\DeleteMenuItemAction;
 use App\Features\Admin\MenuItems\Actions\StoreMenuItemAction;
 use App\Features\Admin\MenuItems\Actions\UpdateMenuItemAction;
 use App\Features\Admin\MenuItems\DTOs\StoreMenuItemDTO;
@@ -10,12 +11,8 @@ use App\Features\Admin\MenuItems\Queries\GetMenuItemsIndexDataQuery;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MenuItems\StoreMenuItemRequest;
 use App\Http\Requests\Admin\MenuItems\UpdateMenuItemRequest;
-use App\Models\Category;
 use App\Models\MenuItem;
-use App\Models\Post;
-use App\Features\Admin\MenuItems\Actions\DeleteMenuItemAction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

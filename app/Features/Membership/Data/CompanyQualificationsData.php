@@ -2,6 +2,7 @@
 namespace App\Features\Membership\Data;
 use App\Http\Requests\User\Membership\UpdateCompanyQualificationsRequest;
 use Illuminate\Http\UploadedFile;
+
 final readonly class CompanyQualificationsData
 {
     public function __construct(public int $activityExperienceYears,public string $oilGasPetchemSpecialty,public bool $isChamberMember,public ?UploadedFile $latestGeneralAssemblyMinutes,public ?UploadedFile $latestCapitalGazette,public ?UploadedFile $originalCertificate,public ?UploadedFile $companyResume,public ?UploadedFile $chamberMembershipCard){}

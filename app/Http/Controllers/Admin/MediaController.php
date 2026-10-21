@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Features\Admin\Media\Actions\DeleteMediaAction;
-use App\Features\Admin\Media\Actions\DownloadMediaAction;
 use App\Features\Admin\Media\Actions\StoreMediaAction;
 use App\Features\Admin\Media\Actions\UpdateMediaAction;
 use App\Features\Admin\Media\DTOs\StoreMediaData;
@@ -13,9 +12,8 @@ use App\Http\Requests\Admin\Media\StoreMediaRequest;
 use App\Http\Requests\Admin\Media\UpdateMediaRequest;
 use App\Models\Media;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\View\View;
 
 
 class MediaController extends Controller

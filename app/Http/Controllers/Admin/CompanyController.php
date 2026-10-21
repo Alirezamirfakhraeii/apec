@@ -15,8 +15,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\ToArray;
+use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 
 class CompanyController extends Controller
@@ -867,7 +867,6 @@ class CompanyController extends Controller
                 ]);
         }
     }
-
 
     public function export()
     {

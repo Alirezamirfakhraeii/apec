@@ -16,13 +16,13 @@ use App\Http\Requests\Admin\UpdateMembershipApplicationStatusRequest;
 use App\Models\ActivityField;
 use App\Models\MembershipApplication;
 use App\Models\WorkflowStage;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Throwable;
-use Illuminate\Auth\Access\AuthorizationException;
 
 
 class MembershipApplicationController extends Controller

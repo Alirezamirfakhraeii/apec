@@ -60,5 +60,23 @@ class Company extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function shareholders(): HasMany
+    {
+        return $this->hasMany(
+            CompanyShareholder::class,
+            'company_id'
+        )->orderBy('sort_order');
+    }
+
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(
+            CompanyDocument::class,
+            'company_id'
+        );
+    }
+
+
 
 }

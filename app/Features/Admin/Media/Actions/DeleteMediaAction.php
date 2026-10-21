@@ -3,10 +3,8 @@
 namespace App\Features\Admin\Media\Actions;
 
 use App\Models\Media;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use RuntimeException;
-use Throwable;
 
 class DeleteMediaAction
 {

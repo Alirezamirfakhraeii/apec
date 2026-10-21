@@ -4,10 +4,8 @@ namespace App\Features\Admin\Users\Actions;
 
 use App\Features\Admin\Users\DTOs\UpdateUserDTO;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
 
 class UpdateUserAction
 {

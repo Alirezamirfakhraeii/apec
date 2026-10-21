@@ -2,7 +2,6 @@
 
 namespace App\Features\Admin\MenuItems\Queries;
 use App\Models\BlogCategory;
-use App\Models\Category;
 use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Post;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Front\User\CompanyController;
 use App\Http\Controllers\Front\User\Dashboard\MembershipTrackingController;
 use App\Http\Controllers\Front\User\Dashboard\ProfileController;
 use App\Http\Controllers\Front\User\Dashboard\TicketController;
@@ -35,4 +36,18 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
         [TicketController::class, 'destroy']
     )->name('tickets.destroy');
     Route::get('/membership/tracking', [MembershipTrackingController::class, 'index'])->name('membership.tracking');
+
+    Route::get(
+        '/company/edit',
+        [CompanyController::class, 'edit']
+    )->name('company.edit');
+
+    Route::put(
+        '/company',
+        [CompanyController::class, 'update']
+    )->name('company.update');
+
+
+
+
 });

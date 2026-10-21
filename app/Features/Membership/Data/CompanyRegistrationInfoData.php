@@ -3,6 +3,7 @@ namespace App\Features\Membership\Data;
 use App\Http\Requests\User\Membership\UpdateCompanyRegistrationInfoRequest;
 use App\Support\PersianDate;
 use Illuminate\Http\UploadedFile;
+
 final readonly class CompanyRegistrationInfoData
 {
     public function __construct(public string $registrationDate,public string $registrationNumber,public string $registrationPlace,public int $registeredCapitalIrr,public string $referenceGazetteDate,public array $shareholders,public ?UploadedFile $officialGazette){}

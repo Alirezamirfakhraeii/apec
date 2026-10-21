@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\User\Auth\DTOs;
+namespace App\Features\Admin\Auth\DTOs;
 
 use Illuminate\Http\Request;
 

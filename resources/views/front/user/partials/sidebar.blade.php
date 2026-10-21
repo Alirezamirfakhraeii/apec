@@ -8,9 +8,7 @@
      * Check whether the logged-in user is already
      * connected to an existing company.
      */
-    $hasCompany = $user
-        ? $user->companies()->exists()
-        : false;
+    $hasCompany = $user && $user->companies()->exists();
 
     $initials = collect(preg_split('/\s+/', trim($displayName)))
         ->filter()
@@ -181,6 +179,7 @@
                 Existing member:
                 Show company information instead of membership request.
             --}}
+
             @if($hasCompany)
 
                 @if($companyEditUrl)

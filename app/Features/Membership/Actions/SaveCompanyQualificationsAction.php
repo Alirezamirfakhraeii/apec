@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
+
 final class SaveCompanyQualificationsAction
 {
     public function execute(MembershipApplication $application,CompanyQualificationsData $data): MembershipCompanyProfile

@@ -6,6 +6,7 @@ use App\Models\MembershipCompanyProfile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
+
 final class SaveCompanyBasicInfoAction
 {
     public function execute(MembershipApplication $application,CompanyBasicInfoData $data): MembershipCompanyProfile

@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\BlogCategoryController;
 use App\Http\Controllers\Front\CategoryController;
-use App\Http\Controllers\Front\CompanyController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\DynamicPageController;
 use App\Http\Controllers\Front\HomeController;
@@ -11,51 +9,184 @@ use App\Http\Controllers\Front\MediaDownloadController;
 use App\Http\Controllers\Front\NewsController;
 use App\Http\Controllers\Front\PageController;
 use App\Http\Controllers\Front\PodcastController;
+use App\Http\Controllers\Front\User\CompanyController;
+use App\Http\Controllers\Front\UserUploadController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/user.php';
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| Public File Upload
+|--------------------------------------------------------------------------
+|
+| این بخش عمومی است و برای ارسال فایل نیازی به لاگین نیست.
+|
+*/
+
+Route::get(
+    '/upload-file',
+    [UserUploadController::class, 'index']
+)->name('upload.index');
+
+Route::post(
+    '/upload-file',
+    [UserUploadController::class, 'store']
+)
+    ->middleware('throttle:5,1')
+    ->name('upload.store');
+
+
+/*
+|--------------------------------------------------------------------------
+| Home
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/',
+    [HomeController::class, 'index']
+)->name('home');
+
+
+/*
+|--------------------------------------------------------------------------
+| Pages
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/page/{slug}',
+    [PageController::class, 'show']
+)->name('front.pages.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| Posts
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/posts/{slug}',
+    [HomeController::class, 'show']
+)->name('front.posts.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| Categories
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/category/{slug}',
+    [CategoryController::class, 'show']
+)->name('front.categories.show');
+
+
+Route::get(
+    '/blog/category/{slug}',
+    [BlogCategoryController::class, 'show']
+)->name('front.blog-categories.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| News
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/news',
+    [NewsController::class, 'index']
+)->name('front.news.index');
+
+
+Route::get(
+    '/news/{slug}',
+    [NewsController::class, 'show']
+)->name('front.news.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| Podcasts
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/podcasts',
+    [PodcastController::class, 'archive']
+)->name('front.podcasts.archive');
+
+
+/*
+|--------------------------------------------------------------------------
+| Contact
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/contact-us',
+    [ContactController::class, 'index']
+)->name('front.contact.index');
+
+
+Route::post(
+    '/contact-us',
+    [ContactController::class, 'store']
+)->name('front.contact.store');
+
+
+Route::get(
+    '/contact',
+    [ContactController::class, 'show']
+)->name('front.contact');
+
+
+/*
+|--------------------------------------------------------------------------
+| Association Members
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/association/members',
+    [CompanyController::class, 'index']
+)->name('companies.index');
 
 
 
 
-Route::get('/page/{slug}', [PageController::class, 'show'])->name('front.pages.show');
-Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('front.posts.show');
-Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('front.categories.show');
-Route::get('/blog/category/{slug}', [BlogCategoryController::class, 'show'])->name('front.blog-categories.show');
+/*
+|--------------------------------------------------------------------------
+| Language
+|--------------------------------------------------------------------------
+*/
 
+Route::get('/lang/{locale}', function ($locale) {
 
-Route::get('/news', [NewsController::class, 'index'])
-    ->name('front.news.index');
-
-Route::get('/news/{slug}', [NewsController::class, 'show'])
-    ->name('front.news.show');
-
-Route::get('/podcasts', [PodcastController::class, 'archive'])
-    ->name('front.podcasts.archive');
-
-Route::get('/contact-us', [ContactController::class, 'index'])->name('front.contact.index');
-Route::post('/contact-us', [ContactController::class, 'store'])->name('front.contact.store');
-
-Route::get('/association/members', [CompanyController::class, 'index'])
-    ->name('companies.index');
-
-
-Route::get('/contact', [ContactController::class, 'show'])->name('front.contact');
-
-
-Route::get('lang/{locale}', function ($locale) {
     if (in_array($locale, ['fa', 'en'])) {
         Session::put('locale', $locale);
     }
+
     return redirect()->back();
+
 })->name('lang.switch');
 
+
+/*
+|--------------------------------------------------------------------------
+| Board Of Directors
+|--------------------------------------------------------------------------
+*/
 
 Route::get(
     '/board-of-directors',
@@ -63,11 +194,23 @@ Route::get(
 )->name('front.board-of-directors');
 
 
+/*
+|--------------------------------------------------------------------------
+| Media Download
+|--------------------------------------------------------------------------
+*/
+
 Route::get(
     '/media/{media}/download',
     [MediaDownloadController::class, 'download']
 )->name('media.download');
 
+
+/*
+|--------------------------------------------------------------------------
+| Media PDF
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/media/pdf/{id}', function ($id) {
 
@@ -81,13 +224,13 @@ Route::get('/media/pdf/{id}', function ($id) {
     $disk = $media->disk ?: 'public';
 
     abort_unless(
-        \Illuminate\Support\Facades\Storage::disk($disk)
-            ->exists($media->path),
+        Storage::disk($disk)->exists($media->path),
         404
     );
 
-    $content = \Illuminate\Support\Facades\Storage::disk($disk)
-        ->get($media->path);
+    $content = Storage::disk($disk)->get(
+        $media->path
+    );
 
     return response(
         $content,
@@ -103,15 +246,13 @@ Route::get('/media/pdf/{id}', function ($id) {
 })->name('media.pdf');
 
 
-Route::get('/route-test', function () {
-    return 'ROUTE OK';
-});
-
-
 /*
 |--------------------------------------------------------------------------
-| این Route حتماً باید آخرین Route باشد
+| Dynamic Page
 |--------------------------------------------------------------------------
+|
+| این Route حتماً باید آخرین Route باشد.
+|
 */
 
 Route::get(
