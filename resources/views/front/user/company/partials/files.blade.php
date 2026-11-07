@@ -3,7 +3,7 @@
     $documentsByType = $documentsByType ?? collect();
 @endphp
 
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-files">
     <div class="company-edit-section__title">لوگو و مدارک شرکت</div>
 
     <div class="company-edit-grid">

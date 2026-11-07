@@ -13,9 +13,15 @@ return Application::configure(basePath: dirname(__DIR__))
 
     ->withMiddleware(function (Middleware $middleware): void {
 
-        $middleware->web(append: [
+        $middleware->web(
+            append: [
             \App\Http\Middleware\SetLocaleMiddleware::class,
-        ]);
+            \App\Http\Middleware\NoIndexPrivatePages::class,
+        ],
+
+            prepend: [
+                \App\Http\Middleware\RedirectOldSlug::class,
+            ]);
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,

@@ -1,4 +1,4 @@
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-commercial">
     <div class="company-edit-section__title">کارت بازرگانی و عضویت اتاق</div>
 
     <div class="company-edit-grid">

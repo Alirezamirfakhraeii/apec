@@ -1,5 +1,7 @@
 @extends('front.layouts.master')
 
+@include('front.news.partials.seo')
+
 @section('content')
 
     <style>

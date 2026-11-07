@@ -39,7 +39,7 @@
     }
 @endphp
 
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-projects">
     <div class="company-edit-section__title">پروژه‌ها و سوابق اجرایی</div>
 
     <div class="company-edit-section__hint">

@@ -1,46 +1,174 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+
+<html
+    lang="{{ app()->getLocale() }}"
+    dir="{{ app()->getLocale() === 'fa' ? 'rtl' : 'ltr' }}"
+>
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'سایت اپک')</title>
 
-    <!-- استایل‌های اختصاصی قالب اردیبهشت -->
-    <link href="{{ asset('front/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('front/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('front/css/owl.carousel.css') }}" rel="stylesheet">
-    <link href="{{ asset('front/css/style001.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ asset('front/css/hircana.css') }}" type="text/css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('front/css/header-menu.css') }}">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    >
 
-    <!-- محل قرارگیری استایل‌های احتمالی صفحات خاص -->
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}"
+    >
+
+
+    {{-- =========================================================
+        SEO
+    ========================================================== --}}
+
+    @include('front.layouts.partials.seo')
+
+
+    {{-- =========================================================
+        Favicon
+    ========================================================== --}}
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="{{ asset('front/img/logo-irapec-min2.png') }}"
+    >
+
+
+    {{-- =========================================================
+        Theme
+    ========================================================== --}}
+
+    <meta
+        name="theme-color"
+        content="#ffffff"
+    >
+
+
+    {{-- =========================================================
+        Styles
+    ========================================================== --}}
+
+    <link
+        href="{{ asset('front/css/bootstrap.css') }}"
+        rel="stylesheet"
+        type="text/css"
+    >
+
+    <link
+        href="{{ asset('front/css/all.min.css') }}"
+        rel="stylesheet"
+        type="text/css"
+    >
+
+    <link
+        href="{{ asset('front/css/owl.carousel.css') }}"
+        rel="stylesheet"
+    >
+
+    <link
+        href="{{ asset('front/css/style001.css') }}"
+        rel="stylesheet"
+        type="text/css"
+    >
+
+    <link
+        href="{{ asset('front/css/hircana.css') }}"
+        rel="stylesheet"
+        type="text/css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ asset('front/css/header-menu.css') }}"
+    >
+
+
+    {{-- Page specific head --}}
+
+    @stack('head')
+
+
+    {{-- Page specific styles --}}
+
     @stack('styles')
+
 </head>
+
+
 <body>
 
-<!-- هدر سایت -->
+
+{{-- =========================================================
+    Header
+========================================================== --}}
+
 @include('front.layouts.partials.header')
 
-<!-- محتوای داینامیک صفحات سایت -->
+
+{{-- =========================================================
+    Content
+========================================================== --}}
+
 <main class="main-content">
+
     @yield('content')
+
 </main>
 
-<!-- فوتر سایت -->
+
+{{-- =========================================================
+    Footer
+========================================================== --}}
+
 @include('front.layouts.partials.footer')
 
 
-<!-- اسکریپت‌های اختصاصی قالب اردیبهشت -->
-<script src="{{ asset('front/js/jquery.2.1.0.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('front/js/popper.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('front/js/bootstrap.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('front/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('front/js/owl.carousel.js') }}"></script>
-<script src="{{ asset('front/js/js.js') }}" type="text/javascript"></script>
-<script src="{{ asset('front/js/header-menu.js') }}"></script>
+{{-- =========================================================
+    Scripts
+========================================================== --}}
 
-<!-- محل قرارگیری اسکریپت‌های احتمالی صفحات خاص -->
+<script
+    src="{{ asset('front/js/jquery.2.1.0.min.js') }}"
+    type="text/javascript"
+></script>
+
+<script
+    src="{{ asset('front/js/popper.min.js') }}"
+    type="text/javascript"
+></script>
+
+<script
+    src="{{ asset('front/js/bootstrap.min.js') }}"
+    type="text/javascript"
+></script>
+
+<script
+    src="{{ asset('front/js/bootstrap.bundle.min.js') }}"
+    type="text/javascript"
+></script>
+
+<script
+    src="{{ asset('front/js/owl.carousel.js') }}"
+></script>
+
+<script
+    src="{{ asset('front/js/js.js') }}"
+    type="text/javascript"
+></script>
+
+<script
+    src="{{ asset('front/js/header-menu.js') }}"
+></script>
+
+
+{{-- Page specific scripts --}}
+
 @stack('scripts')
+
 </body>
+
 </html>

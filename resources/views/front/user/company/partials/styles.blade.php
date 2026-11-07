@@ -471,3 +471,167 @@
     }
 </style>
 @endpush
+
+@push('styles')
+<style>
+    /* =========================================================
+       Company Quick Navigation
+    ========================================================= */
+
+    .company-quick-nav {
+        margin-bottom: 28px;
+        padding: 18px;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+        border: 1px solid #e3e9f1;
+        border-radius: 16px;
+        box-shadow: 0 6px 22px rgba(23, 58, 112, .06);
+    }
+
+    .company-quick-nav__header {
+        margin-bottom: 15px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #edf1f5;
+    }
+
+    .company-quick-nav__heading {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .company-quick-nav__heading-icon {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: #173a70;
+        background: #edf4fc;
+        font-size: 17px;
+    }
+
+    .company-quick-nav__heading > div {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .company-quick-nav__heading strong {
+        color: #173a70;
+        font-size: 14px;
+        font-weight: 900;
+    }
+
+    .company-quick-nav__heading span {
+        color: #8491a3;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .company-quick-nav__items {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 9px;
+    }
+
+    .company-quick-nav__item {
+        min-height: 40px;
+        padding: 9px 13px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        flex: 0 0 auto;
+        color: #536174;
+        background: #f8fafc;
+        border: 1px solid #e1e7ef;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1;
+        text-decoration: none !important;
+        white-space: nowrap;
+        transition: background-color .2s ease,
+                    border-color .2s ease,
+                    color .2s ease,
+                    transform .2s ease,
+                    box-shadow .2s ease;
+    }
+
+    .company-quick-nav__item i {
+        color: #72839b;
+        font-size: 15px;
+        transition: color .2s ease;
+    }
+
+    .company-quick-nav__item:hover {
+        color: #173a70;
+        background: #eef4fc;
+        border-color: #c9d8eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(23, 58, 112, .08);
+    }
+
+    .company-quick-nav__item:hover i {
+        color: #173a70;
+    }
+
+    .company-quick-nav__item.is-active {
+        color: #ffffff;
+        background: #173a70;
+        border-color: #173a70;
+        box-shadow: 0 5px 14px rgba(23, 58, 112, .20);
+    }
+
+    .company-quick-nav__item.is-active i {
+        color: #ffffff;
+    }
+
+    [id^="company-section-"] {
+        scroll-margin-top: 110px;
+    }
+
+    @media (max-width: 768px) {
+        .company-quick-nav {
+            margin-bottom: 20px;
+            padding: 14px;
+            border-radius: 13px;
+        }
+
+        .company-quick-nav__header {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+        }
+
+        .company-quick-nav__heading span {
+            font-size: 11px;
+        }
+
+        .company-quick-nav__items {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding: 1px 0 6px;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .company-quick-nav__items::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .company-quick-nav__items::-webkit-scrollbar-thumb {
+            background: #d5dce6;
+            border-radius: 999px;
+        }
+
+        .company-quick-nav__item {
+            min-height: 38px;
+            padding: 8px 12px;
+            font-size: 11px;
+        }
+    }
+</style>
+@endpush

@@ -1,5 +1,7 @@
 @extends('front.layouts.master')
 
+@include('front.pages.partials.seo')
+
 @section('content')
     <main class="dynamic-page" dir="rtl">
         @foreach($page->blocks->where('status', 'active')->sortBy('sort_order') as $block)

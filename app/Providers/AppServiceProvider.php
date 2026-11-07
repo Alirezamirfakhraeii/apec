@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Models\BlogCategory;
 use App\Models\Category;
 use App\Models\MenuItem;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\Setting;
+use App\Observers\SlugRedirectObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
@@ -27,6 +29,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Post::observe(
+            SlugRedirectObserver::class
+        );
+
+        BlogCategory::observe(
+            SlugRedirectObserver::class
+        );
+
+        Page::observe(
+            SlugRedirectObserver::class
+        );
+
 
         Paginator::useBootstrapFive();
 

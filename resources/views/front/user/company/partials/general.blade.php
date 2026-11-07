@@ -1,4 +1,4 @@
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-general">
     <div class="company-edit-section__title">اطلاعات عمومی شرکت</div>
 
     <div class="company-edit-grid">

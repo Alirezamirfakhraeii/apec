@@ -1,4 +1,4 @@
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-registration">
     <div class="company-edit-section__title">اطلاعات ثبتی و حقوقی</div>
 
     <div class="company-edit-grid">

@@ -14,11 +14,22 @@ use App\Http\Controllers\Front\UserUploadController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-
+use App\Http\Controllers\Front\Seo\SitemapController;
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/user.php';
+
+
+
+
+Route::get(
+    '/sitemap.xml',
+    [
+        SitemapController::class,
+        'index',
+    ]
+)->name('sitemap');
 
 
 /*
@@ -261,3 +272,6 @@ Route::get(
 )
     ->where('path', '.*')
     ->name('front.dynamic');
+
+
+

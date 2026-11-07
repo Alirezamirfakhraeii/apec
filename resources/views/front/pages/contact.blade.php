@@ -1,5 +1,7 @@
 @extends('front.layouts.master')
 
+@include('front.pages.partials.seo')
+
 @push('styles')
     <style>
         .contact-page {

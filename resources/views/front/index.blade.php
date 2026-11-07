@@ -1,5 +1,7 @@
 @extends('front.layouts.master')
 
+@include('front.main.partials.seo')
+
 @section('content')
     <div class="container mt-4">
         <div class="row">

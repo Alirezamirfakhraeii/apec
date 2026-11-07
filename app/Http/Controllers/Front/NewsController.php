@@ -27,14 +27,44 @@ class NewsController extends Controller
     {
         $blogCategory = BlogCategory::query()
             ->where('slug', $slug)
-            ->firstOrFail();
+            ->first();
+
+        if (!$blogCategory) {
+
+            $post = Post::query()
+                ->where('slug', $slug)
+                ->where('status', 'published')
+                ->first();
+
+            if ($post) {
+                return redirect()->route(
+                    'front.posts.show',
+                    $post->slug,
+                    301
+                );
+            }
+
+            abort(404);
+        }
 
         $posts = Post::query()
-            ->where('blog_category_id', $blogCategory->id)
-            ->where('status', 'published')
+            ->where(
+                'blog_category_id',
+                $blogCategory->id
+            )
+            ->where(
+                'status',
+                'published'
+            )
             ->latest('published_at')
             ->paginate(12);
 
-        return view('front.news.show', compact('blogCategory', 'posts'));
+        return view(
+            'front.news.show',
+            compact(
+                'blogCategory',
+                'posts'
+            )
+        );
     }
 }

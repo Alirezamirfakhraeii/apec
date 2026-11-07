@@ -6,7 +6,7 @@
         ->all();
 @endphp
 
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-activity-fields">
     <div class="company-edit-section__title">حوزه‌ها و رتبه‌های فعالیت شرکت</div>
 
     <div class="company-edit-section__hint">

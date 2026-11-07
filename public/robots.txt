@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+
+Disallow: /admin/
+Disallow: /user/
+Disallow: /storage/logs/
+Disallow: /search
+Disallow: /*?search=
+Disallow: /*?q=
+
+Sitemap: https://irapec.com/sitemap.xml

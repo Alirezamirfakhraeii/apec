@@ -1,5 +1,10 @@
 @extends('front.layouts.master')
 
+@include(
+    'front.podcasts.partials.archive-seo'
+)
+
+
 @section('content')
 
     <style>

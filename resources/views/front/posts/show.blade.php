@@ -1,5 +1,7 @@
 @extends('front.layouts.master')
 
+@include('front.posts.partials.seo')
+
 @section('content')
     <div class="article-reading-progress sticky-top">
         <div id="reading-progress" class="article-reading-progress-bar"></div>

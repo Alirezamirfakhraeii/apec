@@ -1,4 +1,4 @@
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-activities">
     <div class="company-edit-section__title">نوع فعالیت شرکت</div>
 
     <div class="company-edit-grid">

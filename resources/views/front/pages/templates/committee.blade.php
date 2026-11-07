@@ -1,6 +1,6 @@
 @extends('front.layouts.master')
 
-@section('title', $page->meta_title ?: $page->title)
+@include('front.pages.partials.seo')
 
 @push('styles')
     <link

@@ -1,4 +1,4 @@
-<div class="company-edit-section">
+<div class="company-edit-section" id="company-section-association-contact">
     <div class="company-edit-section__title">رابط شرکت با انجمن</div>
 
     <div class="company-edit-grid">

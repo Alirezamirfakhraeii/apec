@@ -22,10 +22,12 @@
 
                 @include('front.user.company.partials.alerts')
 
+                @include('front.user.company.partials.quick-nav')
+
                 <form
-                        action="{{ route('user.company.update') }}"
-                        method="POST"
-                        enctype="multipart/form-data"
+                    action="{{ route('user.company.update') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
                 >
                     @csrf
                     @method('PUT')
